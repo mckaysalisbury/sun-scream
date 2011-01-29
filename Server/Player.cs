@@ -55,7 +55,9 @@ namespace Server
             if (update != null)
             {
                 foreach (var message in update.Messages)
-                    Messages.Add(new Message() { Text = message, Type = MessageType.System });
+                {
+                    Commands.ExecuteCommand(this, message);
+                }
 
                 if (update.Thrust != null && Controlling != null)
                 {
@@ -94,6 +96,11 @@ namespace Server
             }
 
             return null;
+        }
+
+        internal void AddMessage(string message, MessageType type)
+        {
+            Messages.Add(new Message() { Text = message, Type = type });
         }
     }
 }

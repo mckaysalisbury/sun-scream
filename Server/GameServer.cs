@@ -5,6 +5,7 @@ using System.Text;
 using System.Net.Sockets;
 using System.Net;
 using System.Timers;
+using System.Reflection;
 
 namespace Server
 {
@@ -23,6 +24,8 @@ namespace Server
         public GameServer()
         {
             Instance = this;
+
+            Commands.RegisterCommands(Assembly.GetExecutingAssembly());
 
             Universe = UniverseGenerator.GenerateUniverse();
 
