@@ -23,7 +23,7 @@ namespace Server
 
         internal override void Update()
         {
-            if (updateCount % 10 == 0)
+            if (updateCount % 100 == 0)
                 Universe.AddEntity(new Asteroid(), Position);
 
             updateCount++;
@@ -32,6 +32,9 @@ namespace Server
         protected override Fixture GetFixture(World world)
         {
             var fixture = FixtureFactory.CreateCircle(world, size, 1);
+            fixture.Body.IsStatic = true;
+            fixture.CollisionFilter.CollidesWith = Category.None;
+
             //fixture.Body.BodyType = BodyType.Dynamic;
 
             //fixture.Body.IsStatic = false;
