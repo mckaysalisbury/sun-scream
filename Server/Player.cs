@@ -13,6 +13,7 @@ namespace Server
 
         public Ship Controlling { get; set; }
         public string Name { get; set; }
+        public Universe Universe { get; set; }
 
         public Player(TcpClient client)
         {
@@ -21,10 +22,21 @@ namespace Server
             GameServer.Instance.Log("Player Connected from " + client.Client.RemoteEndPoint);
         }
 
+        public void Disconnect()
+        {
+            Client.Close();
+            Universe.RemovePlayer(this);
+        }
+
         int packetLength;
 
         public void Update()
         {
+            if (!Client.Client.Connected)
+            {
+                Disconnect();
+            }
+
             var update = CheckForUpdate();
             if (update != null)
             {

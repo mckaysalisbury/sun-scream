@@ -5,6 +5,7 @@ using System.Text;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using System.Timers;
+using System.Net.Sockets;
 
 namespace Server
 {
@@ -13,8 +14,8 @@ namespace Server
     /// </summary>
     public class Universe
     {
-        public List<Entity> Entites = new List<Entity>();
-        public List<Player> Players = new List<Player>();
+        List<Entity> Entites = new List<Entity>();
+        List<Player> Players = new List<Player>();
 
         World World;
 
@@ -44,8 +45,15 @@ namespace Server
         public void AddPlayer(Player player)
         {            
             Players.Add(player);
+            player.Universe = this;
             player.Controlling = this.GenerateShip(player);
             AddEntity(player.Controlling, GetSpawnLocation());
+        }
+
+        public void RemovePlayer(Player player)
+        {
+            Entites.Remove(player.Controlling);
+            Players.Remove(player);
         }
 
         public Ship GenerateShip(Player player)
@@ -66,6 +74,11 @@ namespace Server
             Entites.Add(entity);
         }
 
+        public void RemoveEntity(Entity entity)
+        {
+            Entites.Remove(entity);
+        }
+
         void Update()
         {
             foreach (var entity in Entites)
@@ -78,18 +91,28 @@ namespace Server
             World.Step(10);
             //World.Step((float)(DateTime.Now - lastUpdate).TotalMilliseconds);            
 
-            foreach (var player in Players)
+            foreach (var player in Players.ToArray())
             {
                 player.Update();
 
-                var packet = new UpdatePacket() { ControllingEntityId = player.Controlling.Id };
-
-                foreach (var entity in Entites)
+                if (player.Client.Client.Connected)
                 {
-                    packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 100), LocationY = (int)(entity.Fixture.Body.Position.Y * 100) });
-                }
+                    var packet = new UpdatePacket() { ControllingEntityId = player.Controlling.Id };
 
-                player.Client.Client.Send(packet.Serialize());
+                    foreach (var entity in Entites)
+                    {
+                        packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 100), LocationY = (int)(entity.Fixture.Body.Position.Y * 100) });
+                    }
+
+                    try
+                    {
+                        player.Client.Client.Send(packet.Serialize());
+                    }
+                    catch (SocketException)
+                    {
+                        player.Disconnect();
+                    }
+                }
             }
 
             lastUpdate = DateTime.Now;
