@@ -43,7 +43,7 @@ namespace Server
                 if (update.Thrust != null && Controlling != null)
                 {
                     var thrust = new Microsoft.Xna.Framework.Vector2(update.Thrust.RelativeX / 1000f, update.Thrust.RelativeY / 1000f);
-                    Controlling.Fixture.Body.ApplyLinearImpulse(thrust);
+                    Controlling.Fixture.Body.ApplyForce(thrust);
                     GameServer.Instance.Log(String.Format("Thrust {0}", thrust));
                 }
             }
