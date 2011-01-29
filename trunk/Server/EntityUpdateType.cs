@@ -11,6 +11,7 @@ namespace Server
         Ship,
         Star,
         Planet,
-        Asteroid
+        Asteroid,
+        AsteroidGenerator
     }
 }
