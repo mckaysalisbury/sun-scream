@@ -34,10 +34,12 @@ namespace Server
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             timer.Start();
 
-            //output.AppendText("Listening on TCP port " + Port);
+            Log("Listening on TCP port " + Port);
+        }
 
-            //timer.Tick += new EventHandler(timer_Tick);
-            //timer.Enabled = true;
+        public void Log(string message)
+        {
+            MainForm.Instance.Log(message);
         }
 
         void timer_Elapsed(object sender, ElapsedEventArgs e)

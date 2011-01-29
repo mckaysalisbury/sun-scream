@@ -69,9 +69,13 @@ namespace Server
         void Update()
         {
             foreach (var entity in Entites)
+            {
                 entity.Update();
 
-            World.Step((float)(DateTime.Now - lastUpdate).TotalMilliseconds);
+                GameServer.Instance.Log(entity.Position.X.ToString());
+            }
+
+            World.Step((float)(DateTime.Now - lastUpdate).TotalMilliseconds);            
 
             foreach (var player in Players)
             {
@@ -81,8 +85,6 @@ namespace Server
                 {
                     packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = entity.Fixture.Body.Position.X, LocationY = entity.Fixture.Body.Position.Y });
                 }
-
-                packet.Messages.Add(new Message() { Text = "Hello World", Type = MessageType.System });
 
                 player.Client.Client.Send(packet.Serialize());
             }

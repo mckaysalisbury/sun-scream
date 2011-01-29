@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.protoRichTextBox = new System.Windows.Forms.RichTextBox();
-            this.output = new System.Windows.Forms.RichTextBox();
+            this.Output = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.sendButton = new System.Windows.Forms.Button();
@@ -45,13 +45,13 @@
             this.protoRichTextBox.TabIndex = 0;
             this.protoRichTextBox.Text = "";
             // 
-            // output
+            // Output
             // 
-            this.output.Location = new System.Drawing.Point(12, 319);
-            this.output.Name = "output";
-            this.output.Size = new System.Drawing.Size(507, 312);
-            this.output.TabIndex = 1;
-            this.output.Text = "";
+            this.Output.Location = new System.Drawing.Point(12, 319);
+            this.Output.Name = "Output";
+            this.Output.Size = new System.Drawing.Size(507, 312);
+            this.Output.TabIndex = 1;
+            this.Output.Text = "";
             // 
             // label1
             // 
@@ -86,7 +86,7 @@
             this.Controls.Add(this.sendButton);
             this.Controls.Add(this.propertyGrid1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.output);
+            this.Controls.Add(this.Output);
             this.Controls.Add(this.protoRichTextBox);
             this.Name = "MainForm";
             this.Text = "Test Server";
@@ -98,11 +98,11 @@
         #endregion
 
         private System.Windows.Forms.RichTextBox protoRichTextBox;
-        private System.Windows.Forms.RichTextBox output;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PropertyGrid propertyGrid1;
         private System.Windows.Forms.Button sendButton;
         private System.Windows.Forms.Timer timer;
+        public System.Windows.Forms.RichTextBox Output;
     }
 }
 
