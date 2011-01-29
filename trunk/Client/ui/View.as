@@ -177,6 +177,10 @@
       {
         Connection.sendChat("/release");
       }
+      else if (ch == " ")
+      {
+        Connection.sendChat("/setrole");
+      }
     }
 
     var parent : DisplayObjectContainer;
