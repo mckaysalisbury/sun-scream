@@ -77,6 +77,8 @@
             var angle = Math.floor(Math.atan2(relative.y, relative.x)*100);
             var dist = Math.floor(Math.sqrt(relative.x*relative.x
                                             + relative.y*relative.y));
+            dist = Math.floor(dist / Math.sqrt(768/2*768/2
+                                               + 1024/2*1024/2)*100);
             message.Thrust.Angle = angle;
             message.Thrust.Distance = dist;
             trace("Thrust Angle: " + message.Thrust.Angle + ", Dist: "
