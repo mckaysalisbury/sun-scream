@@ -25,6 +25,8 @@ namespace Server
             universe.AddEntity(new StarSystem("Deneb"), new Vector2(100, -100));
             universe.AddEntity(new StarSystem("Sirius"), new Vector2(-100, 100));
 
+            universe.AddEntity(new AsteroidGenerator(), new Vector2(10, -10));
+
             // Remove these later
             //universe.AddEntity(universe.GenerateShip(new Player(null) { Name = "Test" }), universe.GetSpawnLocation());
 

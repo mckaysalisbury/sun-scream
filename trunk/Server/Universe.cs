@@ -88,7 +88,7 @@ namespace Server
 
         void Update()
         {
-            foreach (var entity in Entites)
+            foreach (var entity in Entites.ToArray())
             {
                 entity.Update();
 
@@ -110,7 +110,9 @@ namespace Server
 
                     foreach (var entity in Entites)
                     {
-                        packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 1000000), LocationY = (int)(entity.Fixture.Body.Position.Y * 1000000) });
+                        var type = entity.GetClientType();
+                        if (type != EntityUpdateType.Invisible)
+                            packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 1000000), LocationY = (int)(entity.Fixture.Body.Position.Y * 1000000) });
                     }
 
                     var packetBytes = packet.Serialize();

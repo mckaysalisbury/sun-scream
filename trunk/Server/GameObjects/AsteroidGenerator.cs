@@ -15,7 +15,7 @@ namespace Server
     {
         private const float size = 0.1f;
 
-        public AsteroidGenerator(int id, string name) : base(string.Empty)
+        public AsteroidGenerator() : base(string.Empty)
         {
         }
 
@@ -39,7 +39,7 @@ namespace Server
 
         internal override EntityUpdateType GetClientType()
         {
-            return EntityUpdateType.AsteroidGenerator;
+            return EntityUpdateType.Invisible;
         }
     }
 }

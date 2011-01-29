@@ -24,12 +24,7 @@ namespace Server
         protected override Fixture GetFixture(World world)
         {
             var fixture = FixtureFactory.CreateCircle(world, size, 1);
-
-            var gravity = new GravityController(.01f);
-            gravity.AddBody(fixture.Body);
-            gravity.GravityType = GravityType.DistanceSquared;
-
-            world.AddController(gravity);
+            fixture.Body.BodyType = BodyType.Dynamic;
             return fixture;
         }
 
