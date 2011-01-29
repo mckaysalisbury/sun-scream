@@ -37,6 +37,11 @@ package ui
       sprite.setPos(newPos);
     }
 
+    public function changeRotation(newRotation : int) : void
+    {
+      sprite.setRotation(newRotation);
+    }
+
     var sprite : Image;
     var images : ImageList;
     var type : int;

@@ -120,16 +120,20 @@
     {
       var pos = new Point(Math.floor(update.LocationX/SCALE) + 10240,
                           Math.floor(update.LocationY/SCALE) + 10240);
+      var rotation = (update.Rotation / 100) * (180 / Math.PI) - 90;
       if (update.Id == controller)
       {
         window.setCenter(pos);
+//        trace("orig: " + update.Rotation + ", transform: " + rotation);
       }
       if (entities[update.Id] == null)
       {
 //        trace(String(update.Type) + ": " + pos.toString());
         entities[update.Id] = new Entity(images, update.Type);
       }
-      entities[update.Id].changePos(pos);
+      var entity = entities[update.Id];
+      entity.changePos(pos);
+      entity.changeRotation(rotation);
     }
 
     public function removeEntity(target : int) : void
