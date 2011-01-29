@@ -75,12 +75,17 @@
             var message = new Client.UpdateToServer();
             message.Thrust = new Client.ThrustUpdate();
             var angle = Math.floor(Math.atan2(relative.y, relative.x)*100);
+            message.Thrust.Angle = angle;
             var dist = Math.floor(Math.sqrt(relative.x*relative.x
                                             + relative.y*relative.y));
-            dist = Math.floor(dist / Math.sqrt(768/2*768/2
-                                               + 1024/2*1024/2)*100);
-            message.Thrust.Angle = angle;
-            message.Thrust.Distance = dist;
+            if (dist > 384)
+            {
+              message.Thrust.Distance = 100;
+            }
+            else
+            {
+              message.Thrust.Distance = Math.floor(dist/384*100);
+            }
             trace("Thrust Angle: " + message.Thrust.Angle + ", Dist: "
                   + message.Thrust.Distance);
             Connection.sendMessage(message);
