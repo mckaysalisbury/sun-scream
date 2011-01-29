@@ -40,9 +40,16 @@ namespace Server
             Log("Listening on TCP port " + Port);
         }
 
+        public void Broadcast(string message)
+        {
+            foreach (var player in GameServer.Instance.Universe.Players)
+                player.AddMessage(message, MessageType.System);
+        }
+
         public void Log(string message)
         {
             MainForm.Instance.Log(message);
+            Broadcast(message);
         }
 
         void timer_Elapsed(object sender, ElapsedEventArgs e)

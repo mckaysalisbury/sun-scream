@@ -24,7 +24,7 @@ namespace Server
             Client = client;
             client.Client.NoDelay = true;
 
-            Name = client.Client.LocalEndPoint.ToString();
+            Name = client.Client.RemoteEndPoint.ToString();
 
             Notes = new List<Note>();
             Messages = new List<Message>();
@@ -61,13 +61,12 @@ namespace Server
 
                 if (update.Thrust != null && Controlling != null)
                 {
-                    GameServer.Instance.Log(String.Format("Angle {0} Distance {1}", update.Thrust.Angle, update.Thrust.Distance));
                     var thrust = AngleToVector(update.Thrust.Angle / 100f, 0.001f);
-                    //Controlling.Fixture.Body.ApplyForce(thrust);
-
                     Controlling.Fixture.Body.ApplyForce(thrust);
-                    GameServer.Instance.Log(String.Format("Thrust {0}", thrust));
-                    GameServer.Instance.Log(String.Format("Velocity {0}", Controlling.Fixture.Body.LinearVelocity));
+
+                    //GameServer.Instance.Log(String.Format("Angle {0} Distance {1}", update.Thrust.Angle, update.Thrust.Distance));
+                    //GameServer.Instance.Log(String.Format("Thrust {0}", thrust));
+                    //GameServer.Instance.Log(String.Format("Velocity {0}", Controlling.Fixture.Body.LinearVelocity));
                 }
             }
         }
@@ -85,7 +84,8 @@ namespace Server
                 Client.Client.Receive(bytes);
                 var packetLength = BitConverter.ToInt32(bytes, 0);
 
-                GameServer.Instance.Log(String.Format("Sent Length {0}  Available {1}", packetLength.ToString(), Client.Client.Available));
+                if (packetLength > Client.Client.Available)
+                    GameServer.Instance.Log(String.Format("Sent Length {0}  Available {1}", packetLength, Client.Client.Available));
 
                 if (Client.Client.Available < packetLength)
                     throw new NotImplementedException("partial packet received");
