@@ -11,6 +11,7 @@ using System.IO;
 using ProtoBuf;
 using System.Net.Sockets;
 using System.Net;
+using System.Runtime.Serialization;
 
 namespace Server
 {
@@ -33,6 +34,13 @@ namespace Server
             protoRichTextBox.Text = ProtoBuf.Serializer.GetProto<UpdatePacket>().Replace("fixed32", "float"); // this replace fixes a bug in the serializer
 
             new GameServer();
+        }
+
+        [DataContract]
+        class Tester
+        {
+            [DataMember(Order=1)]
+            public float TestFloat { get; set; }
         }
 
         internal void Log(string message)
