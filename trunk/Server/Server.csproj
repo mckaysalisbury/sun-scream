@@ -71,9 +71,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Broadcast.cs" />
+    <Compile Include="Commands\BroadcastCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\Commands.cs" />
+    <Compile Include="Commands\HelpCommand.cs" />
+    <Compile Include="Commands\StatusCommand.cs" />
+    <Compile Include="Commands\SayCommand.cs" />
     <Compile Include="NoteType.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="Display\DisplayForm.cs">
