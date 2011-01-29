@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FarseerPhysics.Factories;
+using FarseerPhysics.Dynamics;
+using Microsoft.Xna.Framework;
 
 namespace Server
 {
@@ -11,7 +14,7 @@ namespace Server
     public class StarSystem : Entity
     {
         private const float size = 10f;
-        public StarSystem(int id, string name, float x, float y) : base(id, name, size, size)
+        public StarSystem(int id, string name) : base(id, name)
         {
 
         }
@@ -21,11 +24,10 @@ namespace Server
             return EntityUpdateType.Star;
         }
 
-        internal override void CreateBody(FarseerPhysics.Dynamics.World world)
+        protected override Fixture GetFixture(World world)
         {
-            base.CreateBody(world);
-
-            Fixture.Body.IsStatic = true;
+            return FixtureFactory.CreateRectangle(world, size, size, 1);
+            //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
     }
 }
