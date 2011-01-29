@@ -26,7 +26,9 @@ namespace Server
 
         protected override Fixture GetFixture(World world)
         {
-            return FixtureFactory.CreateRectangle(world, size, size, 1);
+            var fixture = FixtureFactory.CreateRectangle(world, size, size, 1);
+            fixture.Body.IsStatic = false;
+            return fixture;
             //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
     }
