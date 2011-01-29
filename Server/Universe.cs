@@ -72,7 +72,7 @@ namespace Server
             {
                 entity.Update();
 
-                GameServer.Instance.Log(entity.Position.X.ToString());
+                GameServer.Instance.Log(string.Format("{0}={1}@({2},{3})", entity.Id, entity.Name, entity.Position.X, entity.Position.Y));
             }
 
             World.Step((float)(DateTime.Now - lastUpdate).TotalMilliseconds);            
