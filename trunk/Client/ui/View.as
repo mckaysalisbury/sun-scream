@@ -10,7 +10,7 @@
   import lib.ui.Window;
   import lib.ui.WindowBorder;
 
-  import Client.UpdatePacket;
+  import Client.UpdateToServer;
   import Client.ThrustUpdate;
   import Server.EntityUpdate;
   import Server.EntityUpdateType;
@@ -72,7 +72,7 @@
           {
             var relative = new Point(absolute.x - ship.getPos().x,
                                      absolute.y - ship.getPos().y);
-            var message = new Client.UpdatePacket();
+            var message = new Client.UpdateToServer();
             message.Thrust = new Client.ThrustUpdate();
             var angle = Math.floor(Math.atan2(relative.y, relative.x));
             var dist = Math.floor(Math.sqrt(relative.x*relative.x

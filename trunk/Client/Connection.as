@@ -7,7 +7,7 @@ package
   import flash.net.Socket;
   import flash.utils.ByteArray;
 
-  import Client.UpdatePacket;
+  import Client.UpdateToServer;
   import Server.UpdatePacket;
   import Server.MessageType;
 
@@ -92,7 +92,7 @@ package
       }
     }
 
-    public static function sendMessage(message : Client.UpdatePacket) : void
+    public static function sendMessage(message : Client.UpdateToServer) : void
     {
       var outBuffer = new ByteArray();
       message.writeExternal(outBuffer);
