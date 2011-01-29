@@ -25,12 +25,12 @@ namespace Server
         /// The X coordinate of the entity
         /// </summary>
         [DataMember(Order=3)]
-        public float LocationX { get; set; }
+        public int LocationX { get; set; }
         /// <summary>
         /// The Y coordinate of the entity
         /// </summary>
         [DataMember(Order = 4)]
-        public float LocationY { get; set; }
+        public int LocationY { get; set; }
 
         [DataMember(Order = 5)]
         public EntityUpdateType Type { get; set; }
