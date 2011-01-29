@@ -36,5 +36,20 @@ namespace Server
             return fixture;
             //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
+
+        protected Entity Tractor()
+        {
+            var tractorableEntities = this.Universe.Entites.Where((e) => e.IsTractorable);
+            if (tractorableEntities.Any())
+            {
+                var minimum = tractorableEntities.Min((e) => ScreamMath.Quadrance(e.Position, this.Position));
+                var closest = tractorableEntities.First((e) => ScreamMath.Quadrance(e.Position, this.Position) == minimum);
+                return closest;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
