@@ -45,14 +45,21 @@ namespace Server
 
         internal void Log(string message)
         {
-            if (this.InvokeRequired)
+            try
             {
-                this.Invoke(new Action(() => Log(message)));
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new Action(() => Log(message)));
+                }
+                else
+                {
+                    Output.AppendText(message + Environment.NewLine);
+                    Output.ScrollToCaret();
+                }
             }
-            else
+            catch
             {
-                Output.AppendText(message + Environment.NewLine);
-                Output.ScrollToCaret();
+                // I don't care about exceptions in log
             }
         }
     }

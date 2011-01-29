@@ -5,6 +5,7 @@ using System.Text;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
+using FarseerPhysics.Controllers;
 
 namespace Server
 {
@@ -26,7 +27,16 @@ namespace Server
 
         protected override Fixture GetFixture(World world)
         {
-            return FixtureFactory.CreateRectangle(world, size, size, 1);
+            var fixture = FixtureFactory.CreateRectangle(world, size, size, 1);
+
+            var gravity = new GravityController(1);
+            gravity.AddBody(fixture.Body);
+            gravity.GravityType = GravityType.DistanceSquared;
+            gravity.MaxRadius = float.MaxValue;
+
+            world.AddController(gravity);
+            return fixture;
+
             //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
     }
