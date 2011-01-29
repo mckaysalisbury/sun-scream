@@ -1,7 +1,9 @@
-package ui
+﻿package ui
 {
   import flash.display.DisplayObjectContainer;
   import flash.utils.Dictionary;
+  import flash.events.KeyboardEvent;
+  import flash.ui.Keyboard;
 
   import lib.Point;
   import lib.ui.ImageList;
@@ -36,10 +38,12 @@ package ui
 //      window.addClickCommand(click);
       isThrusting = false;
       shouldEndThrust = false;
+      parent.stage.addEventListener(KeyboardEvent.KEY_UP, keyDown);
     }
 
     public function cleanup() : void
     {
+      parent.stage.removeEventListener(KeyboardEvent.KEY_UP, keyDown);
       for each (var entity in entities)
       {
         entity.cleanup();
@@ -70,8 +74,10 @@ package ui
                                      absolute.y - ship.getPos().y);
             var message = new Client.UpdatePacket();
             message.Thrust = new Client.ThrustUpdate();
-            message.Thrust.RelativeX = relative.x * 100;
-            message.Thrust.RelativeY = relative.y * 100;
+            message.Thrust.RelativeX = relative.x * SCALE;
+            message.Thrust.RelativeY = relative.y * SCALE;
+            trace("Thrust X: " + message.Thrust.relativeX + ", y: "
+                  + message.Thrust.relativeY);
             Connection.sendMessage(message);
           }
         }
@@ -100,8 +106,8 @@ package ui
 
     public function updateEntity(update : EntityUpdate) : void
     {
-      var pos = new Point(Math.floor(update.LocationX/100) + 1024,
-                          Math.floor(update.LocationY/100) + 1024);
+      var pos = new Point(Math.floor(update.LocationX/SCALE) + 1024,
+                          Math.floor(update.LocationY/SCALE) + 1024);
       if (update.Id == controller)
       {
         window.setCenter(pos);
@@ -119,6 +125,19 @@ package ui
       controller = newController;
     }
 
+    function keyDown(event : KeyboardEvent) : void
+    {
+      if (event.keyCode == Keyboard.PAGE_DOWN)
+      {
+        SCALE = SCALE*2;
+      }
+      else if (event.keyCode == Keyboard.PAGE_UP)
+      {
+        SCALE = SCALE/2;
+      }
+      trace(SCALE);
+    }
+
     var parent : DisplayObjectContainer;
     var background : WindowBackgroundClip;
     var images : ImageList;
@@ -129,5 +148,7 @@ package ui
     var frameCount : int;
     var isThrusting : Boolean;
     var shouldEndThrust : Boolean;
+
+    public static var SCALE : Number = 5;
   }
 }

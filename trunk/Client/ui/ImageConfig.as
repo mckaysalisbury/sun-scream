@@ -5,8 +5,8 @@ package ui
 
   public class ImageConfig
   {
-    public static var STAR_LAYER = 0;
-    public static var SHIP_LAYER = 1;
+    public static var STAR_LAYER = 1;
+    public static var SHIP_LAYER = 0;
     public static var layerCount = 2;
 
     public static var entities = [new ImageType("ShipClip", SHIP_LAYER,
