@@ -16,35 +16,36 @@ package
     public static function init(newGame : Game) : void
     {
       game = newGame;
+      chatBuffer = new Array();
       conn = new Socket();
       conn.addEventListener(Event.CLOSE, onClose);
       conn.addEventListener(Event.CONNECT, onConnect);
       conn.addEventListener(IOErrorEvent.IO_ERROR, onIoError);
       conn.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
       conn.addEventListener(ProgressEvent.SOCKET_DATA, onData);
-      trace("Socket created\n");
+      game.addChat("Client: Socket created");
       conn.connect("localhost", 1701);
       length = -1;
     }
 
     static function onClose(event : Event) : void
     {
-      trace("Socket closed\n");
+      game.addChat("Client: Socket closed");
     }
 
     static function onConnect(event : Event) : void
     {
-      trace("Socket Connected\n");
+      game.addChat("Client: Socket Connected");
     }
 
     static function onIoError(event : IOErrorEvent) : void
     {
-      trace("Socket IO Error\n");
+      game.addChat("Client: Socket IO Error");
     }
 
     static function onSecurityError(event : SecurityErrorEvent) : void
     {
-      trace("Socket Security Error\n");
+      game.addChat("Client: Socket Security Error");
     }
 
     static function onData(event : ProgressEvent) : void
@@ -71,16 +72,16 @@ package
           update.readExternal(message);
           for each (var updateMessage in update.Messages)
           {
-            var urgency = "System";
-            if (updateMessage.Type == MessageType.Chat)
+            var urgency = "";
+            if (updateMessage.Type == MessageType.System)
             {
-              urgency = "Chat";
+              urgency = "SYSTEM: ";
             }
             else if (updateMessage.Type == MessageType.Error)
             {
-              urgency = "ERROR";
+              urgency = "ERROR: ";
             }
-            trace(urgency + ": " + updateMessage.Text + "\n");
+            game.addChat(urgency + updateMessage.Text);
           }
           game.setController(update.ControllingEntityId);
           for each (var entity in update.Entities)
@@ -94,13 +95,17 @@ package
 
     public static function sendMessage(message : Client.UpdateToServer) : void
     {
+      if (chatBuffer.length > 0)
+      {
+        message.Messages = chatBuffer;
+        chatBuffer = new Array();
+      }
       var outBuffer = new ByteArray();
       message.writeExternal(outBuffer);
       var lenBuffer = encodeLength(outBuffer.length);
       conn.writeBytes(lenBuffer, 0, lenBuffer.length);
       conn.writeBytes(outBuffer, 0, outBuffer.length);
       conn.flush();
-      trace("sendMessage");
     }
 
     static function encodeLength(value : int) : ByteArray
@@ -113,9 +118,15 @@ package
       return result;
     }
 
+    public static function sendChat(newChat : String) : void
+    {
+      chatBuffer.push(newChat);
+    }
+
     static var game : Game;
     static var conn : Socket;
     static var length : int;
+    static var chatBuffer : Array;
   }
 }
 
