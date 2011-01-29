@@ -14,6 +14,9 @@ using System.Net;
 
 namespace Server
 {
+    /// <summary>
+    /// The main form for the server interface
+    /// </summary>
     public partial class MainForm : Form
     {
         const int Port = 1701;
@@ -21,13 +24,16 @@ namespace Server
         List<TcpClient> clients = new List<TcpClient>();
         TcpListener listener;
 
+        /// <summary>
+        /// Creates an instance of the main form class.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
 
             protoRichTextBox.Text = ProtoBuf.Serializer.GetProto<UpdatePacket>();
 
-            var ipAddress = Dns.Resolve("localhost").AddressList[0];
+            var ipAddress = Dns.GetHostEntry("localhost").AddressList[0];
             listener = new TcpListener(ipAddress, Port);
             listener.Start();
 

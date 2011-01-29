@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Server
 {
+    /// <summary>
+    /// Stores information about a star system
+    /// </summary>
     public class StarSystem : Entity
     {
     }
