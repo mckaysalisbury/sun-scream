@@ -38,5 +38,10 @@ namespace Server
 
             //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
+
+        internal override void CollidedWith(Entity collidedWith)
+        {
+            collidedWith.Remove();
+        }
     }
 }

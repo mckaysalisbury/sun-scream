@@ -71,12 +71,19 @@ namespace Server
         {
             entity.CreateBody(World);
             entity.Position = position;
+            entity.Universe = this;
             Entites.Add(entity);
         }
 
         public void RemoveEntity(Entity entity)
         {
             Entites.Remove(entity);
+            entity.Fixture.Dispose();
+
+            foreach (var player in Players)
+            {
+                player.AddNote(entity.Id, NoteType.EntityRemoved);
+            }
         }
 
         void Update()
@@ -97,7 +104,7 @@ namespace Server
 
                 if (player.Client.Client.Connected)
                 {
-                    var packet = new UpdatePacket() { ControllingEntityId = player.Controlling.Id };
+                    var packet = new UpdatePacket() { ControllingEntityId = player.Controlling.Id, Notes = player.Notes };
 
                     GameServer.Instance.Log(string.Format("{0}", player.Controlling.Fixture.Body.LinearVelocity));
 
@@ -106,9 +113,13 @@ namespace Server
                         packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 1000000), LocationY = (int)(entity.Fixture.Body.Position.Y * 1000000) });
                     }
 
+                    var packetBytes = packet.Serialize();
+
+                    player.Notes.Clear();
+
                     try
                     {
-                        player.Client.Client.Send(packet.Serialize());
+                        player.Client.Client.Send(packetBytes);
                     }
                     catch (SocketException)
                     {

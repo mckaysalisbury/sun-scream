@@ -15,6 +15,8 @@ namespace Server
     /// </summary>
     public abstract class Entity
     {
+        public Universe Universe { get; set; }
+
         /// <summary>
         /// Creates an instance of the Entity Class, all these fields must be filled out.
         /// </summary>
@@ -45,7 +47,7 @@ namespace Server
         internal void CreateBody(World world)
         {
             Fixture = GetFixture(world);
-            Fixture.Body.UserData = this;
+            Fixture.UserData = this;
             Fixture.AfterCollision += new AfterCollisionEventHandler(CollisionEvent);
         }
 
@@ -56,6 +58,11 @@ namespace Server
             {
                 CollidedWith(collidedWith);
             }                        
+        }
+
+        public void Remove()
+        {
+            Universe.RemoveEntity(this);
         }
 
         internal virtual void CollidedWith(Entity collidedWith)
