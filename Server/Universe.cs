@@ -56,7 +56,7 @@ namespace Server
 
         public Vector2 GetSpawnLocation()
         {
-            return new Vector2(0, 1);
+            return new Vector2(0, .001f);
         }
 
         public void AddEntity(Entity entity, Vector2 position)

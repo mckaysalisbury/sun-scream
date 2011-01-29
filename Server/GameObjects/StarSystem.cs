@@ -32,7 +32,6 @@ namespace Server
             var gravity = new GravityController(1);
             gravity.AddBody(fixture.Body);
             gravity.GravityType = GravityType.DistanceSquared;
-            gravity.MaxRadius = float.MaxValue;
 
             world.AddController(gravity);
             return fixture;
