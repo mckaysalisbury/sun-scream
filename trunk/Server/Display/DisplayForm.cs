@@ -20,7 +20,7 @@ namespace Server.Display
 
         public Universe Universe { get; set; }
         public Dictionary<int, Control> controls = new Dictionary<int, Control>();
-        public float currentScale = 1;
+        public float currentScale = .25f;
 
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
