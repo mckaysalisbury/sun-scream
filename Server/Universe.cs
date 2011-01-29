@@ -104,9 +104,9 @@ namespace Server
 
                 if (player.Client.Client.Connected)
                 {
-                    var packet = new UpdatePacket() { ControllingEntityId = player.Controlling.Id, Notes = player.Notes };
+                    var packet = new UpdatePacket() { ControllingEntityId = player.Controlling.Id, Notes = player.Notes, Messages = player.Messages };
 
-                    GameServer.Instance.Log(string.Format("{0}", player.Controlling.Fixture.Body.LinearVelocity));
+                    //GameServer.Instance.Log(string.Format("{0}", player.Controlling.Fixture.Body.LinearVelocity));
 
                     foreach (var entity in Entites)
                     {
@@ -118,6 +118,7 @@ namespace Server
                     var packetBytes = packet.Serialize();
 
                     player.Notes.Clear();
+                    player.Messages.Clear();
 
                     try
                     {
