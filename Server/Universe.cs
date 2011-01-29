@@ -45,7 +45,7 @@ namespace Server
         {            
             Players.Add(player);
             player.Controlling = this.GenerateShip(player);
-            Entites.Add(player.Controlling);
+            AddEntity(player.Controlling, GetSpawnLocation());
         }
 
         public Ship GenerateShip(Player player)
@@ -72,14 +72,16 @@ namespace Server
             {
                 entity.Update();
 
-                GameServer.Instance.Log(string.Format("{0}={1}@({2},{3})", entity.Id, entity.Name, entity.Position.X, entity.Position.Y));
+                //GameServer.Instance.Log(string.Format("{0}={1}@({2},{3})", entity.Id, entity.Name, entity.Position.X, entity.Position.Y));
             }
 
             World.Step((float)(DateTime.Now - lastUpdate).TotalMilliseconds);            
 
             foreach (var player in Players)
             {
-                var packet = new UpdatePacket();
+                player.Update();
+
+                var packet = new UpdatePacket() { ControllingEntityId = player.Controlling.Id };
 
                 foreach (var entity in Entites)
                 {

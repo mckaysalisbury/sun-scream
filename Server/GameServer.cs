@@ -52,7 +52,7 @@ namespace Server
             if (listener.Pending())
             {
                 var newClient = listener.AcceptTcpClient();
-                Universe.Players.Add(new Player(newClient));
+                Universe.AddPlayer(new Player(newClient));
 
                 //output.AppendText("\nConnection from " + newClient.Client.RemoteEndPoint.ToString());
                 //output.ScrollToCaret();

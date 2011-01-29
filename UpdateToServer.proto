@@ -1,0 +1,10 @@
+package Client;
+
+message UpdateToServer {
+	optional ThrustUpdate Thrust = 1;
+}
+
+message ThrustUpdate {
+	required int32 RelativeX = 1;
+	required int32 RelativeY = 2;
+}

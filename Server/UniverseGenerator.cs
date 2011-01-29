@@ -23,7 +23,7 @@ namespace Server
             //universe.AddEntity(new StarSystem(universe.GenerateId(), "The second Star"), new Vector2(-100, -100));
 
             // Remove these later
-            universe.AddEntity(universe.GenerateShip(new Player(null) { Name = "Test" }), universe.GetSpawnLocation());
+            //universe.AddEntity(universe.GenerateShip(new Player(null) { Name = "Test" }), universe.GetSpawnLocation());
 
             return universe;
         }
