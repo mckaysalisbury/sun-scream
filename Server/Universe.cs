@@ -7,10 +7,16 @@ using Microsoft.Xna.Framework;
 
 namespace Server
 {
+    /// <summary>
+    /// The whole game universe
+    /// </summary>
     public class Universe
     {
         World World;
 
+        /// <summary>
+        /// Creates an instance of the Universe class
+        /// </summary>
         public Universe()
         {
             World = new World(Vector2.Zero);
