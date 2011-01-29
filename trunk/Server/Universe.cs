@@ -17,7 +17,7 @@ namespace Server
         public List<Entity> Entites = new List<Entity>();
         public List<Player> Players = new List<Player>();
 
-        World World;
+        public World World;
 
         DateTime lastUpdate = DateTime.Now;
 
