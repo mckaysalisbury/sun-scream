@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace Server
 {
-    public enum ClientEntityType
+    public enum EntityUpdateType
     {
         Ship,
         Star,

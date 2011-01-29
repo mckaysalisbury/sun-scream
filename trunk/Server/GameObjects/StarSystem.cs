@@ -11,13 +11,21 @@ namespace Server
     public class StarSystem : Entity
     {
         private const float size = 10f;
-        public StarSystem(int id, string name, float x, float y) : base(id, name, x, y, size, size)
+        public StarSystem(int id, string name, float x, float y) : base(id, name, size, size)
         {
+
         }
 
-        internal override ClientEntityType GetClientType()
+        internal override EntityUpdateType GetClientType()
         {
-            return ClientEntityType.Star;
+            return EntityUpdateType.Star;
+        }
+
+        internal override void CreateBody(FarseerPhysics.Dynamics.World world)
+        {
+            base.CreateBody(world);
+
+            Fixture.Body.IsStatic = true;
         }
     }
 }

@@ -12,13 +12,13 @@ namespace Server
     {
         private const float size = 0.1f;
 
-        public Ship(int id, string name, float x, float y) : base(id, name, x, y, size, size)
+        public Ship(int id, string name, float x, float y) : base(id, name, size, size)
         {
         }
 
-        internal override ClientEntityType GetClientType()
+        internal override EntityUpdateType GetClientType()
         {
-            return ClientEntityType.Ship;
+            return EntityUpdateType.Ship;
         }
     }
 }

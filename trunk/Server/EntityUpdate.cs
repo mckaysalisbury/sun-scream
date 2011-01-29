@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace Server
 {
     [DataContract]
-    public class ClientEntityData
+    public class EntityUpdate
     {
         /// <summary>
         /// The (database) id of the entity
@@ -33,6 +33,6 @@ namespace Server
         public float LocationY { get; set; }
 
         [DataMember(Order = 5)]
-        public ClientEntityType Type { get; set; }
+        public EntityUpdateType Type { get; set; }
     }
 }
