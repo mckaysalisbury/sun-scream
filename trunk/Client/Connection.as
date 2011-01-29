@@ -99,6 +99,7 @@ package
       var lenBuffer = encodeLength(outBuffer.length);
       conn.writeBytes(lenBuffer, 0, lenBuffer.length);
       conn.writeBytes(outBuffer, 0, outBuffer.length);
+      conn.flush();
       trace("sendMessage");
     }
 
