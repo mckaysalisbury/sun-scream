@@ -6,7 +6,7 @@ using System.Net.Sockets;
 
 namespace Server
 {
-    class Player
+    public class Player
     {
         public TcpClient Client;
 

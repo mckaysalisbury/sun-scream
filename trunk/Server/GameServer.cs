@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net.Sockets;
 using System.Net;
+using System.Timers;
 
 namespace Server
 {
@@ -11,10 +12,11 @@ namespace Server
     {
         const int Port = 1701;
 
-        List<TcpClient> clients = new List<TcpClient>();
         TcpListener listener;
 
         Universe Universe;
+
+        Timer timer;
 
         public static GameServer Instance { get; set; }
 
@@ -28,28 +30,19 @@ namespace Server
             listener = new TcpListener(ipAddress, Port);
             listener.Start();
 
+            timer = new Timer(100);
+            timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
+            timer.Start();
+
             //output.AppendText("Listening on TCP port " + Port);
 
             //timer.Tick += new EventHandler(timer_Tick);
             //timer.Enabled = true;
         }
 
-        void timer_Tick(object sender, EventArgs e)
+        void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             CheckForNewConnections();
-
-            lock (clients)
-            {
-                if (clients.Count > 0)
-                {
-                    //var bytes = SerializeTestData();
-
-                    //foreach (var client in clients)
-                    //{
-                    //    client.Client.Send(bytes);
-                    //}
-                }
-            }
         }
 
         void CheckForNewConnections()
@@ -57,10 +50,7 @@ namespace Server
             if (listener.Pending())
             {
                 var newClient = listener.AcceptTcpClient();
-                lock (clients)
-                {
-                    clients.Add(newClient);
-                }
+                Universe.Players.Add(new Player(newClient));
 
                 //output.AppendText("\nConnection from " + newClient.Client.RemoteEndPoint.ToString());
                 //output.ScrollToCaret();
