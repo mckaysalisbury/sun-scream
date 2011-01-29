@@ -46,8 +46,7 @@ namespace Server
         {            
             Players.Add(player);
             player.Universe = this;
-            player.Controlling = this.GenerateShip(player);
-            AddEntity(player.Controlling, GetSpawnLocation());
+            //GenerateShip(player);
         }
 
         public void RemovePlayer(Player player)
@@ -58,8 +57,9 @@ namespace Server
 
         public Ship GenerateShip(Player player)
         {
-            var ship = new Ship(player.Name);
-            return ship;
+            player.Controlling = new Ship(player.Name);
+            AddEntity(player.Controlling, GetSpawnLocation());
+            return player.Controlling;
         }
 
         public Vector2 GetSpawnLocation()
@@ -79,6 +79,7 @@ namespace Server
         {
             Entites.Remove(entity);
             entity.Fixture.Dispose();
+            entity.Fixture = null;
 
             foreach (var player in Players)
             {
@@ -104,7 +105,7 @@ namespace Server
 
                 if (player.Client.Client.Connected)
                 {
-                    var packet = new UpdatePacket() { ControllingEntityId = player.Controlling.Id, Notes = player.Notes, Messages = player.Messages };
+                    var packet = new UpdatePacket() { ControllingEntityId = player.Controlling == null ? 0 : player.Controlling.Id, Notes = player.Notes, Messages = player.Messages };
 
                     //GameServer.Instance.Log(string.Format("{0}", player.Controlling.Fixture.Body.LinearVelocity));
 

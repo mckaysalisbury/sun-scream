@@ -44,12 +44,24 @@ namespace Server
             Notes.Add(new Note() { Target = target, Type = type });
         }
 
+        DateTime deathTime = DateTime.MinValue;
+
         public void Update()
         {
             if (!Client.Client.Connected)
             {
                 Disconnect();
+                return;
             }
+
+            if (Controlling != null && Controlling.Fixture == null)
+            {
+                deathTime = DateTime.Now;
+                Controlling = null;
+            }
+
+            if (Controlling == null && deathTime < DateTime.Now - TimeSpan.FromSeconds(2))
+                Respawn();
 
             var update = CheckForUpdate();
             if (update != null)
@@ -71,6 +83,11 @@ namespace Server
                     //GameServer.Instance.Log(String.Format("Velocity {0}", Controlling.Fixture.Body.LinearVelocity));
                 }
             }
+        }
+
+        void Respawn()
+        {
+            Universe.GenerateShip(this);
         }
 
         public static Vector2 AngleToVector(double angle, double distance)
