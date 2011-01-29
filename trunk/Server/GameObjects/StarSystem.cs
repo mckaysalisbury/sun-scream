@@ -5,11 +5,7 @@ using System.Text;
 
 namespace Server
 {
-    enum TestEnum
+    public class StarSystem : Entity
     {
-        None = 0,
-        One = 1,
-        Two = 2,
-        Hundred = 100
     }
 }
