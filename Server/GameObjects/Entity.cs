@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
 
 namespace Server
 {
@@ -39,11 +41,23 @@ namespace Server
         /// the Width of the entity
         /// </summary>
         [DataMember(Order = 5)]
-        public int Width { get; set; }
+        public float Width { get; set; }
         /// <summary>
         /// The Height of the entity
         /// </summary>
         [DataMember(Order = 6)]
-        public int Height { get; set; }
+        public float Height { get; set; }
+
+        public Fixture Fixture { get; set; }
+
+        internal void CreateBody(World world)
+        {
+            Fixture = FixtureFactory.CreateRectangle(world, Width, Height, 1);
+        }
+
+        internal void Update()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
