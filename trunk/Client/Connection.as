@@ -16,7 +16,6 @@ package
     public static function init(newGame : Game) : void
     {
       game = newGame;
-      chatBuffer = new Array();
       conn = new Socket();
       conn.addEventListener(Event.CLOSE, onClose);
       conn.addEventListener(Event.CONNECT, onConnect);
@@ -95,11 +94,6 @@ package
 
     public static function sendMessage(message : Client.UpdateToServer) : void
     {
-      if (chatBuffer.length > 0)
-      {
-        message.Messages = chatBuffer;
-        chatBuffer = new Array();
-      }
       var outBuffer = new ByteArray();
       message.writeExternal(outBuffer);
       var lenBuffer = encodeLength(outBuffer.length);
@@ -120,13 +114,14 @@ package
 
     public static function sendChat(newChat : String) : void
     {
-      chatBuffer.push(newChat);
+      var message = new Client.UpdateToServer();
+      message.Messages = [newChat];
+      sendMessage(message);
     }
 
     static var game : Game;
     static var conn : Socket;
     static var length : int;
-    static var chatBuffer : Array;
   }
 }
 
