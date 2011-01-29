@@ -14,7 +14,7 @@ namespace Server
     /// </summary>
     public class Universe
     {
-        List<Entity> Entites = new List<Entity>();
+        public List<Entity> Entites = new List<Entity>();
         List<Player> Players = new List<Player>();
 
         World World;
@@ -64,7 +64,7 @@ namespace Server
 
         public Vector2 GetSpawnLocation()
         {
-            return new Vector2(0, 0);
+            return new Vector2(0, 0.001f);
         }
 
         public void AddEntity(Entity entity, Vector2 position)

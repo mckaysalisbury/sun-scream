@@ -35,10 +35,13 @@
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.sendButton = new System.Windows.Forms.Button();
             this.timer = new System.Windows.Forms.Timer(this.components);
+            this.watchButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // protoRichTextBox
             // 
+            this.protoRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.protoRichTextBox.Location = new System.Drawing.Point(12, 29);
             this.protoRichTextBox.Name = "protoRichTextBox";
             this.protoRichTextBox.Size = new System.Drawing.Size(507, 284);
@@ -47,6 +50,9 @@
             // 
             // Output
             // 
+            this.Output.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.Output.Location = new System.Drawing.Point(12, 319);
             this.Output.Name = "Output";
             this.Output.Size = new System.Drawing.Size(507, 312);
@@ -64,6 +70,8 @@
             // 
             // propertyGrid1
             // 
+            this.propertyGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.propertyGrid1.Location = new System.Drawing.Point(525, 29);
             this.propertyGrid1.Name = "propertyGrid1";
             this.propertyGrid1.Size = new System.Drawing.Size(242, 570);
@@ -71,6 +79,7 @@
             // 
             // sendButton
             // 
+            this.sendButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.sendButton.Location = new System.Drawing.Point(688, 605);
             this.sendButton.Name = "sendButton";
             this.sendButton.Size = new System.Drawing.Size(79, 26);
@@ -78,11 +87,25 @@
             this.sendButton.Text = "Send";
             this.sendButton.UseVisualStyleBackColor = true;
             // 
+            // watchButton
+            // 
+            this.watchButton.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.watchButton.Location = new System.Drawing.Point(607, 608);
+            this.watchButton.Name = "watchButton";
+            this.watchButton.Size = new System.Drawing.Size(75, 23);
+            this.watchButton.TabIndex = 5;
+            this.watchButton.Text = "Watch";
+            this.watchButton.UseVisualStyleBackColor = true;
+            this.watchButton.Click += new System.EventHandler(this.watchButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(779, 643);
+            this.Controls.Add(this.watchButton);
             this.Controls.Add(this.sendButton);
             this.Controls.Add(this.propertyGrid1);
             this.Controls.Add(this.label1);
@@ -103,6 +126,7 @@
         private System.Windows.Forms.Button sendButton;
         private System.Windows.Forms.Timer timer;
         public System.Windows.Forms.RichTextBox Output;
+        private System.Windows.Forms.Button watchButton;
     }
 }
 

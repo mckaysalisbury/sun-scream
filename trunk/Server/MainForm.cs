@@ -12,6 +12,7 @@ using ProtoBuf;
 using System.Net.Sockets;
 using System.Net;
 using System.Runtime.Serialization;
+using Server.Display;
 
 namespace Server
 {
@@ -21,6 +22,7 @@ namespace Server
     public partial class MainForm : Form
     {
         public static MainForm Instance { get; set; }
+        public GameServer server;
 
         /// <summary>
         /// Creates an instance of the main form class.
@@ -33,7 +35,7 @@ namespace Server
 
             protoRichTextBox.Text = ProtoBuf.Serializer.GetProto<UpdatePacket>().Replace("fixed32", "float"); // this replace fixes a bug in the serializer
 
-            new GameServer();
+            server = new GameServer();
         }
 
         [DataContract]
@@ -61,6 +63,13 @@ namespace Server
             {
                 // I don't care about exceptions in log
             }
+        }
+
+        private void watchButton_Click(object sender, EventArgs e)
+        {
+            var displayForm = new DisplayForm();
+            displayForm.Universe = server.Universe;
+            displayForm.Show();
         }
     }
 }
