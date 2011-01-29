@@ -87,6 +87,7 @@
     <Compile Include="GameObjects\Ship.cs" />
     <Compile Include="GameObjects\StarSystem.cs" />
     <Compile Include="Universe.cs" />
+    <Compile Include="UniverseGenerator.cs" />
     <Compile Include="UpdatePacket.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
