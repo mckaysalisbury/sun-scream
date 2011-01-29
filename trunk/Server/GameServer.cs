@@ -18,7 +18,7 @@ namespace Server
 
         public GameServer()
         {
-            Universe = new Universe();
+            Universe = UniverseGenerator.Generate();
 
             var ipAddress = Dns.GetHostEntry("localhost").AddressList[0];
             listener = new TcpListener(ipAddress, Port);
