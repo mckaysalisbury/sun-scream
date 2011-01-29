@@ -12,7 +12,7 @@ namespace Server
     /// An entity is an item that lives in the universe
     /// </summary>
     [DataContract]
-    public class Entity
+    public abstract class Entity
     {
         /// <summary>
         /// Creates an instance of the Entity Class, all these fields must be filled out.
@@ -71,5 +71,7 @@ namespace Server
         internal void Update()
         {
         }
+
+        internal abstract ClientEntityType GetClientType();
     }
 }

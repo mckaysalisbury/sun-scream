@@ -16,10 +16,16 @@ namespace Server
         public int ControlingEntityId { get; set; }
 
         [DataMember(Order = 1)]
-        public List<Entity> Entites { get; set; }
+        public List<ClientEntityData> Entites { get; set; }
 
         [DataMember(Order = 2)]
         public List<Message> Messages { get; set; }
+
+        public UpdatePacket()
+        {
+            Entites = new List<ClientEntityData>();
+            Messages = new List<Message>();
+        }
 
         public byte[] Serialize()
         {

@@ -11,8 +11,14 @@ namespace Server
     public class Ship : Entity
     {
         private const float size = 0.1f;
+
         public Ship(int id, string name, float x, float y) : base(id, name, x, y, size, size)
         {
+        }
+
+        internal override ClientEntityType GetClientType()
+        {
+            return ClientEntityType.Ship;
         }
     }
 }
