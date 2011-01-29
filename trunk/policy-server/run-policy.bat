@@ -1,0 +1,1 @@
+python flashpolicyd.py --file=policy.xml --port=843
