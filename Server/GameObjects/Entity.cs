@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
+using FarseerPhysics.Dynamics.Contacts;
 
 namespace Server
 {
@@ -44,6 +45,22 @@ namespace Server
         internal void CreateBody(World world)
         {
             Fixture = GetFixture(world);
+            Fixture.Body.UserData = this;
+            Fixture.AfterCollision += new AfterCollisionEventHandler(CollisionEvent);
+        }
+
+        void CollisionEvent(Fixture geom1, Fixture geom2, Contact contacts)
+        {
+            var collidedWith = geom2.UserData as Entity;
+            if (collidedWith != null)
+            {
+                CollidedWith(collidedWith);
+            }                        
+        }
+
+        internal virtual void CollidedWith(Entity collidedWith)
+        {
+
         }
 
         protected abstract Fixture GetFixture(World world);
