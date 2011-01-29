@@ -68,8 +68,9 @@ namespace Server
             }                        
         }
 
-        public void Remove()
+        public void Die()
         {
+            Died();
             Universe.RemoveEntity(this);
         }
 
@@ -85,5 +86,9 @@ namespace Server
         }
 
         internal abstract EntityUpdateType GetClientType();
+
+        public virtual void Died()
+        {
+        }
     }
 }
