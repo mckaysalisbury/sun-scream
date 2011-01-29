@@ -9,6 +9,9 @@ namespace Server
     [DataContract]
     class UpdatePacket
     {
+        [DataMember(Order = 3)]
+        public int ControlingEntityId { get; set; }
+
         [DataMember(Order = 1)]
         public List<Entity> Entites { get; set; }
 

@@ -14,6 +14,7 @@ namespace Server
     public class Universe
     {
         public List<Entity> Entites = new List<Entity>();
+        public List<Player> Players = new List<Player>();
 
         World World;
 
@@ -40,6 +41,12 @@ namespace Server
             Update();
         }
 
+        public void AddPlayer(Player player)
+        {
+            Players.Add(player);
+            player.Controlling = new Ship();
+        }
+
         public void AddEntity(Entity entity)
         {
             entity.CreateBody(World);
@@ -52,6 +59,12 @@ namespace Server
                 entity.Update();
 
             World.Step((float)(DateTime.Now - lastUpdate).TotalMilliseconds);
+
+            foreach (var player in Players)
+            {
+                //player.Client.S
+
+            }
 
             lastUpdate = DateTime.Now;
 
