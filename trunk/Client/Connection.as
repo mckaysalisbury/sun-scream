@@ -10,6 +10,7 @@ package
   import Client.UpdateToServer;
   import Server.UpdatePacket;
   import Server.MessageType;
+  import Server.NoteType;
 
   public class Connection
   {
@@ -69,25 +70,37 @@ package
           conn.readBytes(message, 0, length);
           var update = new Server.UpdatePacket();
           update.readExternal(message);
-          for each (var updateMessage in update.Messages)
-          {
-            var urgency = "";
-            if (updateMessage.Type == MessageType.System)
-            {
-              urgency = "SYSTEM: ";
-            }
-            else if (updateMessage.Type == MessageType.Error)
-            {
-              urgency = "ERROR: ";
-            }
-            game.addChat(urgency + updateMessage.Text);
-          }
-          game.setController(update.ControllingEntityId);
-          for each (var entity in update.Entities)
-          {
-            game.updateEntity(entity);
-          }
+          processUpdate(update);
           length = -1;
+        }
+      }
+    }
+
+    static function processUpdate(update : Server.UpdatePacket) : void
+    {
+      for each (var updateMessage in update.Messages)
+      {
+        var urgency = "";
+        if (updateMessage.Type == MessageType.System)
+        {
+          urgency = "SYSTEM: ";
+        }
+        else if (updateMessage.Type == MessageType.Error)
+        {
+          urgency = "ERROR: ";
+        }
+        game.addChat(urgency + updateMessage.Text);
+      }
+      game.setController(update.ControllingEntityId);
+      for each (var entity in update.Entities)
+      {
+        game.updateEntity(entity);
+      }
+      for each (var note in update.Notes)
+      {
+        if (note.Type == NoteType.EntityRemoved)
+        {
+          game.removeEntity(note.Target);
         }
       }
     }
