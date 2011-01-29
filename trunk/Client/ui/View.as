@@ -195,7 +195,7 @@
     var isThrusting : Boolean;
     var shouldEndThrust : Boolean;
 
-    public static var SCALE : Number = 1500;
+    public static var SCALE : Number = 6000;
     public static var WIDTH = 1024;
     public static var HEIGHT = 768;
     public static var WINDOW_HEIGHT = HEIGHT - 40;
