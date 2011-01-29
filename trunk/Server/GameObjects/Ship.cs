@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
 
 namespace Server
 {
@@ -12,13 +15,19 @@ namespace Server
     {
         private const float size = 0.1f;
 
-        public Ship(int id, string name, float x, float y) : base(id, name, size, size)
+        public Ship(int id, string name) : base(id, name)
         {
         }
 
         internal override EntityUpdateType GetClientType()
         {
             return EntityUpdateType.Ship;
+        }
+
+        protected override Fixture GetFixture(World world)
+        {
+            return FixtureFactory.CreateRectangle(world, size, size, 1);
+            //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
     }
 }

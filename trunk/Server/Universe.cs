@@ -45,25 +45,24 @@ namespace Server
         {            
             Players.Add(player);
             player.Controlling = this.GenerateShip(player);
+            Entites.Add(player.Controlling);
         }
 
         public Ship GenerateShip(Player player)
         {
-            Tuple<float, float> location = GetSpawnLocation();
-            var ship = new Ship(this.GenerateId(), player.Name, location.Item1, location.Item2);
+            var ship = new Ship(this.GenerateId(), player.Name);
             return ship;
         }
 
-
-        private Tuple<float, float> GetSpawnLocation()
+        public Vector2 GetSpawnLocation()
         {
-            return new Tuple<float, float>(0, 0);
+            return new Vector2(0, 0);
         }
 
-
-        public void AddEntity(Entity entity)
+        public void AddEntity(Entity entity, Vector2 position)
         {
             entity.CreateBody(World);
+            entity.Position = position;
             Entites.Add(entity);
         }
 

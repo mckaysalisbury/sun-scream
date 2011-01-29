@@ -17,12 +17,10 @@ namespace Server
         /// <summary>
         /// Creates an instance of the Entity Class, all these fields must be filled out.
         /// </summary>
-        public Entity(int id, string name, float width, float height)
+        public Entity(int id, string name)
         {
             this.Id = id;
             this.Name = name;
-            this.Width = width;
-            this.Height = height;
         }
 
         /// <summary>
@@ -35,15 +33,6 @@ namespace Server
         /// </summary>
         public string Name { get; set; }
 
-        /// <summary>
-        /// the Width of the entity
-        /// </summary>
-        public float Width { get; set; }
-        /// <summary>
-        /// The Height of the entity
-        /// </summary>
-        public float Height { get; set; }
-
         public Fixture Fixture { get; set; }
 
         public Vector2 Position
@@ -52,10 +41,12 @@ namespace Server
             set { Fixture.Body.Position = value; }
         }
 
-        internal virtual void CreateBody(World world)
+        internal void CreateBody(World world)
         {
-            Fixture = FixtureFactory.CreateRectangle(world, Width, Height, 1);
+            Fixture = GetFixture(world);
         }
+
+        protected abstract Fixture GetFixture(World world);
 
         internal void Update()
         {
