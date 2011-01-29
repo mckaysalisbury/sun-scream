@@ -16,6 +16,8 @@ namespace Server
 
         Universe Universe;
 
+        public static GameServer Instance { get; set; }
+
         public GameServer()
         {
             Instance = this;
