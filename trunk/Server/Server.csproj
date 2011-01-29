@@ -76,6 +76,7 @@
   <ItemGroup>
     <Compile Include="EntityUpdate.cs" />
     <Compile Include="EntityUpdateType.cs" />
+    <Compile Include="GameObjects\Asteroid.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="GameObjects\Entity.cs" />
     <Compile Include="GameServer.cs" />
