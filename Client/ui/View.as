@@ -24,7 +24,7 @@
       parent.addChild(background);
       images = new ImageList();
       windowBorder = new WindowBorder();
-      window = new Window(parent, new Point(1024, 768),
+      window = new Window(parent, new Point(WIDTH, WINDOW_HEIGHT),
                           new Point(2048, 2048),
                           ImageConfig.layerCount,
                           images, windowBorder,
@@ -78,13 +78,13 @@
             message.Thrust.Angle = angle;
             var dist = Math.floor(Math.sqrt(relative.x*relative.x
                                             + relative.y*relative.y));
-            if (dist > 384)
+            if (dist > WINDOW_HEIGHT/2)
             {
               message.Thrust.Distance = 100;
             }
             else
             {
-              message.Thrust.Distance = Math.floor(dist/384*100);
+              message.Thrust.Distance = Math.floor(dist/(WINDOW_HEIGHT/2)*100);
             }
             trace("Thrust Angle: " + message.Thrust.Angle + ", Dist: "
                   + message.Thrust.Distance);
@@ -159,6 +159,9 @@
     var isThrusting : Boolean;
     var shouldEndThrust : Boolean;
 
-    public static var SCALE : Number = 5;
+    public static var SCALE : Number = 100000;
+    public static var WIDTH = 1024;
+    public static var HEIGHT = 768;
+    public static var WINDOW_HEIGHT = HEIGHT - 30;
   }
 }
