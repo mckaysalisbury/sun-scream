@@ -25,11 +25,13 @@ namespace Server
             return EntityUpdateType.Star;
         }
 
+        GravityController gravity;
+
         protected override Fixture GetFixture(World world)
         {
             var fixture = FixtureFactory.CreateCircle(world, size, 1);
 
-            var gravity = new GravityController(.01f);
+            gravity = new GravityController(.01f);
             gravity.AddBody(fixture.Body);
             gravity.GravityType = GravityType.DistanceSquared;
 
@@ -41,7 +43,21 @@ namespace Server
 
         internal override void CollidedWith(Entity collidedWith)
         {
-            collidedWith.Remove();
+            if (collidedWith is Asteroid)
+                Die();
+            collidedWith.Die();
+        }
+
+        public override void Died()
+        {
+            Universe.World.RemoveController(gravity);
+
+            Universe.AddEntity(new Asteroid(), Position);
+            Universe.AddEntity(new Asteroid(), Position);
+            Universe.AddEntity(new Asteroid(), Position);
+            Universe.AddEntity(new Asteroid(), Position);
+            Universe.AddEntity(new Asteroid(), Position);
+            Universe.AddEntity(new Asteroid(), Position);
         }
     }
 }
