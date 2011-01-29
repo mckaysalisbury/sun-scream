@@ -26,10 +26,9 @@ namespace Server
         {
             InitializeComponent();
 
-            protoRichTextBox.Text = ProtoBuf.Serializer.GetProto<UpdatePacket>();
+            protoRichTextBox.Text = ProtoBuf.Serializer.GetProto<UpdatePacket>().Replace("fixed32", "float"); // this replace fixes a bug in the serializer
 
             new GameServer();
         }
-
     }
 }
