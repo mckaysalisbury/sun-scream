@@ -25,7 +25,7 @@
       images = new ImageList();
       windowBorder = new WindowBorder();
       window = new Window(parent, new Point(WIDTH, WINDOW_HEIGHT),
-                          new Point(20480, 20480),
+                          null,
                           ImageConfig.layerCount,
                           images, windowBorder,
                           background, 0);
@@ -118,8 +118,8 @@
 
     public function updateEntity(update : EntityUpdate) : void
     {
-      var pos = new Point(Math.floor(update.LocationX/SCALE) + 10240,
-                          Math.floor(update.LocationY/SCALE) + 10240);
+      var pos = new Point(Math.floor(update.LocationX/SCALE),
+                          Math.floor(update.LocationY/SCALE));
       var rotation = (update.Rotation / 100) * (180 / Math.PI) - 90;
       if (update.Id == controller)
       {
@@ -158,13 +158,24 @@
 
     function keyDown(event : KeyboardEvent) : void
     {
+      var ch = String.fromCharCode(event.charCode);
       if (event.keyCode == Keyboard.PAGE_DOWN)
       {
         SCALE = SCALE*2;
+        chat.addChat("Client: Scale=" + SCALE);
       }
       else if (event.keyCode == Keyboard.PAGE_UP)
       {
         SCALE = SCALE/2;
+        chat.addChat("Client: Scale=" + SCALE);
+      }
+      else if (event.keyCode == Keyboard.TAB || ch == "t")
+      {
+        Connection.sendChat("/tractor");
+      }
+      else if (ch == "r")
+      {
+        Connection.sendChat("/release");
       }
     }
 
@@ -180,7 +191,7 @@
     var isThrusting : Boolean;
     var shouldEndThrust : Boolean;
 
-    public static var SCALE : Number = 150000;
+    public static var SCALE : Number = 1500;
     public static var WIDTH = 1024;
     public static var HEIGHT = 768;
     public static var WINDOW_HEIGHT = HEIGHT - 40;
