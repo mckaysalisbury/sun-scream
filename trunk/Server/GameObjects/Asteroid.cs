@@ -7,7 +7,7 @@ using FarseerPhysics.Dynamics;
 namespace Server
 {
     /// <summary>
-    /// Stores information about a ship
+    /// Stores information about a asteroid
     /// </summary>
     public class Asteroid : Entity
     {
@@ -24,7 +24,7 @@ namespace Server
 
         internal override EntityUpdateType GetClientType()
         {
-            return EntityUpdateType.Ship;
+            return EntityUpdateType.Asteroid;
         }
     }
 }
