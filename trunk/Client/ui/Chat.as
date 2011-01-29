@@ -5,6 +5,8 @@ package ui
   import flash.events.MouseEvent;
   import flash.ui.Keyboard;
 
+  import lib.ui.ButtonList;
+
   public class Chat
   {
     public function Chat(parent : DisplayObjectContainer) : void
@@ -14,14 +16,16 @@ package ui
       clip.x = 0;
       clip.y = View.WINDOW_HEIGHT;
       clip.history.mouseEnabled = false;
-      clip.send.addEventListener(MouseEvent.CLICK, clickSend);
+      clip.send.text.text = "Send";
+      var buttons = new ButtonList([clip.send]);
+      buttons.setActions(clickSend, buttons.frameOver, buttons.frameOut);
       clip.stage.addEventListener(KeyboardEvent.KEY_UP, keyPress);
       clip.mouseEnabled = false;
     }
 
     public function cleanup() : void
     {
-      clip.send.removeEventListener(MouseEvent.CLICK, clickSend);
+      buttons.cleanup();
       clip.stage.removeEventListener(KeyboardEvent.KEY_UP, keyPress);
       clip.parent.removeChild(clip);
     }
@@ -32,7 +36,7 @@ package ui
       {
         if (clip.stage.focus == clip.input)
         {
-          clickSend(null);
+          clickSend(0);
         }
         else
         {
@@ -41,7 +45,7 @@ package ui
       }
     }
 
-    function clickSend(event : MouseEvent) : void
+    function clickSend(choice : int) : void
     {
       if (clip.input.text != "")
       {
@@ -58,5 +62,6 @@ package ui
     }
 
     var clip : ChatClip;
+    var buttons : ButtonList;
   }
 }

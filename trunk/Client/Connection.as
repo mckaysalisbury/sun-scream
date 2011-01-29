@@ -7,6 +7,8 @@ package
   import flash.net.Socket;
   import flash.utils.ByteArray;
 
+  import lib.ui.ButtonList;
+
   import Client.UpdateToServer;
   import Server.UpdatePacket;
   import Server.MessageType;
@@ -17,35 +19,38 @@ package
     public static function init(newGame : Game) : void
     {
       game = newGame;
-      conn = new Socket();
-      conn.addEventListener(Event.CLOSE, onClose);
-      conn.addEventListener(Event.CONNECT, onConnect);
-      conn.addEventListener(IOErrorEvent.IO_ERROR, onIoError);
-      conn.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
-      conn.addEventListener(ProgressEvent.SOCKET_DATA, onData);
-      game.addChat("Client: Socket created");
-      conn.connect("localhost", 1701);
-      length = -1;
+      name = "John Doe";
+      host = "localhost";
+      conn = null;
+      menu = null;
+      menuButtons = null;
+      disconnect();
+      connect();
     }
 
     static function onClose(event : Event) : void
     {
       game.addChat("Client: Socket closed");
+      isConnected = false;
     }
 
     static function onConnect(event : Event) : void
     {
       game.addChat("Client: Socket Connected");
+      isConnected = true;
+      sendChat("/setname " + name);
     }
 
     static function onIoError(event : IOErrorEvent) : void
     {
       game.addChat("Client: Socket IO Error");
+      disconnect();
     }
 
     static function onSecurityError(event : SecurityErrorEvent) : void
     {
       game.addChat("Client: Socket Security Error");
+      disconnect();
     }
 
     static function onData(event : ProgressEvent) : void
@@ -107,12 +112,15 @@ package
 
     public static function sendMessage(message : Client.UpdateToServer) : void
     {
-      var outBuffer = new ByteArray();
-      message.writeExternal(outBuffer);
-      var lenBuffer = encodeLength(outBuffer.length);
-      conn.writeBytes(lenBuffer, 0, lenBuffer.length);
-      conn.writeBytes(outBuffer, 0, outBuffer.length);
-      conn.flush();
+      if (isConnected)
+      {
+        var outBuffer = new ByteArray();
+        message.writeExternal(outBuffer);
+        var lenBuffer = encodeLength(outBuffer.length);
+        conn.writeBytes(lenBuffer, 0, lenBuffer.length);
+        conn.writeBytes(outBuffer, 0, outBuffer.length);
+        conn.flush();
+      }
     }
 
     static function encodeLength(value : int) : ByteArray
@@ -127,14 +135,54 @@ package
 
     public static function sendChat(newChat : String) : void
     {
-      var message = new Client.UpdateToServer();
-      message.Messages = [newChat];
-      sendMessage(message);
+      if (isConnected)
+      {
+        var message = new Client.UpdateToServer();
+        message.Messages = [newChat];
+        sendMessage(message);
+      }
+    }
+
+    static function connect() : void
+    {
+      conn = new Socket();
+      conn.addEventListener(Event.CLOSE, onClose);
+      conn.addEventListener(Event.CONNECT, onConnect);
+      conn.addEventListener(IOErrorEvent.IO_ERROR, onIoError);
+      conn.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+      conn.addEventListener(ProgressEvent.SOCKET_DATA, onData);
+      game.addChat("Client: Socket created");
+      conn.connect(host, 1701);
+      if (menu != null)
+      {
+        menu.parent.removeChild(menu);
+        menu = null;
+      }
+    }
+
+    static function disconnect() : void
+    {
+      isConnected = false;
+      length = -1;
+      if (conn != null)
+      {
+        conn.removeEventListener(Event.CLOSE, onClose);
+        conn.removeEventListener(Event.CONNECT, onConnect);
+        conn.removeEventListener(IOErrorEvent.IO_ERROR, onIoError);
+        conn.removeEventListener(SecurityErrorEvent.SECURITY_ERROR,
+                                 onSecurityError);
+        conn.removeEventListener(ProgressEvent.SOCKET_DATA, onData);
+        conn = null;
+      }
     }
 
     static var game : Game;
     static var conn : Socket;
     static var length : int;
+    static var isConnected : Boolean;
+    static var menu : ConnectMenu;
+    static var menuButtons : ButtonList;
+    static var host : String;
+    static var name : String;
   }
 }
-
