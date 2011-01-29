@@ -57,7 +57,6 @@ namespace Server
 
         internal void Update()
         {
-            throw new NotImplementedException();
         }
     }
 }

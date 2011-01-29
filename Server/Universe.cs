@@ -19,7 +19,7 @@ namespace Server
 
         DateTime lastUpdate = DateTime.Now;
 
-        Timer timer = new Timer();
+        Timer timer;
 
         /// <summary>
         /// Creates an instance of the Universe class
@@ -27,6 +27,17 @@ namespace Server
         public Universe()
         {
             World = new World(Vector2.Zero);
+
+            Update();
+
+            timer = new Timer(100);
+            timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
+            timer.Start();
+        }
+
+        void timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Update();
         }
 
         public void AddEntity(Entity entity)
