@@ -52,11 +52,11 @@ namespace Server
                     return null;
                 }
                 var closest = tractorableEntities.First((e) => ScreamMath.Quadrance(e.Position, this.Position) == minimum);
-                var joint = new DistanceJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
-                joint.DampingRatio = 1;
-                joint.Frequency = 25;
+                var joint = new RopeJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
+                //joint.DampingRatio = 1;
+                //joint.Frequency = 25;
                 joint.CollideConnected = true;
-                joint.Length = (float)Math.Sqrt(maxTractorQuadrance);
+                joint.MaxLength = (float)Math.Sqrt(maxTractorQuadrance);
                 Universe.World.AddJoint(joint);
                 //JointFactory.CreateRevoluteJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero);
                 //JointFactory.CreateLineJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
