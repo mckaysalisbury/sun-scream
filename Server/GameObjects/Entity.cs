@@ -72,7 +72,7 @@ namespace Server
 
         protected abstract Fixture GetFixture(World world);
 
-        internal void Update()
+        internal virtual void Update()
         {
         }
 
