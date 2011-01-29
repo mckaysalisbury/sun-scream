@@ -83,7 +83,7 @@ namespace Server
 
                 foreach (var entity in Entites)
                 {
-                    packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 100), LocationY = (int)(entity.Fixture.Body.Position.Y) });
+                    packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 100), LocationY = (int)(entity.Fixture.Body.Position.Y * 100) });
                 }
 
                 player.Client.Client.Send(packet.Serialize());
