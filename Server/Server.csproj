@@ -103,7 +103,7 @@
     </Compile>
     <Compile Include="Message.cs" />
     <Compile Include="MessageType.cs" />
-    <Compile Include="PlayerMode.cs" />
+    <Compile Include="PlayerRole.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObjects\Ship.cs" />

@@ -15,8 +15,11 @@ namespace Server
     /// </summary>
     public abstract class Entity
     {
-        private static int nextId = 0;
+        static int nextId = 0;
+        
         public Universe Universe { get; set; }
+
+        public bool IsAlive { get { return Fixture != null; } }
 
         protected static int GenerateId()
         {
@@ -70,8 +73,11 @@ namespace Server
 
         public void Die()
         {
-            Died();
-            Universe.RemoveEntity(this);
+            if (IsAlive)
+            {
+                Died();
+                Universe.RemoveEntity(this);
+            }
         }
 
         internal virtual void CollidedWith(Entity collidedWith)
