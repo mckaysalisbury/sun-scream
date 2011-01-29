@@ -74,13 +74,13 @@
                                      absolute.y - ship.getPos().y);
             var message = new Client.UpdateToServer();
             message.Thrust = new Client.ThrustUpdate();
-            var angle = Math.floor(Math.atan2(relative.y, relative.x));
+            var angle = Math.floor(Math.atan2(relative.y, relative.x)*100);
             var dist = Math.floor(Math.sqrt(relative.x*relative.x
                                             + relative.y*relative.y));
-            message.Thrust.Angle = angle*100;
+            message.Thrust.Angle = angle;
             message.Thrust.Distance = dist;
-            trace("Thrust X: " + message.Thrust.RelativeX + ", y: "
-                  + message.Thrust.RelativeY);
+            trace("Thrust Angle: " + message.Thrust.Angle + ", Dist: "
+                  + message.Thrust.Distance);
             Connection.sendMessage(message);
           }
         }
