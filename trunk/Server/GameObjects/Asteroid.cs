@@ -21,11 +21,13 @@ namespace Server
         {
         }
 
+        const float speedFactor = 0.2f;
+
         protected override Fixture GetFixture(World world)
         {
             var fixture = FixtureFactory.CreateCircle(world, size, 1);
             fixture.Body.BodyType = BodyType.Dynamic;
-            fixture.Body.LinearVelocity = new Vector2((float)ScreamMath.Random.NextDouble() - 0.5f, (float)ScreamMath.Random.NextDouble() - 0.5f);
+            fixture.Body.LinearVelocity = new Vector2(((float)ScreamMath.Random.NextDouble() - 0.5f) * speedFactor, ((float)ScreamMath.Random.NextDouble() - 0.5f) * speedFactor);
             return fixture;
         }
 
