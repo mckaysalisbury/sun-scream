@@ -10,6 +10,7 @@ namespace Server
     {
         Ship,
         Star,
-        Planet
+        Planet,
+        Asteroid
     }
 }
