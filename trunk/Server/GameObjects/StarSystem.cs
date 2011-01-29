@@ -14,7 +14,7 @@ namespace Server
     /// </summary>
     public class StarSystem : Entity
     {
-        private const float size = .01f;
+        private const float size = 3f;
         public StarSystem(int id, string name) : base(id, name)
         {
 
@@ -27,13 +27,13 @@ namespace Server
 
         protected override Fixture GetFixture(World world)
         {
-            var fixture = FixtureFactory.CreateRectangle(world, size, size, 1);
+            var fixture = FixtureFactory.CreateCircle(world, size, 1);
 
-            var gravity = new GravityController(.01f);
-            gravity.AddBody(fixture.Body);
-            gravity.GravityType = GravityType.DistanceSquared;
+            //var gravity = new GravityController(.01f);
+            //gravity.AddBody(fixture.Body);
+            //gravity.GravityType = GravityType.DistanceSquared;
 
-            world.AddController(gravity);
+            //world.AddController(gravity);
             return fixture;
 
             //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
