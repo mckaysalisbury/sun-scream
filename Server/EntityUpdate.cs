@@ -36,6 +36,6 @@ namespace Server
         public EntityUpdateType Type { get; set; }
 
         [DataMember(Order = 6)]
-        public int Angle { get; set; }
+        public int Rotation { get; set; }
     }
 }
