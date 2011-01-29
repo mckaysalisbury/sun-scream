@@ -88,8 +88,8 @@
             {
               message.Thrust.Distance = Math.floor(dist/(WINDOW_HEIGHT/2)*100);
             }
-            trace("Thrust Angle: " + message.Thrust.Angle + ", Dist: "
-                  + message.Thrust.Distance);
+//            trace("Thrust Angle: " + message.Thrust.Angle + ", Dist: "
+//                  + message.Thrust.Distance);
             Connection.sendMessage(message);
           }
         }

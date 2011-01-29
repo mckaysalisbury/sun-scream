@@ -113,6 +113,28 @@ package Server {
 			return _Type;
 		}
 
+		private var _Rotation:int;
+
+		private var _hasRotation:Boolean = false;
+
+		public function removeRotation():void {
+			_hasRotation = false;
+			_Rotation = new int();
+		}
+
+		public function get hasRotation():Boolean {
+			return _hasRotation;
+		}
+
+		public function set Rotation(value:int):void {
+			_hasRotation = true;
+			_Rotation = value;
+		}
+
+		public function get Rotation():int {
+			return _Rotation;
+		}
+
 		/**
 		 *  @private
 		 */
@@ -137,6 +159,10 @@ package Server {
 				WriteUtils.writeTag(output, WireType.VARINT, 5);
 				WriteUtils.write_TYPE_ENUM(output, _Type);
 			}
+			if (hasRotation) {
+				WriteUtils.writeTag(output, WireType.VARINT, 6);
+				WriteUtils.write_TYPE_INT32(output, _Rotation);
+			}
 		}
 
 		public function readExternal(input:IDataInput):void {
@@ -145,6 +171,7 @@ package Server {
 			var LocationXCount:uint = 0;
 			var LocationYCount:uint = 0;
 			var TypeCount:uint = 0;
+			var RotationCount:uint = 0;
 			while (input.bytesAvailable != 0) {
 				var tag:Tag = ReadUtils.readTag(input);
 				switch (tag.number) {
@@ -182,6 +209,13 @@ package Server {
 					}
 					++TypeCount;
 					Type = ReadUtils.read_TYPE_ENUM(input);
+					break;
+				case 6:
+					if (RotationCount != 0) {
+						throw new IOError('Bad data format: EntityUpdate.Rotation cannot be set twice.');
+					}
+					++RotationCount;
+					Rotation = ReadUtils.read_TYPE_INT32(input);
 					break;
 				default:
 					ReadUtils.skip(input, tag.wireType);
