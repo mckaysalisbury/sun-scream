@@ -112,7 +112,7 @@ namespace Server
                     {
                         var type = entity.GetClientType();
                         if (type != EntityUpdateType.Invisible)
-                            packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 1000000), LocationY = (int)(entity.Fixture.Body.Position.Y * 1000000), Angle = (int)(entity.Fixture.Body.Rotation * 100f) });
+                            packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 1000000), LocationY = (int)(entity.Fixture.Body.Position.Y * 1000000), Rotation = (int)(entity.Fixture.Body.Rotation * 100f) });
                     }
 
                     var packetBytes = packet.Serialize();
