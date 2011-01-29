@@ -71,6 +71,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NoteType.cs" />
+    <Compile Include="Note.cs" />
     <Compile Include="Display\DisplayForm.cs">
       <SubType>Form</SubType>
     </Compile>

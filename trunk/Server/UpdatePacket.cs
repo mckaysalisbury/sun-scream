@@ -21,10 +21,14 @@ namespace Server
         [DataMember(Order = 2)]
         public List<Message> Messages { get; set; }
 
+        [DataMember(Order = 4)]
+        public List<Note> Notes { get; set; }
+
         public UpdatePacket()
         {
             Entities = new List<EntityUpdate>();
             Messages = new List<Message>();
+            Notes = new List<Note>();
         }
 
         public byte[] Serialize()

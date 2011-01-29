@@ -16,10 +16,14 @@ namespace Server
         public string Name { get; set; }
         public Universe Universe { get; set; }
 
+        public List<Note> Notes { get; set; }
+
         public Player(TcpClient client)
         {
             Client = client;
             client.Client.NoDelay = true;
+
+            Notes = new List<Note>();
 
             GameServer.Instance.Log("Player Connected from " + client.Client.RemoteEndPoint);
         }
@@ -29,6 +33,11 @@ namespace Server
             Client.Close();
             Client = null;
             Universe.RemovePlayer(this);
+        }
+
+        public void AddNote(int target, NoteType type)
+        {
+            Notes.Add(new Note() { Target = target, Type = type });
         }
 
         public void Update()
