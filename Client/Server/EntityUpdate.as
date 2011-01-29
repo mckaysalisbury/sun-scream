@@ -1,0 +1,193 @@
+package Server {
+	import com.netease.protobuf.*;
+	import flash.utils.IExternalizable;
+	import flash.utils.IDataInput;
+	import flash.errors.IOError;
+	// @@protoc_insertion_point(imports)
+
+	// @@protoc_insertion_point(class_metadata)
+	public final class EntityUpdate extends com.netease.protobuf.Message implements flash.utils.IExternalizable {
+		private var _Id:int;
+
+		private var _hasId:Boolean = false;
+
+		public function removeId():void {
+			_hasId = false;
+			_Id = new int();
+		}
+
+		public function get hasId():Boolean {
+			return _hasId;
+		}
+
+		public function set Id(value:int):void {
+			_hasId = true;
+			_Id = value;
+		}
+
+		public function get Id():int {
+			return _Id;
+		}
+
+		private var _Name:String;
+
+		public function removeName():void {
+			_Name = null;
+		}
+
+		public function get hasName():Boolean {
+			return null != _Name;
+		}
+
+		public function set Name(value:String):void {
+			_Name = value;
+		}
+
+		public function get Name():String {
+			return _Name;
+		}
+
+		private var _LocationX:int;
+
+		private var _hasLocationX:Boolean = false;
+
+		public function removeLocationX():void {
+			_hasLocationX = false;
+			_LocationX = new int();
+		}
+
+		public function get hasLocationX():Boolean {
+			return _hasLocationX;
+		}
+
+		public function set LocationX(value:int):void {
+			_hasLocationX = true;
+			_LocationX = value;
+		}
+
+		public function get LocationX():int {
+			return _LocationX;
+		}
+
+		private var _LocationY:int;
+
+		private var _hasLocationY:Boolean = false;
+
+		public function removeLocationY():void {
+			_hasLocationY = false;
+			_LocationY = new int();
+		}
+
+		public function get hasLocationY():Boolean {
+			return _hasLocationY;
+		}
+
+		public function set LocationY(value:int):void {
+			_hasLocationY = true;
+			_LocationY = value;
+		}
+
+		public function get LocationY():int {
+			return _LocationY;
+		}
+
+		private var _Type:int;
+
+		private var _hasType:Boolean = false;
+
+		public function removeType():void {
+			_hasType = false;
+			_Type = new int();
+		}
+
+		public function get hasType():Boolean {
+			return _hasType;
+		}
+
+		public function set Type(value:int):void {
+			_hasType = true;
+			_Type = value;
+		}
+
+		public function get Type():int {
+			return _Type;
+		}
+
+		/**
+		 *  @private
+		 */
+		public override function writeToBuffer(output:WritingBuffer):void {
+			if (hasId) {
+				WriteUtils.writeTag(output, WireType.VARINT, 1);
+				WriteUtils.write_TYPE_INT32(output, _Id);
+			}
+			if (hasName) {
+				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 2);
+				WriteUtils.write_TYPE_STRING(output, _Name);
+			}
+			if (hasLocationX) {
+				WriteUtils.writeTag(output, WireType.VARINT, 3);
+				WriteUtils.write_TYPE_INT32(output, _LocationX);
+			}
+			if (hasLocationY) {
+				WriteUtils.writeTag(output, WireType.VARINT, 4);
+				WriteUtils.write_TYPE_INT32(output, _LocationY);
+			}
+			if (hasType) {
+				WriteUtils.writeTag(output, WireType.VARINT, 5);
+				WriteUtils.write_TYPE_ENUM(output, _Type);
+			}
+		}
+
+		public function readExternal(input:IDataInput):void {
+			var IdCount:uint = 0;
+			var NameCount:uint = 0;
+			var LocationXCount:uint = 0;
+			var LocationYCount:uint = 0;
+			var TypeCount:uint = 0;
+			while (input.bytesAvailable != 0) {
+				var tag:Tag = ReadUtils.readTag(input);
+				switch (tag.number) {
+				case 1:
+					if (IdCount != 0) {
+						throw new IOError('Bad data format: EntityUpdate.Id cannot be set twice.');
+					}
+					++IdCount;
+					Id = ReadUtils.read_TYPE_INT32(input);
+					break;
+				case 2:
+					if (NameCount != 0) {
+						throw new IOError('Bad data format: EntityUpdate.Name cannot be set twice.');
+					}
+					++NameCount;
+					Name = ReadUtils.read_TYPE_STRING(input);
+					break;
+				case 3:
+					if (LocationXCount != 0) {
+						throw new IOError('Bad data format: EntityUpdate.LocationX cannot be set twice.');
+					}
+					++LocationXCount;
+					LocationX = ReadUtils.read_TYPE_INT32(input);
+					break;
+				case 4:
+					if (LocationYCount != 0) {
+						throw new IOError('Bad data format: EntityUpdate.LocationY cannot be set twice.');
+					}
+					++LocationYCount;
+					LocationY = ReadUtils.read_TYPE_INT32(input);
+					break;
+				case 5:
+					if (TypeCount != 0) {
+						throw new IOError('Bad data format: EntityUpdate.Type cannot be set twice.');
+					}
+					++TypeCount;
+					Type = ReadUtils.read_TYPE_ENUM(input);
+					break;
+				default:
+					ReadUtils.skip(input, tag.wireType);
+				}
+			}
+		}
+
+	}
+}
