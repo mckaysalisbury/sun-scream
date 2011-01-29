@@ -28,6 +28,7 @@ namespace Server
         {
             var fixture = FixtureFactory.CreateRectangle(world, size, size, 1);
             fixture.Body.IsStatic = false;
+            fixture.Friction = 0;
             return fixture;
             //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
