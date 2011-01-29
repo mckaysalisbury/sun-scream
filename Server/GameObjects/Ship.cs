@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using FarseerPhysics.Dynamics.Joints;
 
 namespace Server
 {
@@ -14,6 +15,7 @@ namespace Server
     public class Ship : Entity
     {
         private const float size = 1f;
+        private const float maxTractorQuadrance = 1000;
 
         public Ship(string name) : base(name)
         {
@@ -37,13 +39,28 @@ namespace Server
             //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
 
-        protected Entity Tractor()
+        public Entity Tractor()
         {
             var tractorableEntities = this.Universe.Entites.Where((e) => e.IsTractorable);
             if (tractorableEntities.Any())
             {
                 var minimum = tractorableEntities.Min((e) => ScreamMath.Quadrance(e.Position, this.Position));
+
+                if (minimum > maxTractorQuadrance)
+                {
+                    // too far away for tractor
+                    return null;
+                }
                 var closest = tractorableEntities.First((e) => ScreamMath.Quadrance(e.Position, this.Position) == minimum);
+                var joint = new DistanceJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
+                joint.DampingRatio = 1;
+                joint.Frequency = 25;
+                joint.CollideConnected = true;
+                joint.Length = (float)Math.Sqrt(maxTractorQuadrance);
+                Universe.World.AddJoint(joint);
+                //JointFactory.CreateRevoluteJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero);
+                //JointFactory.CreateLineJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
+
                 return closest;
             }
             else
