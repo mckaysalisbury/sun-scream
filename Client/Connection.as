@@ -97,7 +97,6 @@ package
         game.addChat(urgency + updateMessage.Text);
       }
       game.setController(update.ControllingEntityId);
-      trace(update.Entities.length);
       for each (var entity in update.Entities)
       {
         game.updateEntity(entity);
