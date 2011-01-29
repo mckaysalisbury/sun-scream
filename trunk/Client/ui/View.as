@@ -25,7 +25,7 @@
       images = new ImageList();
       windowBorder = new WindowBorder();
       window = new Window(parent, new Point(WIDTH, WINDOW_HEIGHT),
-                          new Point(2048, 2048),
+                          new Point(20480, 20480),
                           ImageConfig.layerCount,
                           images, windowBorder,
                           background, 0);
@@ -118,8 +118,8 @@
 
     public function updateEntity(update : EntityUpdate) : void
     {
-      var pos = new Point(Math.floor(update.LocationX/SCALE) + 1024,
-                          Math.floor(update.LocationY/SCALE) + 1024);
+      var pos = new Point(Math.floor(update.LocationX/SCALE) + 10240,
+                          Math.floor(update.LocationY/SCALE) + 10240);
       if (update.Id == controller)
       {
         window.setCenter(pos);
