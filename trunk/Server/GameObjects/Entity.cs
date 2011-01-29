@@ -23,13 +23,12 @@ namespace Server
             return nextId++;
         }
 
-
         /// <summary>
         /// Creates an instance of the Entity Class, all these fields must be filled out.
         /// </summary>
         public Entity(string name)
         {
-            this.Id = nextId;
+            this.Id = GenerateId();
             this.Name = name;
         }
 

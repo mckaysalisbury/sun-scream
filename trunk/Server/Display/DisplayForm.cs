@@ -52,8 +52,10 @@ namespace Server.Display
 
         private Point ConvertPosition(Vector2 position)
         {
-            var zero = new Point((ClientRectangle.Bottom + ClientRectangle.Top) / 2, (ClientRectangle.Left + ClientRectangle.Right) / 2);
-            return new Point((int)(position.X * currentScale + zero.X), (int)(position.Y * currentScale + zero.Y));
+            var zero = new Point((ClientRectangle.Left + ClientRectangle.Right) / 2, (ClientRectangle.Bottom + ClientRectangle.Top) / 2);
+            var point = new Point((int)(position.X * currentScale + zero.X), (int)(position.Y * currentScale + zero.Y));
+            
+            return point;
         }
 
         private Control CreateControl(Entity entity)
