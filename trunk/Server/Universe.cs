@@ -58,7 +58,7 @@ namespace Server
 
         public Ship GenerateShip(Player player)
         {
-            var ship = new Ship(this.GenerateId(), player.Name);
+            var ship = new Ship(player.Name);
             return ship;
         }
 
@@ -130,13 +130,6 @@ namespace Server
 
             lastUpdate = DateTime.Now;
             timer.Start();
-        }
-
-        private int nextId = 0;
-
-        internal int GenerateId()
-        {
-            return nextId++;
         }
     }
 }

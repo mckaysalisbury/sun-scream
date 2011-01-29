@@ -15,7 +15,7 @@ namespace Server
     public class StarSystem : Entity
     {
         private const float size = 0.5f;
-        public StarSystem(int id, string name) : base(id, name)
+        public StarSystem(string name) : base(name)
         {
 
         }

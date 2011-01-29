@@ -15,14 +15,21 @@ namespace Server
     /// </summary>
     public abstract class Entity
     {
+        private static int nextId = 0;
         public Universe Universe { get; set; }
+
+        protected static int GenerateId()
+        {
+            return nextId++;
+        }
+
 
         /// <summary>
         /// Creates an instance of the Entity Class, all these fields must be filled out.
         /// </summary>
-        public Entity(int id, string name)
+        public Entity(string name)
         {
-            this.Id = id;
+            this.Id = nextId;
             this.Name = name;
         }
 
