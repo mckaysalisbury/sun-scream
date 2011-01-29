@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\Commands.cs" />
+    <Compile Include="Commands\SetRoleCommand.cs" />
     <Compile Include="Commands\ReleaseCommand.cs" />
     <Compile Include="Commands\SetNameCommand.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
@@ -102,6 +103,7 @@
     </Compile>
     <Compile Include="Message.cs" />
     <Compile Include="MessageType.cs" />
+    <Compile Include="PlayerMode.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameObjects\Ship.cs" />
