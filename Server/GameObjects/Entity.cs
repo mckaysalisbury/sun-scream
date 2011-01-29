@@ -96,5 +96,18 @@ namespace Server
         public virtual void Died()
         {
         }
+
+        public static string DisplayString(string action, Entity result)
+        {
+            if (result == null)
+            {
+                return string.Format("Nothing available to {0}", action);
+            }
+            else
+            {
+                return string.Format("{0} #{1}={2}:{3}", action, result.Id, result.Name, result.GetClientType());
+            }
+        }
+
     }
 }

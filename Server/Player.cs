@@ -86,7 +86,8 @@ namespace Server
                             break;
 
                         case Server.Role.Tractor:
-                            Controlling.Tractor(angle, update.Thrust.Distance);
+                            var result = Controlling.Tractor(angle, update.Thrust.Distance);
+                            this.AddMessage(Entity.DisplayString("Tractor", result), MessageType.System);
                             break;
 
                         default:
