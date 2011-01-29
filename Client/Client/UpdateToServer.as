@@ -7,7 +7,7 @@ package Client {
 	// @@protoc_insertion_point(imports)
 
 	// @@protoc_insertion_point(class_metadata)
-	public final class UpdatePacket extends com.netease.protobuf.Message implements flash.utils.IExternalizable {
+	public final class UpdateToServer extends com.netease.protobuf.Message implements flash.utils.IExternalizable {
 		private var _Thrust:Client.ThrustUpdate;
 
 		public function removeThrust():void {
@@ -43,7 +43,7 @@ package Client {
 				switch (tag.number) {
 				case 1:
 					if (ThrustCount != 0) {
-						throw new IOError('Bad data format: UpdatePacket.Thrust cannot be set twice.');
+						throw new IOError('Bad data format: UpdateToServer.Thrust cannot be set twice.');
 					}
 					++ThrustCount;
 					Thrust = new Client.ThrustUpdate;
