@@ -26,6 +26,9 @@ package Client {
 			return _Thrust;
 		}
 
+		[ArrayElementType("String")]
+		public var Messages:Array = [];
+
 		/**
 		 *  @private
 		 */
@@ -33,6 +36,10 @@ package Client {
 			if (hasThrust) {
 				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 1);
 				WriteUtils.write_TYPE_MESSAGE(output, _Thrust);
+			}
+			for (var MessagesIndex:uint = 0; MessagesIndex < Messages.length; ++MessagesIndex) {
+				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 2);
+				WriteUtils.write_TYPE_STRING(output, Messages[MessagesIndex]);
 			}
 		}
 
@@ -48,6 +55,9 @@ package Client {
 					++ThrustCount;
 					Thrust = new Client.ThrustUpdate;
 					ReadUtils.read_TYPE_MESSAGE(input, Thrust);
+					break;
+				case 2:
+					Messages.push(ReadUtils.read_TYPE_STRING(input));
 					break;
 				default:
 					ReadUtils.skip(input, tag.wireType);

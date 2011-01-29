@@ -42,6 +42,11 @@ package
       view.setController(newController);
     }
 
+    public function addChat(newMessage : String) : void
+    {
+      view.addChat(newMessage);
+    }
+
     var parent : DisplayObjectContainer;
     var settings : GameSettings;
     var view : ui.View;

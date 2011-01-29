@@ -3,6 +3,7 @@ package Server {
 	import flash.utils.IExternalizable;
 	import flash.utils.IDataInput;
 	import flash.errors.IOError;
+	import Server.Note;
 	import Server.EntityUpdate;
 	import Server.Message;
 	// @@protoc_insertion_point(imports)
@@ -37,6 +38,9 @@ package Server {
 			return _ControllingEntityId;
 		}
 
+		[ArrayElementType("Server.Note")]
+		public var Notes:Array = [];
+
 		/**
 		 *  @private
 		 */
@@ -52,6 +56,10 @@ package Server {
 			if (hasControllingEntityId) {
 				WriteUtils.writeTag(output, WireType.VARINT, 3);
 				WriteUtils.write_TYPE_INT32(output, _ControllingEntityId);
+			}
+			for (var NotesIndex:uint = 0; NotesIndex < Notes.length; ++NotesIndex) {
+				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 4);
+				WriteUtils.write_TYPE_MESSAGE(output, Notes[NotesIndex]);
 			}
 		}
 
@@ -72,6 +80,9 @@ package Server {
 					}
 					++ControllingEntityIdCount;
 					ControllingEntityId = ReadUtils.read_TYPE_INT32(input);
+					break;
+				case 4:
+					Notes.push(ReadUtils.read_TYPE_MESSAGE(input, new Server.Note));
 					break;
 				default:
 					ReadUtils.skip(input, tag.wireType);

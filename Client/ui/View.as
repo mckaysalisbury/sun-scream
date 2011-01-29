@@ -32,6 +32,7 @@
       windowBorder.init(parent);
       controller = 0;
       entities = new Dictionary();
+      chat = new Chat(parent);
       window.addDragBeginCommand(beginThrust);
       window.addDragEndCommand(endThrust);
       frameCount = 1;
@@ -44,6 +45,7 @@
     public function cleanup() : void
     {
       parent.stage.removeEventListener(KeyboardEvent.KEY_UP, keyDown);
+      chat.cleanup();
       for each (var entity in entities)
       {
         entity.cleanup();
@@ -135,6 +137,11 @@
       controller = newController;
     }
 
+    public function addChat(newMessage : String) : void
+    {
+      chat.addChat(newMessage);
+    }
+
     function keyDown(event : KeyboardEvent) : void
     {
       if (event.keyCode == Keyboard.PAGE_DOWN)
@@ -145,7 +152,6 @@
       {
         SCALE = SCALE/2;
       }
-      trace(SCALE);
     }
 
     var parent : DisplayObjectContainer;
@@ -155,13 +161,14 @@
     var window : Window;
     var controller : int;
     var entities : Dictionary;
+    var chat : Chat;
     var frameCount : int;
     var isThrusting : Boolean;
     var shouldEndThrust : Boolean;
 
-    public static var SCALE : Number = 100000;
+    public static var SCALE : Number = 150000;
     public static var WIDTH = 1024;
     public static var HEIGHT = 768;
-    public static var WINDOW_HEIGHT = HEIGHT - 30;
+    public static var WINDOW_HEIGHT = HEIGHT - 40;
   }
 }

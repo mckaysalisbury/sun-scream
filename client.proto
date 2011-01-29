@@ -2,6 +2,7 @@ package Client;
 
 message UpdateToServer {
   optional ThrustUpdate Thrust = 1;
+  repeated string Messages = 2;
 }
 
 message ThrustUpdate {
