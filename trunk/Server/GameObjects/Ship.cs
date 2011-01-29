@@ -13,7 +13,7 @@ namespace Server
     /// </summary>
     public class Ship : Entity
     {
-        private const float size = 0.1f;
+        private const float size = 0.001f;
 
         public Ship(int id, string name) : base(id, name)
         {
@@ -29,6 +29,8 @@ namespace Server
             var fixture = FixtureFactory.CreateRectangle(world, size, size, 1);
             fixture.Body.IsStatic = false;
             fixture.Friction = 0;
+            fixture.Body.LinearDamping = 0;
+            fixture.Body.AngularDamping = 0;
             return fixture;
             //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }

@@ -54,7 +54,7 @@ namespace Server
                 else
                 {
                     Output.AppendText(message + Environment.NewLine);
-                    Output.ScrollToCaret();
+                    //Output.ScrollToCaret();
                 }
             }
             catch

@@ -14,7 +14,7 @@ namespace Server
     /// </summary>
     public class StarSystem : Entity
     {
-        private const float size = 10f;
+        private const float size = .01f;
         public StarSystem(int id, string name) : base(id, name)
         {
 
@@ -29,7 +29,7 @@ namespace Server
         {
             var fixture = FixtureFactory.CreateRectangle(world, size, size, 1);
 
-            var gravity = new GravityController(1);
+            var gravity = new GravityController(1f);
             gravity.AddBody(fixture.Body);
             gravity.GravityType = GravityType.DistanceSquared;
 
