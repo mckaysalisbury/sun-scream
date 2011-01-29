@@ -13,7 +13,7 @@ namespace Server
     /// </summary>
     public class Ship : Entity
     {
-        private const float size = 0.1f;
+        private const float size = 1f;
 
         public Ship(int id, string name) : base(id, name)
         {
@@ -26,11 +26,13 @@ namespace Server
 
         protected override Fixture GetFixture(World world)
         {
-            var fixture = FixtureFactory.CreateRectangle(world, size, size, 300);
-            fixture.Body.IsStatic = false;
-            fixture.Friction = 0;
-            fixture.Body.LinearDamping = 0;
-            fixture.Body.AngularDamping = 0;
+            var fixture = FixtureFactory.CreateCircle(world, size, 1);
+            fixture.Body.BodyType = BodyType.Dynamic;
+
+            //fixture.Body.IsStatic = false;
+            //fixture.Friction = 0;
+            //fixture.Body.LinearDamping = 0;
+            //fixture.Body.AngularDamping = 0;
             return fixture;
             //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }

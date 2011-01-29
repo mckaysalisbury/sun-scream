@@ -26,10 +26,9 @@ namespace Server
         public void Disconnect()
         {
             Client.Close();
+            Client = null;
             Universe.RemovePlayer(this);
         }
-
-        int packetLength;
 
         public void Update()
         {
@@ -43,9 +42,13 @@ namespace Server
             {
                 if (update.Thrust != null && Controlling != null)
                 {
-                    var thrust = AngleToVector(update.Thrust.Angle / 100f, update.Thrust.Distance / 1000f);
+                    GameServer.Instance.Log(String.Format("Angle {0} Distance {1}", update.Thrust.Angle, update.Thrust.Distance));
+                    var thrust = AngleToVector(update.Thrust.Angle / 100f, 0.001f);
+                    //Controlling.Fixture.Body.ApplyForce(thrust);
+
                     Controlling.Fixture.Body.ApplyForce(thrust);
                     GameServer.Instance.Log(String.Format("Thrust {0}", thrust));
+                    GameServer.Instance.Log(String.Format("Velocity {0}", Controlling.Fixture.Body.LinearVelocity));
                 }
             }
         }
@@ -61,7 +64,7 @@ namespace Server
             {
                 var bytes = new byte[4];
                 Client.Client.Receive(bytes);
-                packetLength = BitConverter.ToInt32(bytes, 0);
+                var packetLength = BitConverter.ToInt32(bytes, 0);
 
                 GameServer.Instance.Log(String.Format("Sent Length {0}  Available {1}", packetLength.ToString(), Client.Client.Available));
 

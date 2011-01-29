@@ -28,13 +28,13 @@ namespace Server
         /// </summary>
         public Universe()
         {
-            World = new World(Vector2.Zero);
-
-            Update();
+            World = new World(Vector2.Zero) { AutoClearForces = true };
 
             timer = new Timer(100);
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
-            timer.Start();
+            timer.AutoReset = false;
+
+            Update();
         }
 
         void timer_Elapsed(object sender, ElapsedEventArgs e)
@@ -88,8 +88,8 @@ namespace Server
                 //GameServer.Instance.Log(string.Format("{0}={1}@({2},{3})", entity.Id, entity.Name, entity.Position.X, entity.Position.Y));
             }
 
-            World.Step(10);
-            //World.Step((float)(DateTime.Now - lastUpdate).TotalMilliseconds);            
+            //World.Step(10);
+            World.Step((float)(DateTime.Now - lastUpdate).TotalMilliseconds);
 
             foreach (var player in Players.ToArray())
             {
@@ -99,9 +99,11 @@ namespace Server
                 {
                     var packet = new UpdatePacket() { ControllingEntityId = player.Controlling.Id };
 
+                    GameServer.Instance.Log(string.Format("{0}", player.Controlling.Fixture.Body.LinearVelocity));
+
                     foreach (var entity in Entites)
                     {
-                        packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 100), LocationY = (int)(entity.Fixture.Body.Position.Y * 100) });
+                        packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 1000000), LocationY = (int)(entity.Fixture.Body.Position.Y * 1000000) });
                     }
 
                     try
@@ -116,6 +118,7 @@ namespace Server
             }
 
             lastUpdate = DateTime.Now;
+            timer.Start();
         }
 
         private int nextId = 0;
