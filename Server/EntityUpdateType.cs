@@ -8,10 +8,10 @@ namespace Server
 {
     public enum EntityUpdateType
     {
+        Invisible,
         Ship,
         Star,
         Planet,
         Asteroid,
-        AsteroidGenerator
     }
 }
