@@ -82,12 +82,12 @@ namespace Server
         {
             var tractorableEntities = this.Universe.Entites.Where((e) => e.IsTractorable);
             var availableTractorableEntities = tractorableEntities.Where((e) => e != this && !TractoredItems.ContainsKey(e));
-            var nearEnoughAvailableTractorableEntities = availableTractorableEntities.Where((e) => ScreamMath.Quadrance(e.Position, this.Position) < maxTractorQuadrance);
-            if (availableTractorableEntities.Any())
+            var nearEnoughAvailableTractorableEntities = availableTractorableEntities.Select((e) => new { Quadrance = ScreamMath.Quadrance(e.Position, this.Position), Entity = e }).Where((p) => p.Quadrance < maxTractorQuadrance);
+            if (nearEnoughAvailableTractorableEntities.Any())
             {
-                var minimum = availableTractorableEntities.Min((e) => ScreamMath.Quadrance(e.Position, positionToLookFrom));
+                var minimum = nearEnoughAvailableTractorableEntities.Min((p) => p.Quadrance);
 
-                var closest = availableTractorableEntities.First((e) => ScreamMath.Quadrance(e.Position, this.Position) == minimum);
+                var closest = nearEnoughAvailableTractorableEntities.First((p) => p.Quadrance == minimum).Entity;
                 var joint = new RopeJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
                 //joint.DampingRatio = 1;
                 //joint.Frequency = 25;
