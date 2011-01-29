@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FarseerPhysics.Dynamics;
 
 namespace Server
 {
@@ -12,8 +13,13 @@ namespace Server
     {
         private const float size = 0.1f;
 
-        public Asteroid(int id, string name, float x, float y) : base(id, name, size, size)
+        public Asteroid(int id, string name) : base(id, name)
         {
+        }
+
+        protected override Fixture GetFixture(World world)
+        {
+            throw new NotImplementedException();
         }
 
         internal override EntityUpdateType GetClientType()
