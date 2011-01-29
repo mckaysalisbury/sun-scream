@@ -19,6 +19,7 @@ namespace Server
         public Player(TcpClient client)
         {
             Client = client;
+            client.Client.NoDelay = true;
 
             GameServer.Instance.Log("Player Connected from " + client.Client.RemoteEndPoint);
         }

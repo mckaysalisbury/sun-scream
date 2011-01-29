@@ -30,7 +30,7 @@ namespace Server
         {
             World = new World(Vector2.Zero) { AutoClearForces = true };
 
-            timer = new Timer(100);
+            timer = new Timer(33);
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             timer.AutoReset = false;
 
