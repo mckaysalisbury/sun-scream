@@ -17,6 +17,8 @@ namespace Server
         private const float size = 1f;
         private const float maxTractorQuadrance = 1000;
 
+        public List<Entity> TractoredItems = new List<Entity>();
+
         public Ship(string name) : base(name)
         {
         }
@@ -24,6 +26,14 @@ namespace Server
         internal override EntityUpdateType GetClientType()
         {
             return EntityUpdateType.Ship;
+        }
+
+        public override bool IsTractorable
+        {
+            get
+            {
+                return true;
+            }
         }
 
         protected override Fixture GetFixture(World world)
@@ -39,25 +49,32 @@ namespace Server
             //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
 
+        public Entity Release()
+        {
+
+            return null;
+        }
         public Entity Tractor()
         {
             var tractorableEntities = this.Universe.Entites.Where((e) => e.IsTractorable);
-            if (tractorableEntities.Any())
+            var availableTractorableEntities = tractorableEntities.Where((e) => e != this && !TractoredItems.Contains(e));
+            if (availableTractorableEntities.Any())
             {
-                var minimum = tractorableEntities.Min((e) => ScreamMath.Quadrance(e.Position, this.Position));
+                var minimum = availableTractorableEntities.Min((e) => ScreamMath.Quadrance(e.Position, this.Position));
 
                 if (minimum > maxTractorQuadrance)
                 {
                     // too far away for tractor
                     return null;
                 }
-                var closest = tractorableEntities.First((e) => ScreamMath.Quadrance(e.Position, this.Position) == minimum);
+                var closest = availableTractorableEntities.First((e) => ScreamMath.Quadrance(e.Position, this.Position) == minimum);
                 var joint = new RopeJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
                 //joint.DampingRatio = 1;
                 //joint.Frequency = 25;
                 joint.CollideConnected = true;
                 joint.MaxLength = (float)Math.Sqrt(maxTractorQuadrance);
                 Universe.World.AddJoint(joint);
+                TractoredItems.Add(closest);
                 //JointFactory.CreateRevoluteJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero);
                 //JointFactory.CreateLineJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
 

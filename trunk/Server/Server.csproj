@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\Commands.cs" />
+    <Compile Include="Commands\ReleaseCommand.cs" />
     <Compile Include="Commands\SetNameCommand.cs" />
     <Compile Include="Commands\HelpCommand.cs" />
     <Compile Include="Commands\StatusCommand.cs" />
