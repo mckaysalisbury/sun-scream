@@ -10,10 +10,9 @@ namespace Server
     /// </summary>
     public class Ship : Entity
     {
-        public Ship()
+        private const float size = 0.1f;
+        public Ship(int id, string name, float x, float y) : base(id, name, x, y, size, size)
         {
-            Width = 0.1f;
-            Height = 0.1f;
         }
     }
 }

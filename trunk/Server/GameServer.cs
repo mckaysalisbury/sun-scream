@@ -24,7 +24,7 @@ namespace Server
         {
             Instance = this;
 
-            Universe = UniverseGenerator.Generate();
+            Universe = UniverseGenerator.GenerateUniverse();
 
             var ipAddress = Dns.GetHostEntry("localhost").AddressList[0];
             listener = new TcpListener(ipAddress, Port);

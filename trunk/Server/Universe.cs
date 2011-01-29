@@ -42,10 +42,24 @@ namespace Server
         }
 
         public void AddPlayer(Player player)
-        {
+        {            
             Players.Add(player);
-            player.Controlling = new Ship();
+            player.Controlling = this.GenerateShip(player);
         }
+
+        public Ship GenerateShip(Player player)
+        {
+            Tuple<float, float> location = GetSpawnLocation();
+            var ship = new Ship(this.GenerateId(), player.Name, location.Item1, location.Item2);
+            return ship;
+        }
+
+
+        private Tuple<float, float> GetSpawnLocation()
+        {
+            return new Tuple<float, float>(0, 0);
+        }
+
 
         public void AddEntity(Entity entity)
         {
@@ -82,6 +96,13 @@ namespace Server
             //        client.Client.Send(bytes);
             //    }
             //}
+        }
+
+        private int nextId = 0;
+
+        internal int GenerateId()
+        {
+            return nextId++;
         }
     }
 }

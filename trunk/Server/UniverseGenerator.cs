@@ -14,11 +14,14 @@ namespace Server
         /// Generates a new universe
         /// </summary>
         /// <returns>a newly generated universe</returns>
-        public static Universe Generate()
+        public static Universe GenerateUniverse()
         {
             var universe = new Universe();
 
-            universe.AddEntity(new Ship());
+            universe.AddEntity(new StarSystem(universe.GenerateId(), "The first Star", 0, 0));
+
+            // Remove these later
+            universe.AddEntity(universe.GenerateShip(new Player(null) { Name = "Test" }));
 
             return universe;
         }

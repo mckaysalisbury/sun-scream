@@ -11,6 +11,7 @@ namespace Server
         public TcpClient Client;
 
         public Ship Controlling { get; set; }
+        public string Name { get; set; }
 
         public Player(TcpClient client)
         {

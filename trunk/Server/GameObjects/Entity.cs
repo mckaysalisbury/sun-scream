@@ -15,6 +15,19 @@ namespace Server
     public class Entity
     {
         /// <summary>
+        /// Creates an instance of the Entity Class, all these fields must be filled out.
+        /// </summary>
+        public Entity(int id, string name, float x, float y, float width, float height)
+        {
+            this.Id = id;
+            this.Name = name;
+            this.LocationX = x;
+            this.LocationY = y;
+            this.Width = width;
+            this.Height = height;
+        }
+
+        /// <summary>
         /// The (database) id of the entity
         /// </summary>
         [DataMember(Order = 1)]
