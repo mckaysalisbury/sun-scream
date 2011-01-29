@@ -80,9 +80,10 @@ namespace Server
 
         private Entity TractorEntity(Vector2 positionToLookFrom)
         {
+            var currentPosition = this.Position;
             var tractorableEntities = this.Universe.Entites.Where((e) => e.IsTractorable);
             var availableTractorableEntities = tractorableEntities.Where((e) => e != this && !TractoredItems.ContainsKey(e));
-            var nearEnoughAvailableTractorableEntities = availableTractorableEntities.Select((e) => new { Quadrance = ScreamMath.Quadrance(e.Position, this.Position), Entity = e }).Where((p) => p.Quadrance < maxTractorQuadrance);
+            var nearEnoughAvailableTractorableEntities = availableTractorableEntities.Select((e) => new { Quadrance = ScreamMath.Quadrance(e.Position, currentPosition), Entity = e }).Where((p) => p.Quadrance < maxTractorQuadrance);
             if (nearEnoughAvailableTractorableEntities.Any())
             {
                 var minimum = nearEnoughAvailableTractorableEntities.Min((p) => p.Quadrance);
