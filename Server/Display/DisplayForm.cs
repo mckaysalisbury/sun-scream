@@ -28,7 +28,7 @@ namespace Server.Display
             {
                 controlPair.Value.Visible = false;
             }
-            foreach (var entity in Universe.Entites)
+            foreach (var entity in Universe.Entites.ToArray())
             {
                 Control control;
                 if (controls.ContainsKey(entity.Id))
@@ -78,7 +78,12 @@ namespace Server.Display
                     var asteroid = new Label();
                     asteroid.Parent = this;
                     asteroid.Text = "A";
-                    return asteroid;
+                    return asteroid; 
+                case EntityUpdateType.Invisible:
+                    var invisible = new Label();
+                    invisible.Parent = this;
+                    invisible.Text = "I";
+                    return invisible;
                 default:
                     throw new Exception();
             }

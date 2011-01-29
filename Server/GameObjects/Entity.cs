@@ -44,6 +44,8 @@ namespace Server
 
         public Fixture Fixture { get; set; }
 
+        public virtual bool IsTractorable { get { return false; } }
+
         public Vector2 Position
         {
             get { return Fixture.Body.Position; }

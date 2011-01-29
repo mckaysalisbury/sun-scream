@@ -32,5 +32,13 @@ namespace Server
         {
             return EntityUpdateType.Asteroid;
         }
+
+        public override bool IsTractorable
+        {
+            get
+            {
+                return true;
+            }
+        }
     }
 }
