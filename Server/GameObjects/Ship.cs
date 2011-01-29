@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Server
 {
+    /// <summary>
+    /// Stores information about a ship
+    /// </summary>
     public class Ship : Entity
     {
     }
