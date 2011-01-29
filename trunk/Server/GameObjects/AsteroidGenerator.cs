@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Microsoft.Xna.Framework;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+
+namespace Server
+{
+    /// <summary>
+    /// Stores information about a asteroid
+    /// </summary>
+    public class AsteroidGenerator : Entity
+    {
+        private const float size = 0.1f;
+
+        public AsteroidGenerator(int id, string name) : base(string.Empty)
+        {
+        }
+
+        internal override void Update()
+        {
+            Universe.AddEntity(new Asteroid(), Position);
+        }
+
+        protected override Fixture GetFixture(World world)
+        {
+            var fixture = FixtureFactory.CreateCircle(world, size, 1);
+            fixture.Body.BodyType = BodyType.Dynamic;
+
+            //fixture.Body.IsStatic = false;
+            //fixture.Friction = 0;
+            //fixture.Body.LinearDamping = 0;
+            //fixture.Body.AngularDamping = 0;
+            return fixture;
+            //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
+        }
+
+        internal override EntityUpdateType GetClientType()
+        {
+            return EntityUpdateType.AsteroidGenerator;
+        }
+    }
+}
