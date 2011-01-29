@@ -71,7 +71,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Broadcast.cs" />
+    <Compile Include="Commands\Broadcast.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\Commands.cs" />
     <Compile Include="NoteType.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="Display\DisplayForm.cs">
@@ -157,9 +159,7 @@
       <Name>Farseer Physics 3.2</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

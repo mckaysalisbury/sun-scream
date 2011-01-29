@@ -24,6 +24,8 @@ namespace Server
             Client = client;
             client.Client.NoDelay = true;
 
+            Name = client.Client.LocalEndPoint.ToString();
+
             Notes = new List<Note>();
             Messages = new List<Message>();
 

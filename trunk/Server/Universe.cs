@@ -15,7 +15,7 @@ namespace Server
     public class Universe
     {
         public List<Entity> Entites = new List<Entity>();
-        List<Player> Players = new List<Player>();
+        public List<Player> Players = new List<Player>();
 
         World World;
 
