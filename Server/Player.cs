@@ -64,7 +64,7 @@ namespace Server
                     var thrust = AngleToVector(update.Thrust.Angle / 100f, 0.001f);
                     Controlling.Fixture.Body.ApplyForce(thrust);
 
-                    Controlling.Fixture.Body.Rotation = update.Thrust.Angle;
+                    Controlling.Fixture.Body.Rotation = update.Thrust.Angle / 100f;
 
                     //GameServer.Instance.Log(String.Format("Angle {0} Distance {1}", update.Thrust.Angle, update.Thrust.Distance));
                     //GameServer.Instance.Log(String.Format("Thrust {0}", thrust));
