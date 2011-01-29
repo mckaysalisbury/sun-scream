@@ -16,14 +16,14 @@ namespace Server
         public int ControlingEntityId { get; set; }
 
         [DataMember(Order = 1)]
-        public List<ClientEntityData> Entites { get; set; }
+        public List<EntityUpdate> Entites { get; set; }
 
         [DataMember(Order = 2)]
         public List<Message> Messages { get; set; }
 
         public UpdatePacket()
         {
-            Entites = new List<ClientEntityData>();
+            Entites = new List<EntityUpdate>();
             Messages = new List<Message>();
         }
 
