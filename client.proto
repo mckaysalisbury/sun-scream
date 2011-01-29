@@ -1,6 +1,6 @@
 package Client;
 
-message UpdatePacket {
+message UpdateToServer {
   optional ThrustUpdate Thrust = 1;
 }
 
