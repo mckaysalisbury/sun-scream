@@ -13,17 +13,17 @@ namespace Server
     class UpdatePacket
     {
         [DataMember(Order = 3)]
-        public int ControlingEntityId { get; set; }
+        public int ControllingEntityId { get; set; }
 
         [DataMember(Order = 1)]
-        public List<EntityUpdate> Entites { get; set; }
+        public List<EntityUpdate> Entities { get; set; }
 
         [DataMember(Order = 2)]
         public List<Message> Messages { get; set; }
 
         public UpdatePacket()
         {
-            Entites = new List<EntityUpdate>();
+            Entities = new List<EntityUpdate>();
             Messages = new List<Message>();
         }
 

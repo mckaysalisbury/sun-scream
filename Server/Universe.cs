@@ -80,7 +80,7 @@ namespace Server
 
                 foreach (var entity in Entites)
                 {
-                    packet.Entites.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = entity.Fixture.Body.Position.X, LocationY = entity.Fixture.Body.Position.Y });
+                    packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = entity.Fixture.Body.Position.X, LocationY = entity.Fixture.Body.Position.Y });
                 }
 
                 packet.Messages.Add(new Message() { Text = "Hello World", Type = MessageType.System });
