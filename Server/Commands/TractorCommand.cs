@@ -12,11 +12,11 @@ namespace Server
             var result = source.Controlling.Tractor();
             if (result == null)
             {
-                return "No asteroids nearby";
+                return "Nothing available to tractor";
             }
             else
-            {               
-                return string.Format("Tractoring #{0}={1}", result.Id, result.Name);
+            {
+                return string.Format("Tractoring #{0}={1}:{2}", result.Id, result.Name, result.GetClientType());
             }
         }
     }
