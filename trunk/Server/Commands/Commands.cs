@@ -27,7 +27,7 @@ namespace Server
                         message = message.Substring(index + 1);
                 }
                 else
-                    commandName = "broadcast";
+                    commandName = "say";
 
                 string result;
                 if (!CommandsByName.ContainsKey(commandName))
