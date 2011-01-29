@@ -1,0 +1,11 @@
+package Client;
+
+message UpdatePacket {
+  optional ThrustUpdate Thrust = 1;
+}
+
+message ThrustUpdate {
+  required int32 Angle = 1;
+  required int32 Distance = 2;
+}
+

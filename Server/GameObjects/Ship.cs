@@ -13,7 +13,7 @@ namespace Server
     /// </summary>
     public class Ship : Entity
     {
-        private const float size = 0.001f;
+        private const float size = 0.1f;
 
         public Ship(int id, string name) : base(id, name)
         {
@@ -26,7 +26,7 @@ namespace Server
 
         protected override Fixture GetFixture(World world)
         {
-            var fixture = FixtureFactory.CreateRectangle(world, size, size, 1);
+            var fixture = FixtureFactory.CreateRectangle(world, size, size, 300);
             fixture.Body.IsStatic = false;
             fixture.Friction = 0;
             fixture.Body.LinearDamping = 0;
