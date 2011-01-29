@@ -16,6 +16,7 @@ namespace Server
         public string Name { get; set; }
         public Universe Universe { get; set; }
 
+        public List<Message> Messages { get; set; }
         public List<Note> Notes { get; set; }
 
         public Player(TcpClient client)
@@ -24,6 +25,7 @@ namespace Server
             client.Client.NoDelay = true;
 
             Notes = new List<Note>();
+            Messages = new List<Message>();
 
             GameServer.Instance.Log("Player Connected from " + client.Client.RemoteEndPoint);
         }
@@ -50,6 +52,9 @@ namespace Server
             var update = CheckForUpdate();
             if (update != null)
             {
+                foreach (var message in update.Messages)
+                    Messages.Add(new Message() { Text = message, Type = MessageType.System });
+
                 if (update.Thrust != null && Controlling != null)
                 {
                     GameServer.Instance.Log(String.Format("Angle {0} Distance {1}", update.Thrust.Angle, update.Thrust.Distance));

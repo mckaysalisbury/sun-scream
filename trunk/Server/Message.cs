@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 namespace Server
 {
     [DataContract]
-    class Message
+    public class Message
     {
         [DataMember(Order = 1)]
         public string Text { get; set; }

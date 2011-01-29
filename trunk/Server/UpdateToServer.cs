@@ -24,6 +24,13 @@ namespace Client
       get { return _Thrust; }
       set { _Thrust = value; }
     }
+    private readonly global::System.Collections.Generic.List<string> _Messages = new global::System.Collections.Generic.List<string>();
+    [global::ProtoBuf.ProtoMember(2, Name=@"Messages", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    public global::System.Collections.Generic.List<string> Messages
+    {
+      get { return _Messages; }
+    }
+  
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
