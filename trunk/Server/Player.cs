@@ -16,6 +16,8 @@ namespace Server
         public string Name { get; set; }
         public Universe Universe { get; set; }
 
+        public Role Role { get; set; }
+
         public List<Message> Messages { get; set; }
         public List<Note> Notes { get; set; }
 
@@ -73,10 +75,23 @@ namespace Server
 
                 if (update.Thrust != null && Controlling != null)
                 {
-                    var thrust = AngleToVector(update.Thrust.Angle / 100f, 0.001f);
-                    Controlling.Fixture.Body.ApplyForce(thrust);
+                    var angle = update.Thrust.Angle / 100f;
 
-                    Controlling.Fixture.Body.Rotation = update.Thrust.Angle / 100f;
+                    switch (Role)
+                    {
+                        case Server.Role.Thrust:
+                            var thrust = AngleToVector(angle, 0.001f);
+                            Controlling.Fixture.Body.ApplyForce(thrust);
+                            Controlling.Fixture.Body.Rotation = angle;
+                            break;
+
+                        case Server.Role.Tractor:
+                            Controlling.Tractor(angle, update.Thrust.Distance);
+                            break;
+
+                        default:
+                            throw new NotImplementedException();
+                    }
 
                     //GameServer.Instance.Log(String.Format("Angle {0} Distance {1}", update.Thrust.Angle, update.Thrust.Distance));
                     //GameServer.Instance.Log(String.Format("Thrust {0}", thrust));
