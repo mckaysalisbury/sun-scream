@@ -10,5 +10,9 @@ namespace Server
     /// </summary>
     public class StarSystem : Entity
     {
+        private const float size = 10f;
+        public StarSystem(int id, string name, float x, float y) : base(id, name, x, y, size, size)
+        {
+        }
     }
 }
