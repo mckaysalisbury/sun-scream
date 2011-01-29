@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from: UpdateToServer.proto
+// Generated from: client.proto
 namespace Client
 {
   [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"UpdateToServer")]
@@ -34,19 +34,19 @@ namespace Client
   {
     public ThrustUpdate() {}
     
-    private int _RelativeX;
-    [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"RelativeX", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    public int RelativeX
+    private int _Angle;
+    [global::ProtoBuf.ProtoMember(1, IsRequired = true, Name=@"Angle", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public int Angle
     {
-      get { return _RelativeX; }
-      set { _RelativeX = value; }
+      get { return _Angle; }
+      set { _Angle = value; }
     }
-    private int _RelativeY;
-    [global::ProtoBuf.ProtoMember(2, IsRequired = true, Name=@"RelativeY", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    public int RelativeY
+    private int _Distance;
+    [global::ProtoBuf.ProtoMember(2, IsRequired = true, Name=@"Distance", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public int Distance
     {
-      get { return _RelativeY; }
-      set { _RelativeY = value; }
+      get { return _Distance; }
+      set { _Distance = value; }
     }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)

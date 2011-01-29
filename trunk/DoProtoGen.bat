@@ -1,1 +1,1 @@
-References\protogen -i:UpdateToServer.proto -o:Server\UpdateToServer.cs
+References\protogen -i:client.proto -o:Server\UpdateToServer.cs

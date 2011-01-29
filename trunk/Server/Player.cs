@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net.Sockets;
 using System.IO;
+using Microsoft.Xna.Framework;
 
 namespace Server
 {
@@ -42,11 +43,16 @@ namespace Server
             {
                 if (update.Thrust != null && Controlling != null)
                 {
-                    var thrust = new Microsoft.Xna.Framework.Vector2(update.Thrust.RelativeX / 100000f, update.Thrust.RelativeY / 100000f);
+                    var thrust = AngleToVector(update.Thrust.Angle / 100f, update.Thrust.Distance / 1000f);
                     Controlling.Fixture.Body.ApplyForce(thrust);
                     GameServer.Instance.Log(String.Format("Thrust {0}", thrust));
                 }
             }
+        }
+
+        public static Vector2 AngleToVector(double angle, double distance)
+        {
+            return new Vector2((float)(distance * Math.Cos(angle)), (float)(distance * Math.Sin(angle)));
         }
 
         public Client.UpdateToServer CheckForUpdate()
