@@ -9,6 +9,8 @@ package
 
   import lib.ui.ButtonList;
 
+  import ui.View;
+
   import Client.UpdateToServer;
   import Server.UpdatePacket;
   import Server.MessageType;
@@ -25,7 +27,6 @@ package
       menu = null;
       menuButtons = null;
       disconnect();
-      connect();
     }
 
     static function onClose(event : Event) : void
@@ -155,6 +156,8 @@ package
       conn.connect(host, 1701);
       if (menu != null)
       {
+        menuButtons.cleanup();
+        menuButtons = null;
         menu.parent.removeChild(menu);
         menu = null;
       }
@@ -174,6 +177,22 @@ package
         conn.removeEventListener(ProgressEvent.SOCKET_DATA, onData);
         conn = null;
       }
+      menu = new ConnectMenu();
+      Main.root.addChild(menu);
+      menu.x = (View.WIDTH - menu.width)/2;
+      menu.y = (View.HEIGHT - menu.height)/2;
+      menuButtons = new ButtonList([menu.ok]);
+      menuButtons.setActions(click, menuButtons.frameOver,
+                             menuButtons.frameOut);
+      menu.hostField.text = host;
+      menu.nameField.text = name;
+    }
+
+    static function click(choice : int) : void
+    {
+      host = menu.hostField.text;
+      name = menu.nameField.text;
+      connect();
     }
 
     static var game : Game;
