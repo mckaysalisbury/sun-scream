@@ -132,6 +132,16 @@
       entities[update.Id].changePos(pos);
     }
 
+    public function removeEntity(target : int) : void
+    {
+      var oldEntity = entities[target];
+      if (oldEntity != null)
+      {
+        oldEntity.cleanup();
+        delete entities[oldEntity];
+      }
+    }
+
     public function setController(newController : int) : void
     {
       controller = newController;

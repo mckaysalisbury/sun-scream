@@ -37,6 +37,11 @@ package
       view.updateEntity(update);
     }
 
+    public function removeEntity(target : int) : void
+    {
+      view.removeEntity(target);
+    }
+
     public function setController(newController : int) : void
     {
       view.setController(newController);
