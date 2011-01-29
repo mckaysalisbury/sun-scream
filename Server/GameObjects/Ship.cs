@@ -15,7 +15,7 @@ namespace Server
     {
         private const float size = 1f;
 
-        public Ship(int id, string name) : base(id, name)
+        public Ship(string name) : base(name)
         {
         }
 

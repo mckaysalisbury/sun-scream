@@ -20,6 +20,7 @@ namespace Server.Display
 
         public Universe Universe { get; set; }
         public Dictionary<int, Control> controls = new Dictionary<int, Control>();
+        public float currentScale = 1;
 
         private void refreshTimer_Tick(object sender, EventArgs e)
         {
@@ -51,7 +52,8 @@ namespace Server.Display
 
         private Point ConvertPosition(Vector2 position)
         {
-            return new Point((int)(position.X * 10 + 200), (int)(position.Y * 10 + 200));
+            var zero = new Point((ClientRectangle.Bottom + ClientRectangle.Top) / 2, (ClientRectangle.Left + ClientRectangle.Right) / 2);
+            return new Point((int)(position.X * currentScale + zero.X), (int)(position.Y * currentScale + zero.Y));
         }
 
         private Control CreateControl(Entity entity)
@@ -78,6 +80,16 @@ namespace Server.Display
                 default:
                     throw new Exception();
             }
+        }
+
+        private void zoomInButton_Click(object sender, EventArgs e)
+        {
+            currentScale /= 2;
+        }
+
+        private void zoomOutButton_Click(object sender, EventArgs e)
+        {
+            currentScale *= 2;
         }
     }
 }
