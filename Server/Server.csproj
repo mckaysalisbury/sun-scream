@@ -55,9 +55,6 @@
     </DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FarseerPhysics">
-      <HintPath>..\References\FarseerPhysics.dll</HintPath>
-    </Reference>
     <Reference Include="protobuf-net">
       <HintPath>..\References\protobuf-net.dll</HintPath>
     </Reference>
@@ -139,6 +136,12 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\References\Farseer Physics Engine 3.2 Class\Farseer Physics 3.2.csproj">
+      <Project>{A4610E4C-DD34-428B-BABB-779CA0B5993A}</Project>
+      <Name>Farseer Physics 3.2</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
