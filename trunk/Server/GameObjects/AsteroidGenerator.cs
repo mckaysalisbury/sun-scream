@@ -19,9 +19,14 @@ namespace Server
         {
         }
 
+        int updateCount = 0;
+
         internal override void Update()
         {
-            Universe.AddEntity(new Asteroid(), Position);
+            if (updateCount % 10 == 0)
+                Universe.AddEntity(new Asteroid(), Position);
+
+            updateCount++;
         }
 
         protected override Fixture GetFixture(World world)

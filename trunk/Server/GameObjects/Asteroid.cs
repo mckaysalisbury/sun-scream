@@ -25,6 +25,7 @@ namespace Server
         {
             var fixture = FixtureFactory.CreateCircle(world, size, 1);
             fixture.Body.BodyType = BodyType.Dynamic;
+            fixture.Body.LinearVelocity = new Vector2((float)ScreamMath.Random.NextDouble() - 0.5f, (float)ScreamMath.Random.NextDouble() - 0.5f);
             return fixture;
         }
 
