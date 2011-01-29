@@ -25,10 +25,7 @@ namespace Server
         {
             InitializeComponent();
 
-            protoRichTextBox.Text = ProtoBuf.Serializer.GetProto<TestObject>();
-
-            var testData = GenerateTestData();
-            propertyGrid1.SelectedObject = testData;
+            protoRichTextBox.Text = ProtoBuf.Serializer.GetProto<UpdatePacket>();
 
             var ipAddress = Dns.Resolve("localhost").AddressList[0];
             listener = new TcpListener(ipAddress, Port);
@@ -48,12 +45,12 @@ namespace Server
             {
                 if (clients.Count > 0)
                 {
-                    var bytes = SerializeTestData();
+                    //var bytes = SerializeTestData();
 
-                    foreach (var client in clients)
-                    {
-                        client.Client.Send(bytes);
-                    }
+                    //foreach (var client in clients)
+                    //{
+                    //    client.Client.Send(bytes);
+                    //}
                 }
             }
         }
@@ -73,45 +70,38 @@ namespace Server
             }
         }
 
-        TestObject GenerateTestData()
-        {
-            var result = new TestObject() { Id = 100, PositionX = 3.35f, PositionY = 512.23f, TestEnum = TestEnum.Hundred };
-
-            result.Children.Add(new Child() { Name = "Brookelyn" });
-            result.Children.Add(new Child() { Name = "Vincent" });
-            result.Children.Add(new Child() { Name = "Brenin" });
-
-            return result;
-        }
-
         void sendButton_Click(object sender, EventArgs e)
         {
-            var bytes = SerializeTestData();
+            //var bytes = SerializeTestData();
 
-            lock (clients)
-            {
-                foreach (var client in clients)
-                {
-                    client.Client.Send(bytes);
-                }
-            }
+            //lock (clients)
+            //{
+            //    foreach (var client in clients)
+            //    {
+
+            //        var packet = new UpdatePacket();
+            //        packet.Messages.Add(new Message() { Text = "Hello World", Type = MessageType.System });
+
+            //        client.Client.Send(bytes);
+            //    }
+            //}
         }
 
-        byte[] SerializeTestData()
-        {
-            using (var stream = new MemoryStream())
-            {
-                Serializer.SerializeWithLengthPrefix(stream, propertyGrid1.SelectedObject as TestObject, PrefixStyle.Fixed32);
+        //byte[] SerializeTestData()
+        //{
+        //    using (var stream = new MemoryStream())
+        //    {
+        //        Serializer.SerializeWithLengthPrefix(stream, propertyGrid1.SelectedObject as TestObject, PrefixStyle.Fixed32);
 
-                var bytes = new byte[stream.Length];
-                stream.Position = 0;
-                stream.Read(bytes, 0, (int)stream.Length);
+        //        var bytes = new byte[stream.Length];
+        //        stream.Position = 0;
+        //        stream.Read(bytes, 0, (int)stream.Length);
 
-                output.AppendText("\nSerialized to: " + BitConverter.ToString(bytes));
-                output.ScrollToCaret();
+        //        output.AppendText("\nSerialized to: " + BitConverter.ToString(bytes));
+        //        output.ScrollToCaret();
 
-                return bytes;
-            }
-        }
+        //        return bytes;
+        //    }
+        //}
     }
 }
