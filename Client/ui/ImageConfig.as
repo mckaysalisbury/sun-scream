@@ -9,7 +9,9 @@ package ui
     public static var SHIP_LAYER = 0;
     public static var layerCount = 2;
 
-    public static var entities = [new ImageType("ShipClip", SHIP_LAYER,
+    public static var entities = [new ImageType("EmptyClip", SHIP_LAYER,
+                                                new Point(4, 4)),
+                                  new ImageType("ShipClip", SHIP_LAYER,
                                                 new Point(72, 65)),
                                   new ImageType("StarClip", STAR_LAYER,
                                                 new Point(30, 30)),
