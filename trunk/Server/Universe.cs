@@ -77,25 +77,18 @@ namespace Server
             foreach (var player in Players)
             {
                 var packet = new UpdatePacket();
+
+                foreach (var entity in Entites)
+                {
+                    packet.Entites.Add(new ClientEntityData() { Type = entity.GetClientType() });
+                }
+
                 packet.Messages.Add(new Message() { Text = "Hello World", Type = MessageType.System });
 
                 player.Client.Client.Send(packet.Serialize());
             }
 
             lastUpdate = DateTime.Now;
-
-
-
-            //var bytes = SerializeTestData();
-            //lock (clients)
-            //{
-            //    foreach (var client in clients)
-            //    {
-
-
-            //        client.Client.Send(bytes);
-            //    }
-            //}
         }
 
         private int nextId = 0;

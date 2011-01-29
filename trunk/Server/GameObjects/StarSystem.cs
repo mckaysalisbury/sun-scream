@@ -14,5 +14,10 @@ namespace Server
         public StarSystem(int id, string name, float x, float y) : base(id, name, x, y, size, size)
         {
         }
+
+        internal override ClientEntityType GetClientType()
+        {
+            return ClientEntityType.Star;
+        }
     }
 }
