@@ -15,9 +15,9 @@ namespace Server
     public class Ship : Entity
     {
         private const float size = 1f;
-        private const float maxTractorQuadrance = 1000;
+        private const float maxTractorQuadrance = 10000;
 
-        public List<Entity> TractoredItems = new List<Entity>();
+        public Dictionary<Entity, Joint> TractoredItems = new Dictionary<Entity, Joint>();
 
         public Ship(string name) : base(name)
         {
@@ -51,13 +51,22 @@ namespace Server
 
         public Entity Release()
         {
-
-            return null;
+            if (TractoredItems == null || TractoredItems.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                var pair = TractoredItems.First();
+                TractoredItems.Remove(pair.Key);
+                Universe.World.RemoveJoint(pair.Value);
+                return pair.Key;
+            }
         }
         public Entity Tractor()
         {
             var tractorableEntities = this.Universe.Entites.Where((e) => e.IsTractorable);
-            var availableTractorableEntities = tractorableEntities.Where((e) => e != this && !TractoredItems.Contains(e));
+            var availableTractorableEntities = tractorableEntities.Where((e) => e != this && !TractoredItems.ContainsKey(e));
             if (availableTractorableEntities.Any())
             {
                 var minimum = availableTractorableEntities.Min((e) => ScreamMath.Quadrance(e.Position, this.Position));
@@ -74,7 +83,7 @@ namespace Server
                 joint.CollideConnected = true;
                 joint.MaxLength = (float)Math.Sqrt(maxTractorQuadrance);
                 Universe.World.AddJoint(joint);
-                TractoredItems.Add(closest);
+                TractoredItems.Add(closest, joint);
                 //JointFactory.CreateRevoluteJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero);
                 //JointFactory.CreateLineJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
 
