@@ -18,6 +18,8 @@ namespace Server
 
         public GameServer()
         {
+            Instance = this;
+
             Universe = UniverseGenerator.Generate();
 
             var ipAddress = Dns.GetHostEntry("localhost").AddressList[0];

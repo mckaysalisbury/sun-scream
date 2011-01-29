@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
+using System.Timers;
 
 namespace Server
 {
@@ -12,7 +13,13 @@ namespace Server
     /// </summary>
     public class Universe
     {
+        public List<Entity> Entites = new List<Entity>();
+
         World World;
+
+        DateTime lastUpdate = DateTime.Now;
+
+        Timer timer = new Timer();
 
         /// <summary>
         /// Creates an instance of the Universe class
@@ -20,12 +27,28 @@ namespace Server
         public Universe()
         {
             World = new World(Vector2.Zero);
+
+            AddEntity(new Ship());
         }
 
-        void sendButton_Click(object sender, EventArgs e)
+        public void AddEntity(Entity entity)
         {
-            //var bytes = SerializeTestData();
+            entity.CreateBody(World);
+            Entites.Add(entity);
+        }
 
+        void Update()
+        {
+            foreach (var entity in Entites)
+                entity.Update();
+
+            World.Step((float)(DateTime.Now - lastUpdate).TotalMilliseconds);
+
+            lastUpdate = DateTime.Now;
+
+
+
+            //var bytes = SerializeTestData();
             //lock (clients)
             //{
             //    foreach (var client in clients)

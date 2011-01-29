@@ -10,5 +10,10 @@ namespace Server
     /// </summary>
     public class Ship : Entity
     {
+        public Ship()
+        {
+            Width = 0.1f;
+            Height = 0.1f;
+        }
     }
 }

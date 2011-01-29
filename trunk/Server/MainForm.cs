@@ -28,6 +28,7 @@ namespace Server
 
             protoRichTextBox.Text = ProtoBuf.Serializer.GetProto<UpdatePacket>();
 
+            new GameServer();
         }
 
     }
