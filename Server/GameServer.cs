@@ -8,13 +8,13 @@ using System.Timers;
 
 namespace Server
 {
-    class GameServer
+    public class GameServer
     {
         const int Port = 1701;
 
         TcpListener listener;
 
-        Universe Universe;
+        public Universe Universe { get; private set; }
 
         Timer timer;
 
