@@ -63,19 +63,30 @@ namespace Server
                 return pair.Key;
             }
         }
+
+        public Entity Tractor(float angle, int distance)
+        {
+            var deltaPosition = new Vector2((float)(Math.Cos(angle) * distance), (float)(Math.Sin(angle) * distance));
+            var positionToLookFrom = this.Position + deltaPosition;
+            return TractorEntity(positionToLookFrom);
+        }
+
         public Entity Tractor()
+        {
+            var positionToLookFrom = this.Position;
+
+            return TractorEntity(positionToLookFrom);
+        }
+
+        private Entity TractorEntity(Vector2 positionToLookFrom)
         {
             var tractorableEntities = this.Universe.Entites.Where((e) => e.IsTractorable);
             var availableTractorableEntities = tractorableEntities.Where((e) => e != this && !TractoredItems.ContainsKey(e));
+            var nearEnoughAvailableTractorableEntities = availableTractorableEntities.Where((e) => ScreamMath.Quadrance(e.Position, this.Position) < maxTractorQuadrance);
             if (availableTractorableEntities.Any())
             {
-                var minimum = availableTractorableEntities.Min((e) => ScreamMath.Quadrance(e.Position, this.Position));
+                var minimum = availableTractorableEntities.Min((e) => ScreamMath.Quadrance(e.Position, positionToLookFrom));
 
-                if (minimum > maxTractorQuadrance)
-                {
-                    // too far away for tractor
-                    return null;
-                }
                 var closest = availableTractorableEntities.First((e) => ScreamMath.Quadrance(e.Position, this.Position) == minimum);
                 var joint = new RopeJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
                 //joint.DampingRatio = 1;
