@@ -56,7 +56,7 @@ namespace Server
 
         public Vector2 GetSpawnLocation()
         {
-            return new Vector2(0, .001f);
+            return new Vector2(0, 0);
         }
 
         public void AddEntity(Entity entity, Vector2 position)
@@ -75,7 +75,8 @@ namespace Server
                 //GameServer.Instance.Log(string.Format("{0}={1}@({2},{3})", entity.Id, entity.Name, entity.Position.X, entity.Position.Y));
             }
 
-            World.Step((float)(DateTime.Now - lastUpdate).TotalMilliseconds);            
+            World.Step(10);
+            //World.Step((float)(DateTime.Now - lastUpdate).TotalMilliseconds);            
 
             foreach (var player in Players)
             {

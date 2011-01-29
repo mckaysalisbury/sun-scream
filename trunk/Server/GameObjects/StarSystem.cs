@@ -29,7 +29,7 @@ namespace Server
         {
             var fixture = FixtureFactory.CreateRectangle(world, size, size, 1);
 
-            var gravity = new GravityController(1f);
+            var gravity = new GravityController(.01f);
             gravity.AddBody(fixture.Body);
             gravity.GravityType = GravityType.DistanceSquared;
 
