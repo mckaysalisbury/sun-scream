@@ -13,7 +13,7 @@ namespace Server
     {
         private const float size = 0.1f;
 
-        public Asteroid(string name) : base(name)
+        public Asteroid() : base(string.Empty)
         {
         }
 
