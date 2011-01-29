@@ -18,6 +18,8 @@ namespace Server
         {
             var universe = new Universe();
 
+            universe.AddEntity(new Ship());
+
             return universe;
         }
     }
