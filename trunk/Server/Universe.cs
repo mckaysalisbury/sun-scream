@@ -27,8 +27,6 @@ namespace Server
         public Universe()
         {
             World = new World(Vector2.Zero);
-
-            AddEntity(new Ship());
         }
 
         public void AddEntity(Entity entity)
