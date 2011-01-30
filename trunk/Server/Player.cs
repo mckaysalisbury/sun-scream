@@ -169,9 +169,9 @@ namespace Server
                 Client.Client.Receive(bytes);
                 var packetLength = BitConverter.ToInt32(bytes, 0);
 
-                if (packetLength > 1000 || packetLength < 0)
+                if (packetLength > 100000 || packetLength < 0)
                 {
-                    GameServer.Instance.Log(String.Format("Invalid packet length {0}", packetLength));
+                    GameServer.Instance.Log(String.Format("Invalid packet length {0}, Bytes were = {1}", packetLength, BitConverter.ToString(bytes)));
 
                     Disconnect();
                     return null;
@@ -181,7 +181,12 @@ namespace Server
                     GameServer.Instance.Log(String.Format("Sent Length {0}  Available {1}", packetLength, Client.Client.Available));
 
                 if (Client.Client.Available < packetLength)
-                    throw new NotImplementedException("partial packet received");
+                {
+                    GameServer.Instance.Log("Partial packet recieved");
+
+                    Disconnect();
+                    return null;
+                }
 
                 var packetBytes = new byte[packetLength];
                 Client.Client.Receive(packetBytes);
