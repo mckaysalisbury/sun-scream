@@ -88,11 +88,11 @@ namespace Server
             switch (faction)
             {
                 case Faction.Builders:
-                    return "You are a builder. You have a (T)ractor beam with which you can collect nearby asteroids, When you have collected 5 of them, you can (B)uild a new planet!";
+                    return "You are a builder. You have a (T)ractor beam with which you can collect nearby asteroids, When you have collected 5 of them, you can (B)uild a new planet to get a point!";
                 case Faction.Destroyers:
-                    return "You are a destroyer. You have a (T)ractor beam with which you can collect nearby asteroids. When the time is right, you can (R)elease the asteroid. If it hits a planet it will destroy the planet to make way for the intersteller bypasses.";
+                    return "You are a destroyer. You have a (T)ractor beam with which you can collect nearby asteroids. When the time is right, you can (R)elease the asteroid. If it hits a planet it will destroy the planet to earn you a point.";
                 case Faction.Guides:
-                    return "You are a guide. You have a (T)ractor beam with which you can collect nearby hitchhikers. When the time is right, you can (R)elease the hitchhiker. If it lands on a planet, they will be happy!";
+                    return "You are a guide. You have a (T)ractor beam with which you can collect nearby hitchhikers. When the time is right, you can (R)elease the hitchhiker. If it lands on a planet, you get a point!";
                 default:
                     throw new NotImplementedException();
             }
