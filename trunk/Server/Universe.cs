@@ -165,6 +165,7 @@ namespace Server
                                 {
                                     Type = entity.GetClientType(),
                                     Id = entity.Id,
+                                    Name = entity.Name,
                                     LocationX = (int)(entity.Fixture.Body.Position.X * 10000f),
                                     LocationY = (int)(entity.Fixture.Body.Position.Y * 10000f),
                                     Rotation = (int)(entity.Fixture.Body.Rotation * 100f),

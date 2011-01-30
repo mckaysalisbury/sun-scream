@@ -150,6 +150,8 @@
       entity.changePos(pos, window);
       entity.changeRotation(rotation);
       entity.changeScale(Math.floor(update.Size/SCALE));
+      entity.setName(update.Name);
+//      trace(update.Name);
     }
 
     public function removeEntity(target : int) : void

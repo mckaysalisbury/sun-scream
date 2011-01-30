@@ -4,7 +4,7 @@ package ui
   import flash.display.Shape;
 
   import lib.Point;
-  import lib.ui.Image;
+  import lib.ui.ImageText;
   import lib.ui.ImageList;
   import lib.ui.Window;
 
@@ -20,7 +20,7 @@ package ui
       {
         type = newType;
       }
-      sprite = new Image(ImageConfig.entities[type]);
+      sprite = new ImageText(ImageConfig.entities[type]);
       images.add(sprite);
       pos = new Point(0, 0);
       tractor = null;
@@ -69,7 +69,10 @@ package ui
 
     public function changeRotation(newRotation : int) : void
     {
-      sprite.setRotation(newRotation);
+      if (type != Server.EntityUpdateType.Planet)
+      {
+        sprite.setRotation(newRotation);
+      }
     }
 
     public function changeScale(newRadius : int) : void
@@ -104,7 +107,19 @@ package ui
       isTowed = true;
     }
 
-    var sprite : Image;
+    public function setName(name : String) : void
+    {
+      if (name != null
+          && (type == Server.EntityUpdateType.BuilderShip
+              || type == Server.EntityUpdateType.DestroyerShip
+              || type == Server.EntityUpdateType.GuideShip
+              || type == Server.EntityUpdateType.Planet))
+      {
+        sprite.setText(name);
+      }
+    }
+
+    var sprite : ImageText;
     var images : ImageList;
     var type : int;
     var pos : Point;
