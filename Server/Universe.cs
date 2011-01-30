@@ -123,19 +123,34 @@ namespace Server
                         };
 
                     //GameServer.Instance.Log(string.Format("{0}", player.Controlling.Fixture.Body.LinearVelocity));
+                    //GameServer.Instance.Log(((int)(player.Controlling.Fixture.Body.Rotation * 100f)).ToString());
 
                     foreach (var entity in Entites)
                     {
                         var type = entity.GetClientType();
                         if (type != EntityUpdateType.Invisible)
-                            packet.Entities.Add(new EntityUpdate()
+                        {
+                            var update = new EntityUpdate()
                                 {
                                     Type = entity.GetClientType(),
-                                    Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 10000),
+                                    Id = entity.Id,
+                                    LocationX = (int)(entity.Fixture.Body.Position.X * 10000),
                                     LocationY = (int)(entity.Fixture.Body.Position.Y * 10000),
                                     Rotation = (int)(entity.Fixture.Body.Rotation * 100f),
                                     Size = (int)(entity.Fixture.Shape.Radius * 100f)
-                                });
+                                };
+
+                            var ship = entity as Ship;
+                            if (ship != null)
+                            {
+                                foreach (var towed in ship.TractoredItems.Keys)
+                                {
+                                    update.Towed.Add(towed.Id);
+                                }
+                            }
+
+                            packet.Entities.Add(update);
+                        }
                     }
 
                     var packetBytes = packet.Serialize();
@@ -149,7 +164,7 @@ namespace Server
                     }
                     catch (SocketException e)
                     {
-                        GameServer.Instance.Log(e.ToString());
+                        //GameServer.Instance.Log(e.ToString());
                         player.Disconnect();
                     }
                 }

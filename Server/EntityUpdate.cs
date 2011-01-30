@@ -40,14 +40,14 @@ namespace Server
         public int Rotation { get; set; }
 
         [DataMember(Order = 7)]
-        public List<int> Beaming { get; set; }
+        public List<int> Towed { get; set; }
 
         [DataMember(Order = 8)]
         public int Size { get; set; }
 
         public EntityUpdate()
         {
-            Beaming = new List<int>();
+            Towed = new List<int>();
         }
     }
 }
