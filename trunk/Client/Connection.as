@@ -4,6 +4,10 @@ package
   import flash.events.IOErrorEvent;
   import flash.events.SecurityErrorEvent;
   import flash.events.ProgressEvent;
+  import flash.events.AsyncErrorEvent;
+  import flash.events.NetStatusEvent;
+  import flash.events.SyncEvent;
+  import flash.net.SharedObject;
   import flash.net.Socket;
   import flash.utils.ByteArray;
 
@@ -23,10 +27,33 @@ package
       game = newGame;
       name = "John Doe";
       host = "localhost";
+      disk = SharedObject.getLocal("sun-scream");
+      disk.addEventListener(flash.events.AsyncErrorEvent.ASYNC_ERROR,
+                            asyncHandler);
+      disk.addEventListener(flash.events.NetStatusEvent.NET_STATUS,
+                            netStatusHandler);
+      disk.addEventListener(flash.events.SyncEvent.SYNC,
+                            syncHandler);
+      load();
       conn = null;
       menu = null;
       menuButtons = null;
       disconnect();
+    }
+
+    static function asyncHandler(event : AsyncErrorEvent) : void
+    {
+      game.addChat("Client: SharedObject async error");
+    }
+
+    static function netStatusHandler(event : NetStatusEvent) : void
+    {
+      game.addChat("Client: SharedObject net status error");
+    }
+
+    static function syncHandler(event : SyncEvent) : void
+    {
+      game.addChat("Client: SharedObject sync error");
     }
 
     static function onClose(event : Event) : void
@@ -52,6 +79,56 @@ package
     {
       game.addChat("Client: Socket Security Error");
       disconnect();
+    }
+
+    static function load() : void
+    {
+      try
+      {
+        if (disk.data.done == true && disk.data.version == 0)
+        {
+          if (disk.data.host != null && disk.data.host != "")
+          {
+            host = disk.data.host;
+          }
+          else
+          {
+            disk.data.host = host;
+          }
+          if (disk.data.name != null && disk.data.name != "")
+          {
+            name = disk.data.name;
+          }
+          else
+          {
+            disk.data.name = name;
+          }
+        }
+        else if (! disk.data.done)
+        {
+          save();
+        }
+      }
+      catch (e : Error)
+      {
+        save();
+      }
+    }
+
+    static function save() : void
+    {
+      try
+      {
+        disk.data.done = false;
+        disk.data.version = 0;
+        disk.data.name = name;
+        disk.data.host = host;
+        disk.data.done = true;
+        disk.flush();
+      }
+      catch (e : Error)
+      {
+      }
     }
 
     static function onData(event : ProgressEvent) : void
@@ -192,6 +269,7 @@ package
     {
       host = menu.hostField.text;
       name = menu.nameField.text;
+      save();
       connect();
     }
 
@@ -203,5 +281,6 @@ package
     static var menuButtons : ButtonList;
     static var host : String;
     static var name : String;
+    static var disk : SharedObject;
   }
 }
