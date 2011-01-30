@@ -38,7 +38,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DocumentationFile>
     </DocumentationFile>
   </PropertyGroup>
@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\Commands.cs" />
+    <Compile Include="Commands\SetFactionCommand.cs" />
     <Compile Include="Commands\SetRoleCommand.cs" />
     <Compile Include="Commands\ReleaseCommand.cs" />
     <Compile Include="Commands\SetNameCommand.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SayCommand.cs" />
     <Compile Include="Commands\TractorCommand.cs" />
+    <Compile Include="Faction.cs" />
     <Compile Include="NoteType.cs" />
     <Compile Include="Note.cs" />
     <Compile Include="Display\DisplayForm.cs">

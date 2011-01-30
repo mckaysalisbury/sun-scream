@@ -23,6 +23,8 @@ namespace Server
 
         Timer timer;
 
+        const int iterations = 10;
+
         /// <summary>
         /// Creates an instance of the Universe class
         /// </summary>
@@ -30,7 +32,8 @@ namespace Server
         {
             World = new World(Vector2.Zero) { AutoClearForces = true };
 
-            timer = new Timer(33);
+            
+            timer = new Timer(10);
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             timer.AutoReset = false;
 
@@ -72,6 +75,7 @@ namespace Server
             entity.CreateBody(World);
             entity.Position = position;
             entity.Universe = this;
+            entity.Fixture.Body.IsBullet = true;
             Entites.Add(entity);
         }
 
@@ -96,14 +100,23 @@ namespace Server
                 //GameServer.Instance.Log(string.Format("{0}={1}@({2},{3})", entity.Id, entity.Name, entity.Position.X, entity.Position.Y));
             }
 
-            //World.Step(10);
-            World.Step((float)(DateTime.Now - lastUpdate).TotalMilliseconds);
+            //var time = (float)(DateTime.Now - lastUpdate).TotalMilliseconds;
+            World.Step(1);
+            World.Step(1);
+            World.Step(1);
+            World.Step(1);
+            World.Step(1);
+            World.Step(1);
+            World.Step(1);
+            World.Step(1);
+            World.Step(1);
+            World.Step(1);
 
             foreach (var player in Players.ToArray())
             {
                 player.Update();
 
-                if (player.Client.Client.Connected)
+                if (player.Client != null)
                 {
                     var packet = new UpdatePacket() { ControllingEntityId = player.Controlling == null ? 0 : player.Controlling.Id, Notes = player.Notes, Messages = player.Messages };
 

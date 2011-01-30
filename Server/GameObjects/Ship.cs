@@ -39,9 +39,9 @@ namespace Server
         protected override Fixture GetFixture(World world)
         {
             var fixture = FixtureFactory.CreateCircle(world, size, 1);
-            fixture.Body.BodyType = BodyType.Dynamic;
+            //fixture.Body.BodyType = BodyType.Dynamic;
 
-            //fixture.Body.IsStatic = false;
+            fixture.Body.IsStatic = false;
             //fixture.Friction = 0;
             //fixture.Body.LinearDamping = 0;
             //fixture.Body.AngularDamping = 0;

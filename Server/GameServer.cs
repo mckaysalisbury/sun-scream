@@ -29,8 +29,9 @@ namespace Server
 
             Universe = UniverseGenerator.GenerateUniverse();
 
-            var ipAddress = Dns.GetHostEntry("localhost").AddressList[0];
-            listener = new TcpListener(ipAddress, Port);
+            //var ipAddress = Dns.GetHostEntry("livingston-pc").AddressList[0];
+            //listener = new TcpListener(ipAddress, Port);
+            listener = new TcpListener(Port);
             listener.Start();
 
             timer = new Timer(100);
