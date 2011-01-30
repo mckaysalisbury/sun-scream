@@ -70,14 +70,17 @@ namespace Server
 
                         break;
                     case Server.Faction.Magrathean:
+                        Controlling.TowMax = 10;
                         Controlling.Speed = 0.04f;
 
                         break;
                     case Server.Faction.MegadodoPublications:
+                        Controlling.TowMax = 5;
                         Controlling.Speed = 0.12f;
                         break;
 
                     case Server.Faction.CyriusCybernetics:
+                        Controlling.TowMax = int.MaxValue;
                         Controlling.Speed = 0.20f;
                         break;
                 }

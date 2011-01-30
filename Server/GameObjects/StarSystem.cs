@@ -49,7 +49,9 @@ namespace Server
                 Die();
                 var ship = ((Asteroid)collidedWith).LastShip;
                 if (ship != null)
+                {
                     Score.Give(ship);
+                }
             }
             collidedWith.Die();
         }
