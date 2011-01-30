@@ -46,6 +46,12 @@ namespace Server
             Update();
         }
 
+        public void PlaySound(Sounds sound)
+        {
+            foreach (var player in Players)
+                player.AddNote((int)sound, NoteType.PlaySound);
+        }
+
         public void AddPlayer(Player player)
         {            
             Players.Add(player);
