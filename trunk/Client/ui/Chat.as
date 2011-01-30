@@ -34,7 +34,7 @@ package ui
     {
       if (event.keyCode == Keyboard.ENTER)
       {
-        if (clip.stage.focus == clip.input)
+        if (isActive())
         {
           clickSend(0);
         }
@@ -59,6 +59,11 @@ package ui
     {
       clip.history.appendText(message + "\n");
       clip.history.scrollV = clip.history.maxScrollV;
+    }
+
+    function isActive() : Boolean
+    {
+      return clip.stage.focus == clip.input;
     }
 
     var clip : ChatClip;
