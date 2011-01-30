@@ -15,7 +15,7 @@ namespace Server
     /// </summary>
     public class Ship : Entity
     {
-        private const float size = 1f;
+        private const float size = 2f;
 
         const int asteroidsNeededToBuild = 5;
 
