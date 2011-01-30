@@ -15,12 +15,15 @@ namespace Server
     public class Ship : Entity
     {
         private const float size = 1f;
-        private const float maxTractorQuadrance = 1000;
+        private const float maxTractorQuadrance = 10000;
+        private int maxTractors;
+        private const int asteroidsNeededToBuild = 5;
 
         public Dictionary<Entity, Joint> TractoredItems = new Dictionary<Entity, Joint>();
 
-        public Ship(string name) : base(name)
+        public Ship(string name, int maxTractors) : base(name)
         {
+            this.maxTractors = maxTractors;
         }
 
         internal override EntityUpdateType GetClientType()
@@ -58,10 +61,16 @@ namespace Server
             else
             {
                 var pair = TractoredItems.First();
-                TractoredItems.Remove(pair.Key);
-                Universe.World.RemoveJoint(pair.Value);
+                Remove(pair.Key);
                 return pair.Key;
             }
+        }
+
+        private void Remove(Entity entity)
+        {
+            var joint = TractoredItems[entity];
+            TractoredItems.Remove(entity);
+            //Universe.World.RemoveJoint(joint);
         }
 
         public Entity Tractor(float angle, int distance)
@@ -69,6 +78,41 @@ namespace Server
             var deltaPosition = new Vector2((float)(Math.Cos(angle) * distance), (float)(Math.Sin(angle) * distance));
             var positionToLookFrom = this.Position + deltaPosition;
             return TractorEntity(positionToLookFrom);
+        }
+
+        public void RemoveAndBuild()
+        {
+            var tractoredAsteroids = TractoredItems.Where((e) => e.Key.GetClientType() == EntityUpdateType.Asteroid).ToArray();
+            if (tractoredAsteroids.Length >= asteroidsNeededToBuild)
+            {
+                int asteroidsNeededForThisPlanet = asteroidsNeededToBuild;
+                foreach (var asteroidPair in tractoredAsteroids)
+                {
+                    Remove(asteroidPair.Key);
+                    asteroidPair.Key.Die();
+
+                    if (--asteroidsNeededForThisPlanet == 0)
+                    {
+                        BuildPlanet();
+                        break;
+                    }
+
+                }
+            }
+        }
+
+        public int nextPlanetIndex = 0;
+
+        private void BuildPlanet()
+        {
+            Universe.AddEntity(new StarSystem((this.Name ?? string.Empty) + (nextPlanetIndex++).ToString()), BehindMe());
+        }
+
+        private Vector2 BehindMe()
+        {
+            const float behindAmount = 100f;
+            var behindPosition = new Vector2(this.Position.X - (float)Math.Cos(this.Fixture.Body.Rotation) * behindAmount, this.Position.Y - (float)Math.Sin(this.Fixture.Body.Rotation) * behindAmount);
+            return behindPosition;
         }
 
         public Entity Tractor()
@@ -80,6 +124,10 @@ namespace Server
 
         private Entity TractorEntity(Vector2 positionToLookFrom)
         {
+            if (TractoredItems.Count >= maxTractors)
+            {
+                return null;
+            }
             var currentPosition = this.Position;
             var tractorableEntities = this.Universe.Entites.Where((e) => e.IsTractorable);
             var availableTractorableEntities = tractorableEntities.Where((e) => e != this && !TractoredItems.ContainsKey(e));
@@ -96,6 +144,10 @@ namespace Server
                 joint.MaxLength = (float)Math.Sqrt(maxTractorQuadrance);
                 Universe.World.AddJoint(joint);
                 TractoredItems.Add(closest, joint);
+                if (closest is Asteroid)
+                {
+                    ((Asteroid)closest).LastShip = this;
+                }
                 //JointFactory.CreateRevoluteJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero);
                 //JointFactory.CreateLineJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
 

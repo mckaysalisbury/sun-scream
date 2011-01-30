@@ -6,6 +6,7 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Controllers;
+using Server.GameObjects;
 
 namespace Server
 {
@@ -44,7 +45,11 @@ namespace Server
         internal override void CollidedWith(Entity collidedWith)
         {
             if (collidedWith is Asteroid)
+            {
                 Die();
+                var ship = ((Asteroid)collidedWith).LastShip;
+                Score.Give(ship);
+            }
             collidedWith.Die();
         }
 
