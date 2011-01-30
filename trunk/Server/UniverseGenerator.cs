@@ -19,7 +19,14 @@ namespace Server
         {
             var universe = new Universe();
 
-            universe.AddEntity(new Planet("Earth"), new Vector2(0,0));
+            Populate(universe);
+
+            return universe;
+        }
+
+        private static void Populate(Universe universe)
+        {
+            universe.AddEntity(new Planet("Earth"), new Vector2(0, 0));
             universe.AddEntity(new Planet("Venus"), new Vector2(3000, 500));
             universe.AddEntity(new Planet("Mars"), new Vector2(-4000, 2000));
             universe.AddEntity(new Planet("Jupiter"), new Vector2(10000, -10000));
@@ -29,9 +36,8 @@ namespace Server
 
             universe.AddEntity(new Asteroid(), new Vector2(1000, -500));
             universe.AddEntity(new Asteroid(), new Vector2(-1000, 500));
-            universe.AddEntity(new AsteroidGenerator(), universe.GetSpawnLocation());
 
-            return universe;
+            //universe.AddEntity(new AsteroidGenerator(), universe.GetSpawnLocation());
         }
     }
 }
