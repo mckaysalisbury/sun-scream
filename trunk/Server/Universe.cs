@@ -23,6 +23,7 @@ namespace Server
 
         Timer timer;
 
+        const float interval = 30f;
         const int iterations = 10;
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace Server
             World = new World(Vector2.Zero) { AutoClearForces = true };
 
             
-            timer = new Timer(10);
+            timer = new Timer(interval);
             timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
             timer.AutoReset = false;
 
@@ -102,16 +103,10 @@ namespace Server
             }
 
             //var time = (float)(DateTime.Now - lastUpdate).TotalMilliseconds;
-            World.Step(1);
-            World.Step(1);
-            World.Step(1);
-            World.Step(1);
-            World.Step(1);
-            World.Step(1);
-            World.Step(1);
-            World.Step(1);
-            World.Step(1);
-            World.Step(1);
+            for (int i = 0; i < iterations; i++)
+            {
+                World.Step(interval / iterations);
+            }
 
             foreach (var player in Players.ToArray())
             {
@@ -119,7 +114,13 @@ namespace Server
 
                 if (player.Client != null)
                 {
-                    var packet = new UpdatePacket() { ControllingEntityId = player.Controlling == null ? 0 : player.Controlling.Id, Notes = player.Notes, Messages = player.Messages };
+                    var packet = new UpdatePacket()
+                        {
+                            ControllingEntityId = player.Controlling == null ? 0 : player.Controlling.Id,
+                            Notes = player.Notes,
+                            Messages = player.Messages,
+                            TractorRange = player.Controlling == null ? 0 : (int)player.Controlling.TractorQuadrance
+                        };
 
                     //GameServer.Instance.Log(string.Format("{0}", player.Controlling.Fixture.Body.LinearVelocity));
 
@@ -127,7 +128,14 @@ namespace Server
                     {
                         var type = entity.GetClientType();
                         if (type != EntityUpdateType.Invisible)
-                            packet.Entities.Add(new EntityUpdate() { Type = entity.GetClientType(), Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 10000), LocationY = (int)(entity.Fixture.Body.Position.Y * 10000), Rotation = (int)(entity.Fixture.Body.Rotation * 100f) });
+                            packet.Entities.Add(new EntityUpdate()
+                                {
+                                    Type = entity.GetClientType(),
+                                    Id = entity.Id, LocationX = (int)(entity.Fixture.Body.Position.X * 10000),
+                                    LocationY = (int)(entity.Fixture.Body.Position.Y * 10000),
+                                    Rotation = (int)(entity.Fixture.Body.Rotation * 100f),
+                                    Size = (int)(entity.Fixture.Shape.Radius * 100f)
+                                });
                     }
 
                     var packetBytes = packet.Serialize();

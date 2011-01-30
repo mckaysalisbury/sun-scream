@@ -26,6 +26,7 @@ namespace Server
         /// </summary>
         [DataMember(Order=3)]
         public int LocationX { get; set; }
+
         /// <summary>
         /// The Y coordinate of the entity
         /// </summary>
@@ -37,5 +38,16 @@ namespace Server
 
         [DataMember(Order = 6)]
         public int Rotation { get; set; }
+
+        [DataMember(Order = 7)]
+        public List<int> Beaming { get; set; }
+
+        [DataMember(Order = 8)]
+        public int Size { get; set; }
+
+        public EntityUpdate()
+        {
+            Beaming = new List<int>();
+        }
     }
 }

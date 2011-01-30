@@ -7,6 +7,7 @@ namespace Server
 {
     public enum NoteType
     {
-        EntityRemoved
+        EntityRemoved,
+        PlaySound
     }
 }
