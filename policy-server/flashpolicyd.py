@@ -26,13 +26,13 @@ class policy_server(object):
         self.policy = self.read_policy(path)
         self.log('Listening on port %d\n' % port)
         try:
-            self.sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
+            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         except AttributeError:
             # AttributeError catches Python built without IPv6
-            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
         except socket.error:
             # socket.error catches OS with IPv6 disabled
-            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind(('0.0.0.0', port))
         self.sock.listen(5)
