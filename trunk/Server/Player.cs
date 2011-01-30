@@ -124,6 +124,7 @@ namespace Server
                             var thrust = AngleToVector(angle, Controlling.Speed);
                             Controlling.Fixture.Body.ApplyForce(thrust);
                             Controlling.Fixture.Body.Rotation = angle;
+                            Controlling.Fixture.Body.AngularVelocity = 0;
                             break;
 
                         case Server.Role.Tractor:
