@@ -132,7 +132,14 @@
       if (update.Id == controller)
       {
         window.setCenter(pos);
-//        trace("orig: " + update.Rotation + ", transform: " + rotation);
+        for each (var towed in update.Towed)
+        {
+          var current = entities[towed];
+          if (current != null)
+          {
+            current.setTowed(parent);
+          }
+        }
       }
       if (entities[update.Id] == null)
       {
@@ -140,7 +147,7 @@
         entities[update.Id] = new Entity(images, update.Type);
       }
       var entity = entities[update.Id];
-      entity.changePos(pos);
+      entity.changePos(pos, window);
       entity.changeRotation(rotation);
       entity.changeScale(Math.floor(update.Size/SCALE));
     }
@@ -167,7 +174,7 @@
       {
         oldRange = newRadius;
         range.graphics.clear();
-        range.graphics.lineStyle(0, 0xffffff);
+        range.graphics.lineStyle(0, 0xaaaaaa);
         range.graphics.drawCircle(WIDTH/2, WINDOW_HEIGHT/2, oldRange);
       }
     }
