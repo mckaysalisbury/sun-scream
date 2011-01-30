@@ -1,8 +1,10 @@
 ﻿package ui
 {
   import flash.display.DisplayObjectContainer;
+  import flash.display.Shape;
   import flash.utils.Dictionary;
   import flash.events.KeyboardEvent;
+  import flash.events.MouseEvent;
   import flash.ui.Keyboard;
 
   import lib.Point;
@@ -19,6 +21,7 @@
   {
     public function View(newParent : DisplayObjectContainer)
     {
+      oldRange = 1;
       parent = newParent;
       background = new WindowBackgroundClip();
       parent.addChild(background);
@@ -40,11 +43,16 @@
       isThrusting = false;
       shouldEndThrust = false;
       parent.stage.addEventListener(KeyboardEvent.KEY_UP, keyDown);
+      parent.stage.addEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel);
+      range = new Shape();
+      parent.addChild(range);
     }
 
     public function cleanup() : void
     {
+      range.parent.removeChild(range);
       parent.stage.removeEventListener(KeyboardEvent.KEY_UP, keyDown);
+      parent.stage.removeEventListener(MouseEvent.MOUSE_WHEEL, mouseWheel);
       chat.cleanup();
       for each (var entity in entities)
       {
@@ -152,6 +160,18 @@
       controller = newController;
     }
 
+    public function updateRange(newRange : int) : void
+    {
+      var newRadius = Math.floor(newRange/SCALE);
+      if (newRadius != oldRange)
+      {
+        oldRange = newRadius;
+        range.graphics.clear();
+        range.graphics.lineStyle(0, 0xffffff);
+        range.graphics.drawCircle(WIDTH/2, WINDOW_HEIGHT/2, oldRange);
+      }
+    }
+
     public function addChat(newMessage : String) : void
     {
       chat.addChat(newMessage);
@@ -199,6 +219,20 @@
       }
     }
 
+    function mouseWheel(event : MouseEvent) : void
+    {
+      if (event.delta > 0)
+      {
+        SCALE = SCALE/1.5;
+//        chat.addChat("Client: Scale=" + SCALE);
+      }
+      else
+      {
+        SCALE = SCALE*1.5;
+//        chat.addChat("Client: Scale=" + SCALE);
+      }
+    }
+
     var parent : DisplayObjectContainer;
     var background : WindowBackgroundClip;
     var images : ImageList;
@@ -210,6 +244,8 @@
     var frameCount : int;
     var isThrusting : Boolean;
     var shouldEndThrust : Boolean;
+    var range : Shape;
+    var oldRange : int;
 
     public static var SCALE : Number = 12000;
     public static var WIDTH = 1024;

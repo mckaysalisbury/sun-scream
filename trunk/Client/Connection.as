@@ -176,6 +176,7 @@ package
         game.addChat(urgency + updateMessage.Text);
       }
       game.setController(update.ControllingEntityId);
+      game.updateRange(update.TractorRange);
       for each (var entity in update.Entities)
       {
         game.updateEntity(entity);
