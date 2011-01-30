@@ -15,15 +15,20 @@ namespace Server
     public class Ship : Entity
     {
         private const float size = 1f;
-        private const float maxTractorQuadrance = 10000;
-        private int maxTractors;
-        private const int asteroidsNeededToBuild = 5;
+
+        const int asteroidsNeededToBuild = 5;
+
+        public bool CanBuild { get; set; }
+        public float Speed { get; set; }
+        public float TractorQuadrance { get; set; }
+        public int TowMax { get; set; }
 
         public Dictionary<Entity, Joint> TractoredItems = new Dictionary<Entity, Joint>();
 
         public Ship(string name, int maxTractors) : base(name)
         {
-            this.maxTractors = maxTractors;
+            TractorQuadrance = 10000;
+            this.TowMax = maxTractors;
         }
 
         internal override EntityUpdateType GetClientType()
@@ -70,7 +75,7 @@ namespace Server
         {
             var joint = TractoredItems[entity];
             TractoredItems.Remove(entity);
-            //Universe.World.RemoveJoint(joint);
+            Universe.World.RemoveJoint(joint);
         }
 
         public Entity Tractor(float angle, int distance)
@@ -124,14 +129,14 @@ namespace Server
 
         private Entity TractorEntity(Vector2 positionToLookFrom)
         {
-            if (TractoredItems.Count >= maxTractors)
+            if (TractoredItems.Count >= TowMax)
             {
                 return null;
             }
             var currentPosition = this.Position;
             var tractorableEntities = this.Universe.Entites.Where((e) => e.IsTractorable);
             var availableTractorableEntities = tractorableEntities.Where((e) => e != this && !TractoredItems.ContainsKey(e));
-            var nearEnoughAvailableTractorableEntities = availableTractorableEntities.Select((e) => new { Quadrance = ScreamMath.Quadrance(e.Position, currentPosition), Entity = e }).Where((p) => p.Quadrance < maxTractorQuadrance);
+            var nearEnoughAvailableTractorableEntities = availableTractorableEntities.Select((e) => new { Quadrance = ScreamMath.Quadrance(e.Position, currentPosition), Entity = e }).Where((p) => p.Quadrance < TractorQuadrance);
             if (nearEnoughAvailableTractorableEntities.Any())
             {
                 var minimum = nearEnoughAvailableTractorableEntities.Min((p) => p.Quadrance);
@@ -141,7 +146,7 @@ namespace Server
                 //joint.DampingRatio = 1;
                 //joint.Frequency = 25;
                 joint.CollideConnected = true;
-                joint.MaxLength = (float)Math.Sqrt(maxTractorQuadrance);
+                joint.MaxLength = (float)Math.Sqrt(TractorQuadrance);
                 Universe.World.AddJoint(joint);
                 TractoredItems.Add(closest, joint);
                 if (closest is Asteroid)
