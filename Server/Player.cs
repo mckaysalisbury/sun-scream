@@ -18,7 +18,7 @@ namespace Server
 
         public Role Role { get; set; }
 
-        Faction faction = Faction.Volgon;
+        Faction faction;
         public Faction Faction
         {
             get { return faction; }
@@ -64,24 +64,22 @@ namespace Server
             {
                 switch (Faction)
                 {
-                    case Server.Faction.Volgon:
+                    case Server.Faction.Destroyers:
                         Controlling.TowMax = 1;
                         Controlling.Speed = 0.08f;
+                        Controlling.TractorType = EntityUpdateType.Asteroid;
 
                         break;
-                    case Server.Faction.Magrathean:
+                    case Server.Faction.Builders:
                         Controlling.TowMax = 10;
                         Controlling.Speed = 0.04f;
+                        Controlling.TractorType = EntityUpdateType.Asteroid;
 
                         break;
-                    case Server.Faction.MegadodoPublications:
+                    case Server.Faction.Guides:
                         Controlling.TowMax = 5;
                         Controlling.Speed = 0.12f;
-                        break;
-
-                    case Server.Faction.CyriusCybernetics:
-                        Controlling.TowMax = int.MaxValue;
-                        Controlling.Speed = 0.20f;
+                        Controlling.TractorType = EntityUpdateType.Hitchhiker;
                         break;
                 }
             }
