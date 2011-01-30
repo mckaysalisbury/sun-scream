@@ -58,7 +58,7 @@ namespace Server
             Notes.Add(new Note() { Target = target, Type = type });
         }
 
-        void UpdateFaction()
+        public void UpdateFaction()
         {
             if (Controlling != null)
             {

@@ -61,6 +61,7 @@ namespace Server
         public Ship GenerateShip(Player player)
         {
             player.Controlling = new Ship(player.Name, 10);
+            player.UpdateFaction();
             AddEntity(player.Controlling, GetSpawnLocation());
             return player.Controlling;
         }
