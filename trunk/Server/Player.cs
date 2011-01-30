@@ -125,6 +125,7 @@ namespace Server
 
         void Respawn()
         {
+            Universe.PlaySound(Sounds.Spawn);
             Universe.GenerateShip(this);
         }
 
