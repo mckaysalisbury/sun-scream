@@ -74,6 +74,20 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// Detatches an entity if it hasn't already been detached
+        /// </summary>
+        /// <remarks>
+        /// This is used specifically when a towitem gets destroyed, the system needs to update it.
+        /// </remarks>
+        public void DetachIfAttached(Entity entity)
+        {
+            if (TractoredItems.ContainsKey(entity))
+            {
+                Detach(entity);
+            }
+        }
+
         private void Detach(Entity entity)
         {
             var joint = TractoredItems[entity];
