@@ -115,6 +115,7 @@
     <Compile Include="GameObjects\Ship.cs" />
     <Compile Include="GameObjects\Planet.cs" />
     <Compile Include="ScreamMath.cs" />
+    <Compile Include="Sounds.cs" />
     <Compile Include="Universe.cs" />
     <Compile Include="UniverseGenerator.cs" />
     <Compile Include="UpdatePacket.cs" />
