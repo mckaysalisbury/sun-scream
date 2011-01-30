@@ -115,7 +115,7 @@ namespace Server
 
         private Vector2 BehindMe()
         {
-            const float behindAmount = 100f;
+            float behindAmount = (float)Math.Sqrt(this.TractorQuadrance) * 2;
             var behindPosition = new Vector2(this.Position.X - (float)Math.Cos(this.Fixture.Body.Rotation) * behindAmount, this.Position.Y - (float)Math.Sin(this.Fixture.Body.Rotation) * behindAmount);
             return behindPosition;
         }
