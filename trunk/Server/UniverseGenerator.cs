@@ -29,6 +29,7 @@ namespace Server
 
             universe.AddEntity(new Asteroid(), new Vector2(1000, -500));
             universe.AddEntity(new Asteroid(), new Vector2(-1000, 500));
+            universe.AddEntity(new AsteroidGenerator(), universe.GetSpawnLocation());
 
             return universe;
         }

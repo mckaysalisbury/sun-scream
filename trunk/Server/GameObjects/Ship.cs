@@ -57,7 +57,7 @@ namespace Server
             //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
 
-        public Entity Release()
+        public Entity Detach()
         {
             if (TractoredItems == null || TractoredItems.Count == 0)
             {
@@ -66,12 +66,12 @@ namespace Server
             else
             {
                 var pair = TractoredItems.First();
-                Remove(pair.Key);
+                Detach(pair.Key);
                 return pair.Key;
             }
         }
 
-        private void Remove(Entity entity)
+        private void Detach(Entity entity)
         {
             var joint = TractoredItems[entity];
             TractoredItems.Remove(entity);
@@ -93,7 +93,7 @@ namespace Server
                 int asteroidsNeededForThisPlanet = asteroidsNeededToBuild;
                 foreach (var asteroidPair in tractoredAsteroids)
                 {
-                    Remove(asteroidPair.Key);
+                    Detach(asteroidPair.Key);
                     asteroidPair.Key.Die();
 
                     if (--asteroidsNeededForThisPlanet == 0)
