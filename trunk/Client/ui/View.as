@@ -181,6 +181,10 @@
       {
         Connection.sendChat("/setrole");
       }
+      else if (ch == "b")
+      {
+        Connection.sendChat("/build");
+      }
     }
 
     var parent : DisplayObjectContainer;
