@@ -34,7 +34,7 @@ class policy_server(object):
             # socket.error catches OS with IPv6 disabled
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.sock.bind(('', port))
+        self.sock.bind(('0.0.0.0', port))
         self.sock.listen(5)
     def read_policy(self, path):
         with file(path, 'rb') as f:
