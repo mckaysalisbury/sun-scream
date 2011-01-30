@@ -166,5 +166,11 @@ namespace Server
                 return null;
             }
         }
+
+        public override void Died()
+        {
+            base.Died();
+            Universe.PlaySound(Sounds.ShipExplodes);
+        }
     }
 }

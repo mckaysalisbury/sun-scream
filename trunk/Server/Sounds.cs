@@ -8,5 +8,6 @@ namespace Server
     public enum Sounds
     {
         PlanetExplodes = 1,
+        ShipExplodes = 2
     }
 }

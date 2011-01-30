@@ -57,6 +57,8 @@ namespace Server
 
         public override void Died()
         {
+            Universe.PlaySound(Sounds.PlanetExplodes);
+
             Universe.World.RemoveController(gravity);
 
             Universe.AddEntity(new Asteroid(), Position);
