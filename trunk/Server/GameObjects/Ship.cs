@@ -53,7 +53,7 @@ namespace Server
         protected override Fixture GetFixture(World world)
         {
             var fixture = FixtureFactory.CreateCircle(world, size, 1);
-            fixture.Body.IsStatic = false;
+            fixture.Body.BodyType = BodyType.Dynamic;
             return fixture;
         }
 
@@ -171,7 +171,9 @@ namespace Server
             }
             else
             {
-                return "Nothing within range.";
+                if (Faction == Server.Faction.Guides)
+                    return "No hitchhikers within range.";
+                return "No asteroids within range.";
             }
         }
 
