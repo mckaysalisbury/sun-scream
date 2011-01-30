@@ -35,10 +35,18 @@ namespace Server
             universe.AddEntity(new Planet("Sirius"), new Vector2(-10000, -9000));
 
             universe.AddEntity(new Asteroid(), new Vector2(1500, -2500));
+            universe.AddEntity(new Asteroid(), new Vector2(1500, -2500));
+            universe.AddEntity(new Asteroid(), new Vector2(-1500, -1500));
             universe.AddEntity(new Asteroid(), new Vector2(-1500, -1500));
             universe.AddEntity(new Asteroid(), new Vector2(1500, 500));
             universe.AddEntity(new Asteroid(), new Vector2(-1500, 1500));
+            universe.AddEntity(new Asteroid(), new Vector2(-1500, 1500));
+
             //universe.AddEntity(new Asteroid(), new Vector2(-1000, 500));
+
+            universe.AddEntity(new Hitchhiker(), new Vector2(0, 0));
+            universe.AddEntity(new Hitchhiker(), new Vector2(0, 0));
+            universe.AddEntity(new Hitchhiker(), new Vector2(0, 0));
 
             //universe.AddEntity(new AsteroidGenerator(), universe.GetSpawnLocation());
         }
