@@ -62,26 +62,7 @@ namespace Server
         {
             if (Controlling != null)
             {
-                switch (Faction)
-                {
-                    case Server.Faction.Destroyers:
-                        Controlling.TowMax = 1;
-                        Controlling.Speed = 0.08f;
-                        Controlling.TractorType = EntityUpdateType.Asteroid;
-
-                        break;
-                    case Server.Faction.Builders:
-                        Controlling.TowMax = 10;
-                        Controlling.Speed = 0.04f;
-                        Controlling.TractorType = EntityUpdateType.Asteroid;
-
-                        break;
-                    case Server.Faction.Guides:
-                        Controlling.TowMax = 5;
-                        Controlling.Speed = 0.12f;
-                        Controlling.TractorType = EntityUpdateType.Hitchhiker;
-                        break;
-                }
+                Controlling.Faction = Faction;
             }
         }
 
@@ -127,7 +108,7 @@ namespace Server
 
                         case Server.Role.Tractor:
                             var result = Controlling.Tractor(angle, update.Thrust.Distance);
-                            this.AddMessage(Entity.DisplayString("Tractor", result), MessageType.System);
+                            this.AddMessage(result, MessageType.System);
                             break;
 
                         default:

@@ -26,13 +26,5 @@ namespace Server
             fixture.Body.LinearVelocity = new Vector2(((float)ScreamMath.Random.NextDouble() - 0.5f) * speedFactor, ((float)ScreamMath.Random.NextDouble() - 0.5f) * speedFactor);
             return fixture;
         }
-
-        public override bool IsTractorable
-        {
-            get
-            {
-                return true;
-            }
-        }
     }
 }

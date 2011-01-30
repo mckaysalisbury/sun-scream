@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Dynamics.Joints;
+using System.Diagnostics;
 
 namespace Server
 {
@@ -25,7 +26,8 @@ namespace Server
 
         public Dictionary<Entity, Joint> TractoredItems = new Dictionary<Entity, Joint>();
 
-        public Ship(string name, int maxTractors) : base(name)
+        public Ship(string name, int maxTractors)
+            : base(name)
         {
             TractorQuadrance = 10000;
             this.TowMax = maxTractors;
@@ -36,14 +38,16 @@ namespace Server
 
         internal override EntityUpdateType GetClientType()
         {
-            return EntityUpdateType.Ship;
-        }
-
-        public override bool IsTractorable
-        {
-            get
+            switch (Faction)
             {
-                return true;
+                case Server.Faction.Builders:
+                    return EntityUpdateType.BuilderShip;
+                case Server.Faction.Destroyers:
+                    return EntityUpdateType.DestroyerShip;
+                case Server.Faction.Guides:
+                    return EntityUpdateType.GuideShip;
+                default:
+                    throw new NotImplementedException();
             }
         }
 
@@ -60,17 +64,17 @@ namespace Server
             //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
 
-        public Entity Detach()
+        public string Detach()
         {
             if (TractoredItems == null || TractoredItems.Count == 0)
             {
-                return null;
+                return "Nothing to detach.";
             }
             else
             {
                 var pair = TractoredItems.First();
                 Detach(pair.Key);
-                return pair.Key;
+                return Entity.DisplayString("Detached", pair.Key);
             }
         }
 
@@ -81,16 +85,16 @@ namespace Server
             Universe.World.RemoveJoint(joint);
         }
 
-        public Entity Tractor(float angle, int distance)
+        public string Tractor(float angle, int distance)
         {
             var deltaPosition = new Vector2((float)(Math.Cos(angle) * distance), (float)(Math.Sin(angle) * distance));
             var positionToLookFrom = this.Position + deltaPosition;
             return TractorEntity(positionToLookFrom);
         }
 
-        public void RemoveAndBuild()
+        public bool RemoveAndBuild()
         {
-            var tractoredAsteroids = TractoredItems.Where((e) => e.Key.GetClientType() == TractorType).ToArray();
+            var tractoredAsteroids = TractoredItems.ToArray();
             if (tractoredAsteroids.Length >= asteroidsNeededToBuild)
             {
                 int asteroidsNeededForThisPlanet = asteroidsNeededToBuild;
@@ -102,11 +106,12 @@ namespace Server
                     if (--asteroidsNeededForThisPlanet == 0)
                     {
                         BuildPlanet();
-                        break;
+                        return true;
                     }
-
                 }
+                Debug.Fail("This shouldn't ever happen, I was told that there was enough, but couldn't find enough.");
             }
+            return false;
         }
 
         public int nextPlanetIndex = 0;
@@ -123,21 +128,21 @@ namespace Server
             return behindPosition;
         }
 
-        public Entity Tractor()
+        public string Tractor()
         {
             var positionToLookFrom = this.Position;
 
             return TractorEntity(positionToLookFrom);
         }
 
-        private Entity TractorEntity(Vector2 positionToLookFrom)
+        private string TractorEntity(Vector2 positionToLookFrom)
         {
             if (TractoredItems.Count >= TowMax)
             {
-                return null;
+                return string.Format("All {0} tractor beams in use.", TowMax);
             }
             var currentPosition = this.Position;
-            var tractorableEntities = this.Universe.Entites.Where((e) => e.IsTractorable);
+            var tractorableEntities = this.Universe.Entites.Where((e) => e.GetClientType() == TractorType);
             var availableTractorableEntities = tractorableEntities.Where((e) => e != this && !TractoredItems.ContainsKey(e));
             var nearEnoughAvailableTractorableEntities = availableTractorableEntities.Select((e) => new { Quadrance = ScreamMath.Quadrance(e.Position, currentPosition), Entity = e }).Where((p) => p.Quadrance < TractorQuadrance);
             if (nearEnoughAvailableTractorableEntities.Any())
@@ -152,18 +157,18 @@ namespace Server
                 joint.MaxLength = (float)Math.Sqrt(TractorQuadrance);
                 Universe.World.AddJoint(joint);
                 TractoredItems.Add(closest, joint);
-                if (closest is Asteroid)
+                if (closest is TowItem)
                 {
-                    ((Asteroid)closest).LastShip = this;
+                    ((TowItem)closest).LastShip = this;
                 }
                 //JointFactory.CreateRevoluteJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero);
                 //JointFactory.CreateLineJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
 
-                return closest;
+                return Entity.DisplayString("Tractored", closest);
             }
             else
             {
-                return null;
+                return "Nothing within range.";
             }
         }
 
@@ -171,6 +176,37 @@ namespace Server
         {
             base.Died();
             Universe.PlaySound(Sounds.ShipExplodes);
+        }
+
+        private Faction faction;
+        public Faction Faction
+        {
+            get
+            {
+                return faction;
+            }
+            set
+            {
+                faction = value;
+                switch (faction)
+                {
+                    case Server.Faction.Destroyers:
+                        TowMax = 1;
+                        Speed = 0.08f;
+                        TractorType = EntityUpdateType.Asteroid;
+                        break;
+                    case Server.Faction.Builders:
+                        TowMax = 10;
+                        Speed = 0.04f;
+                        TractorType = EntityUpdateType.Asteroid;
+                        break;
+                    case Server.Faction.Guides:
+                        TowMax = 1;
+                        Speed = 0.12f;
+                        TractorType = EntityUpdateType.Hitchhiker;
+                        break;
+                }
+            }
         }
     }
 }

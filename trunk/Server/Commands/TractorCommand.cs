@@ -9,8 +9,7 @@ namespace Server
     {
         public override string Execute(Player source, string arguments)
         {
-            var result = source.Controlling.Tractor();
-            return Entity.DisplayString("Tractor", result);
+            return source.Controlling.Tractor();
         }
     }
 }

@@ -9,8 +9,7 @@ namespace Server
     {
         public override string Execute(Player source, string arguments)
         {
-            var result = source.Controlling.Detach();
-            return Entity.DisplayString("Release", result);
+            return source.Controlling.Detach();
         }
     }
 }

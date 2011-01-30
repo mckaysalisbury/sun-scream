@@ -9,7 +9,9 @@ namespace Server
     public enum EntityUpdateType
     {
         Invisible,
-        Ship,
+        BuilderShip,
+        DestroyerShip,
+        GuideShip,
         Planet,
         Asteroid,
         Hitchhiker,
