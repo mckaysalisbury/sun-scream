@@ -47,6 +47,7 @@ namespace Server
 
         public void Disconnect()
         {
+            GameServer.Instance.Log("Client Disconnected");
             Client.Close();
             Client = null;
             Universe.RemovePlayer(this);
@@ -168,8 +169,10 @@ namespace Server
                 Client.Client.Receive(bytes);
                 var packetLength = BitConverter.ToInt32(bytes, 0);
 
-                if (packetLength > 100 || packetLength < 0)
+                if (packetLength > 1000 || packetLength < 0)
                 {
+                    GameServer.Instance.Log(String.Format("Invalid packet length {0}", packetLength));
+
                     Disconnect();
                     return null;
                 }

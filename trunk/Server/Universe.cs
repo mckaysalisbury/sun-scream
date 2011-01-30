@@ -138,8 +138,9 @@ namespace Server
                     {
                         player.Client.Client.Send(packetBytes);
                     }
-                    catch (SocketException)
+                    catch (SocketException e)
                     {
+                        GameServer.Instance.Log(e.ToString());
                         player.Disconnect();
                     }
                 }
