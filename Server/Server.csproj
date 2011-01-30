@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\BuildCommand.cs" />
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\Commands.cs" />
     <Compile Include="Commands\SetFactionCommand.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SayCommand.cs" />
     <Compile Include="Commands\TractorCommand.cs" />
+    <Compile Include="GameObjects\Score.cs" />
     <Compile Include="Faction.cs" />
     <Compile Include="NoteType.cs" />
     <Compile Include="Note.cs" />

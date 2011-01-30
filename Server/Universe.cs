@@ -60,7 +60,7 @@ namespace Server
 
         public Ship GenerateShip(Player player)
         {
-            player.Controlling = new Ship(player.Name);
+            player.Controlling = new Ship(player.Name, 10);
             AddEntity(player.Controlling, GetSpawnLocation());
             return player.Controlling;
         }

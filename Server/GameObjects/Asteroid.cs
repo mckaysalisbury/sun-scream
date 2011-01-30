@@ -17,6 +17,8 @@ namespace Server
     {
         private const float size = 0.1f;
 
+        public Ship LastShip = null;
+
         public Asteroid() : base(string.Empty)
         {
         }
