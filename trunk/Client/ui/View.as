@@ -240,7 +240,6 @@
 
     function mouseWheel(event : MouseEvent) : void
     {
-//      trace(event.delta);
       if (event.delta > 0)
       {
         SCALE = SCALE/1.5;
@@ -251,7 +250,6 @@
         SCALE = SCALE*1.5;
 //        chat.addChat("Client: Scale=" + SCALE);
       }
-      tractorParent.visible = false;
     }
 
     var parent : DisplayObjectContainer;
