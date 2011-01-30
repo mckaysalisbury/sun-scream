@@ -82,7 +82,6 @@
     <Compile Include="Commands\StatusCommand.cs" />
     <Compile Include="Commands\SayCommand.cs" />
     <Compile Include="Commands\TractorCommand.cs" />
-    <Compile Include="GameObjects\Deprecated.cs" />
     <Compile Include="GameObjects\Hitchhiker.cs" />
     <Compile Include="GameObjects\Score.cs" />
     <Compile Include="Faction.cs" />

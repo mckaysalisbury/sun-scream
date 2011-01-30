@@ -7,9 +7,17 @@ namespace Server
 {
     public enum Faction
     {
-        Volgon = 0,
-        Magrathean = 1,
-        MegadodoPublications = 2,
-        CyriusCybernetics = 3
+        /// <summary>
+        /// Destroyers, a nod to the Vogons
+        /// </summary>
+        Destroyers = 0,
+        /// <summary>
+        /// Magrathean, a nod to Magratheans
+        /// </summary>
+        Builders = 1,
+        /// <summary>
+        /// Guides, a nod to Megadodo Publications
+        /// </summary>
+        Guides = 2,
     }
 }

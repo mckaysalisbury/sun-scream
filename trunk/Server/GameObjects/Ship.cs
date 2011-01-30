@@ -29,7 +29,10 @@ namespace Server
         {
             TractorQuadrance = 10000;
             this.TowMax = maxTractors;
+            TractorType = EntityUpdateType.Asteroid;
         }
+
+        public EntityUpdateType TractorType { get; set; }
 
         internal override EntityUpdateType GetClientType()
         {
@@ -87,7 +90,7 @@ namespace Server
 
         public void RemoveAndBuild()
         {
-            var tractoredAsteroids = TractoredItems.Where((e) => e.Key.GetClientType() == EntityUpdateType.Asteroid).ToArray();
+            var tractoredAsteroids = TractoredItems.Where((e) => e.Key.GetClientType() == TractorType).ToArray();
             if (tractoredAsteroids.Length >= asteroidsNeededToBuild)
             {
                 int asteroidsNeededForThisPlanet = asteroidsNeededToBuild;
