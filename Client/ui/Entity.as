@@ -2,6 +2,7 @@ package ui
 {
   import flash.display.DisplayObjectContainer;
   import flash.display.Shape;
+  import flash.filters.GlowFilter;
 
   import lib.Point;
   import lib.ui.ImageText;
@@ -28,6 +29,7 @@ package ui
       if (type == Server.EntityUpdateType.Planet)
       {
         sprite.setFrame(Math.floor(Math.random()*16));
+        sprite.setFilter(planetGlow);
       }
       else if (type == Server.EntityUpdateType.DestroyerShip)
       {
@@ -141,5 +143,7 @@ package ui
     var pos : Point;
     var tractor : Shape;
     var isTowed : Boolean;
+
+    static var planetGlow = new GlowFilter(0xffffff, 0.5);
   }
 }

@@ -2,6 +2,7 @@
 {
   import flash.display.DisplayObjectContainer;
   import flash.display.Shape;
+  import flash.display.Sprite;
   import flash.utils.Dictionary;
   import flash.events.KeyboardEvent;
   import flash.events.MouseEvent;
@@ -33,6 +34,8 @@
                           images, windowBorder,
                           background, 0);
       windowBorder.init(parent);
+      tractorParent = new Sprite();
+      parent.addChild(tractorParent);
       controller = 0;
       entities = new Dictionary();
       chat = new Chat(parent);
@@ -58,9 +61,10 @@
       {
         entity.cleanup();
       }
-      parent.removeChild(background);
+      parent.removeChild(tractorParent);
       window.cleanup();
       windowBorder.cleanup();
+      parent.removeChild(background);
       images.cleanup();
     }
 
@@ -107,6 +111,10 @@
           isThrusting = false;
         }
       }
+      if (! tractorParent.visible)
+      {
+        tractorParent.visible = true;
+      }
     }
 
     public function getParent() : DisplayObjectContainer
@@ -137,7 +145,7 @@
           var current = entities[towed];
           if (current != null)
           {
-            current.setTowed(parent);
+            current.setTowed(tractorParent);
           }
         }
       }
@@ -232,6 +240,7 @@
 
     function mouseWheel(event : MouseEvent) : void
     {
+//      trace(event.delta);
       if (event.delta > 0)
       {
         SCALE = SCALE/1.5;
@@ -242,6 +251,7 @@
         SCALE = SCALE*1.5;
 //        chat.addChat("Client: Scale=" + SCALE);
       }
+      tractorParent.visible = false;
     }
 
     var parent : DisplayObjectContainer;
@@ -249,6 +259,7 @@
     var images : ImageList;
     var windowBorder : WindowBorder;
     var window : Window;
+    var tractorParent : Sprite;
     var controller : int;
     var entities : Dictionary;
     var chat : Chat;
