@@ -67,6 +67,7 @@ package
       game.addChat("Client: Socket Connected");
       isConnected = true;
       sendChat("/setname " + name);
+      sendChat("/setfaction " + Math.floor(Math.random() * 4));
     }
 
     static function onIoError(event : IOErrorEvent) : void
@@ -166,7 +167,7 @@ package
         var urgency = "";
         if (updateMessage.Type == MessageType.System)
         {
-          urgency = "SYSTEM: ";
+//          urgency = "SYSTEM: ";
         }
         else if (updateMessage.Type == MessageType.Error)
         {

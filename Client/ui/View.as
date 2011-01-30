@@ -169,7 +169,7 @@
         SCALE = SCALE/2;
         chat.addChat("Client: Scale=" + SCALE);
       }
-      else if (event.keyCode == Keyboard.TAB || ch == "t")
+      else if (event.keyCode == Keyboard.TAB || ch == "t" || ch == " ")
       {
         Connection.sendChat("/tractor");
       }
@@ -177,9 +177,21 @@
       {
         Connection.sendChat("/release");
       }
-      else if (ch == " ")
+      else if (ch == "0")
       {
-        Connection.sendChat("/setrole");
+        Connection.sendChat("/setfaction 0");
+      }
+      else if (ch == "1")
+      {
+        Connection.sendChat("/setfaction 1");
+      }
+      else if (ch == "2")
+      {
+        Connection.sendChat("/setfaction 2");
+      }
+      else if (ch == "3")
+      {
+        Connection.sendChat("/setfaction 3");
       }
       else if (ch == "b")
       {
