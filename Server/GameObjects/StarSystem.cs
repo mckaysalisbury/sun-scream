@@ -6,7 +6,6 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.Dynamics;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Controllers;
-using Server.GameObjects;
 
 namespace Server
 {

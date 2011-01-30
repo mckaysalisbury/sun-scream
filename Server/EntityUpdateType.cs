@@ -13,5 +13,6 @@ namespace Server
         Star,
         Planet,
         Asteroid,
+        Hitchhiker,
     }
 }
