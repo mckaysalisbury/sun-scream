@@ -134,6 +134,7 @@
       var entity = entities[update.Id];
       entity.changePos(pos);
       entity.changeRotation(rotation);
+      entity.changeScale(Math.floor(update.Size/SCALE));
     }
 
     public function removeEntity(target : int) : void
@@ -210,7 +211,7 @@
     var isThrusting : Boolean;
     var shouldEndThrust : Boolean;
 
-    public static var SCALE : Number = 6000;
+    public static var SCALE : Number = 12000;
     public static var WIDTH = 1024;
     public static var HEIGHT = 768;
     public static var WINDOW_HEIGHT = HEIGHT - 40;

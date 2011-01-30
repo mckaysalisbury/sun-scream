@@ -42,6 +42,22 @@ package ui
       sprite.setRotation(newRotation);
     }
 
+    public function changeScale(newRadius : int) : void
+    {
+      var size = ImageConfig.entities[type].size;
+      var most = size.x;
+      if (size.y > size.x)
+      {
+        most = size.y;
+      }
+      var scale = newRadius*2/most;
+      if (scale < 0.1)
+      {
+        scale = 0.1;
+      }
+      sprite.setScale(scale);
+    }
+
     var sprite : Image;
     var images : ImageList;
     var type : int;
