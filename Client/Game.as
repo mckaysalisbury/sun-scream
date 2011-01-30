@@ -47,6 +47,11 @@ package
       view.setController(newController);
     }
 
+    public function updateRange(newRange : int) : void
+    {
+      view.updateRange(newRange);
+    }
+
     public function addChat(newMessage : String) : void
     {
       view.addChat(newMessage);
