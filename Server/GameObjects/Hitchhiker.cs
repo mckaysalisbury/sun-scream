@@ -14,5 +14,11 @@ namespace Server
         {
             return EntityUpdateType.Hitchhiker;
         }
+
+        internal override void CollidedWith(Entity collidedWith)
+        {
+            Universe.PlaySound(Sounds.Reentry);
+            base.CollidedWith(collidedWith);
+        }
     }
 }

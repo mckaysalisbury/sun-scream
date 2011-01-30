@@ -52,14 +52,8 @@ namespace Server
         protected override Fixture GetFixture(World world)
         {
             var fixture = FixtureFactory.CreateCircle(world, size, 1);
-            //fixture.Body.BodyType = BodyType.Dynamic;
-
             fixture.Body.IsStatic = false;
-            //fixture.Friction = 0;
-            //fixture.Body.LinearDamping = 0;
-            //fixture.Body.AngularDamping = 0;
             return fixture;
-            //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
 
         public string Detach()
@@ -72,6 +66,9 @@ namespace Server
             {
                 var pair = TractoredItems.First();
                 Detach(pair.Key);
+
+                Universe.PlaySound(Sounds.Pop);
+
                 return Entity.DisplayString("Detached", pair.Key);
             }
         }
@@ -120,6 +117,7 @@ namespace Server
 
         private void BuildPlanet()
         {
+            Universe.PlaySound(Sounds.Spawn);
             Universe.AddEntity(new Planet((this.Name ?? string.Empty) + (nextPlanetIndex++).ToString()), BehindMe());
         }
 
@@ -165,6 +163,8 @@ namespace Server
                 }
                 //JointFactory.CreateRevoluteJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero);
                 //JointFactory.CreateLineJoint(this.Fixture.Body, closest.Fixture.Body, Vector2.Zero, Vector2.Zero);
+
+                Universe.PlaySound(Sounds.Pop);
 
                 return Entity.DisplayString("Tractored", closest);
             }
