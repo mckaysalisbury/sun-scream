@@ -118,6 +118,7 @@ namespace Server
                         if (--asteroidsNeededForThisPlanet == 0)
                         {
                             BuildPlanet();
+                            Score.Give(this);
                             return "Planet built";
                         }
                     }
