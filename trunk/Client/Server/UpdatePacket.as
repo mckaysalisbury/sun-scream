@@ -41,6 +41,28 @@ package Server {
 		[ArrayElementType("Server.Note")]
 		public var Notes:Array = [];
 
+		private var _TractorRange:int;
+
+		private var _hasTractorRange:Boolean = false;
+
+		public function removeTractorRange():void {
+			_hasTractorRange = false;
+			_TractorRange = new int();
+		}
+
+		public function get hasTractorRange():Boolean {
+			return _hasTractorRange;
+		}
+
+		public function set TractorRange(value:int):void {
+			_hasTractorRange = true;
+			_TractorRange = value;
+		}
+
+		public function get TractorRange():int {
+			return _TractorRange;
+		}
+
 		/**
 		 *  @private
 		 */
@@ -61,10 +83,15 @@ package Server {
 				WriteUtils.writeTag(output, WireType.LENGTH_DELIMITED, 4);
 				WriteUtils.write_TYPE_MESSAGE(output, Notes[NotesIndex]);
 			}
+			if (hasTractorRange) {
+				WriteUtils.writeTag(output, WireType.VARINT, 5);
+				WriteUtils.write_TYPE_INT32(output, _TractorRange);
+			}
 		}
 
 		public function readExternal(input:IDataInput):void {
 			var ControllingEntityIdCount:uint = 0;
+			var TractorRangeCount:uint = 0;
 			while (input.bytesAvailable != 0) {
 				var tag:Tag = ReadUtils.readTag(input);
 				switch (tag.number) {
@@ -83,6 +110,13 @@ package Server {
 					break;
 				case 4:
 					Notes.push(ReadUtils.read_TYPE_MESSAGE(input, new Server.Note));
+					break;
+				case 5:
+					if (TractorRangeCount != 0) {
+						throw new IOError('Bad data format: UpdatePacket.TractorRange cannot be set twice.');
+					}
+					++TractorRangeCount;
+					TractorRange = ReadUtils.read_TYPE_INT32(input);
 					break;
 				default:
 					ReadUtils.skip(input, tag.wireType);

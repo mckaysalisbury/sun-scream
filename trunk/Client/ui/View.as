@@ -191,10 +191,6 @@
         {
           Connection.sendChat("/setfaction 2");
         }
-        else if (ch == "3")
-        {
-          Connection.sendChat("/setfaction 3");
-        }
         else if (ch == "b")
         {
           Connection.sendChat("/build");

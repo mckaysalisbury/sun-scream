@@ -135,6 +135,31 @@ package Server {
 			return _Rotation;
 		}
 
+		[ArrayElementType("int")]
+		public var Towed:Array = [];
+
+		private var _Size:int;
+
+		private var _hasSize:Boolean = false;
+
+		public function removeSize():void {
+			_hasSize = false;
+			_Size = new int();
+		}
+
+		public function get hasSize():Boolean {
+			return _hasSize;
+		}
+
+		public function set Size(value:int):void {
+			_hasSize = true;
+			_Size = value;
+		}
+
+		public function get Size():int {
+			return _Size;
+		}
+
 		/**
 		 *  @private
 		 */
@@ -163,6 +188,14 @@ package Server {
 				WriteUtils.writeTag(output, WireType.VARINT, 6);
 				WriteUtils.write_TYPE_INT32(output, _Rotation);
 			}
+			for (var TowedIndex:uint = 0; TowedIndex < Towed.length; ++TowedIndex) {
+				WriteUtils.writeTag(output, WireType.VARINT, 7);
+				WriteUtils.write_TYPE_INT32(output, Towed[TowedIndex]);
+			}
+			if (hasSize) {
+				WriteUtils.writeTag(output, WireType.VARINT, 8);
+				WriteUtils.write_TYPE_INT32(output, _Size);
+			}
 		}
 
 		public function readExternal(input:IDataInput):void {
@@ -172,6 +205,7 @@ package Server {
 			var LocationYCount:uint = 0;
 			var TypeCount:uint = 0;
 			var RotationCount:uint = 0;
+			var SizeCount:uint = 0;
 			while (input.bytesAvailable != 0) {
 				var tag:Tag = ReadUtils.readTag(input);
 				switch (tag.number) {
@@ -216,6 +250,20 @@ package Server {
 					}
 					++RotationCount;
 					Rotation = ReadUtils.read_TYPE_INT32(input);
+					break;
+				case 7:
+					if (tag.wireType == WireType.LENGTH_DELIMITED) {
+						ReadUtils.readPackedRepeated(input, ReadUtils.read_TYPE_INT32, Towed);
+						break;
+					}
+					Towed.push(ReadUtils.read_TYPE_INT32(input));
+					break;
+				case 8:
+					if (SizeCount != 0) {
+						throw new IOError('Bad data format: EntityUpdate.Size cannot be set twice.');
+					}
+					++SizeCount;
+					Size = ReadUtils.read_TYPE_INT32(input);
 					break;
 				default:
 					ReadUtils.skip(input, tag.wireType);
