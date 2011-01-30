@@ -37,8 +37,6 @@ namespace Server
 
             world.AddController(gravity);
             return fixture;
-
-            //return FixtureFactory.CreateCircle(world,1, new Body( Width, Height, 1);
         }
 
         internal override void CollidedWith(Entity collidedWith)
@@ -49,6 +47,7 @@ namespace Server
                 var ship = ((Asteroid)collidedWith).LastShip;
                 if (ship != null && ship.Faction == Faction.Destroyers)
                 {
+                    GameServer.Instance.Broadcast(String.Format("{0} scored by destroying a planet!", ship.Name));
                     Score.Give(ship);
                 }
             }
@@ -57,6 +56,7 @@ namespace Server
                 var ship = ((Hitchhiker)collidedWith).LastShip;
                 if (ship != null && ship.Faction == Faction.Guides)
                 {
+                    GameServer.Instance.Broadcast(String.Format("{0} scored by landing a hitchhiker!", ship.Name));
                     Score.Give(ship);
                 }
             }

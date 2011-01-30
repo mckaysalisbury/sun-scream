@@ -200,7 +200,7 @@ namespace Server
                         break;
                     case Server.Faction.Builders:
                         TowMax = 10;
-                        Speed = 0.04f;
+                        Speed = 0.08f;
                         TractorType = EntityUpdateType.Asteroid;
                         break;
                     case Server.Faction.Guides:
