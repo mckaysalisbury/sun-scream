@@ -19,8 +19,15 @@ namespace Server
         public Role Role { get; set; }
 
         Faction faction = Faction.Volgon;
-
-        public Faction Faction { get; set; }
+        public Faction Faction
+        {
+            get { return faction; }
+            set
+            {
+                faction = value;
+                UpdateFaction();
+            }
+        }
 
         public List<Message> Messages { get; set; }
         public List<Note> Notes { get; set; }
@@ -48,6 +55,32 @@ namespace Server
         public void AddNote(int target, NoteType type)
         {
             Notes.Add(new Note() { Target = target, Type = type });
+        }
+
+        void UpdateFaction()
+        {
+            if (Controlling != null)
+            {
+                switch (Faction)
+                {
+                    case Server.Faction.Volgon:
+                        Controlling.TowMax = 1;
+                        Controlling.Speed = 0.08f;
+
+                        break;
+                    case Server.Faction.Magrathean:
+                        Controlling.Speed = 0.04f;
+
+                        break;
+                    case Server.Faction.MegadodoPublications:
+                        Controlling.Speed = 0.12f;
+                        break;
+
+                    case Server.Faction.CyriusCybernetics:
+                        Controlling.Speed = 0.20f;
+                        break;
+                }
+            }
         }
 
         DateTime deathTime = DateTime.MinValue;
@@ -84,7 +117,7 @@ namespace Server
                     switch (Role)
                     {
                         case Server.Role.Thrust:
-                            var thrust = AngleToVector(angle, 0.04f);
+                            var thrust = AngleToVector(angle, Controlling.Speed);
                             Controlling.Fixture.Body.ApplyForce(thrust);
                             Controlling.Fixture.Body.Rotation = angle;
                             break;
@@ -135,7 +168,7 @@ namespace Server
                 Client.Client.Receive(bytes);
                 var packetLength = BitConverter.ToInt32(bytes, 0);
 
-                if (packetLength > 100)
+                if (packetLength > 100 || packetLength < 0)
                 {
                     Disconnect();
                     return null;
