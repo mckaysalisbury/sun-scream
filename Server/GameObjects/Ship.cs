@@ -15,7 +15,7 @@ namespace Server
     public class Ship : Entity
     {
         private const float size = 1f;
-        private const float maxTractorQuadrance = 10000;
+        private const float maxTractorQuadrance = 1000;
 
         public Dictionary<Entity, Joint> TractoredItems = new Dictionary<Entity, Joint>();
 
