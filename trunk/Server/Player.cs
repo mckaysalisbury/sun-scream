@@ -62,8 +62,9 @@ namespace Server
         {
             if (Controlling != null)
             {
-                Controlling.Faction = Faction;
+                Controlling.Die();
             }
+            Controlling = Universe.GenerateShip(this, Faction);
         }
 
         DateTime deathTime = DateTime.MinValue;
