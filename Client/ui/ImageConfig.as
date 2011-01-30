@@ -14,11 +14,11 @@ package ui
                                                 new Point(4, 4)),
                                   new ImageType("ShipClip", SHIP_LAYER,
                                                 new Point(72, 65)),
-                                  new ImageType("StarClip", STAR_LAYER,
-                                                new Point(30, 30)),
-                                  new ImageType("StarClip", STAR_LAYER,
+                                  new ImageType("PlanetClip", STAR_LAYER,
                                                 new Point(30, 30)),
                                   new ImageType("AsteroidClip", ASTEROID_LAYER,
+                                                new Point(90, 90)),
+                                  new ImageType("HitchClip", ASTEROID_LAYER,
                                                 new Point(30, 30))];
   }
 }

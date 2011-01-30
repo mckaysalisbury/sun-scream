@@ -67,7 +67,7 @@ package
       game.addChat("Client: Socket Connected");
       isConnected = true;
       sendChat("/setname " + name);
-      sendChat("/setfaction " + Math.floor(Math.random() * 4));
+//      sendChat("/setfaction " + Math.floor(Math.random() * 3));
     }
 
     static function onIoError(event : IOErrorEvent) : void
