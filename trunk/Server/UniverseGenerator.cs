@@ -27,7 +27,8 @@ namespace Server
             universe.AddEntity(new StarSystem("Betelgeuse"), new Vector2(10000, 9000));
             universe.AddEntity(new StarSystem("Sirius"), new Vector2(-10000, -9000));
 
-            universe.AddEntity(new AsteroidGenerator(), new Vector2(10, -500));
+            universe.AddEntity(new Asteroid(), new Vector2(1000, -500));
+            universe.AddEntity(new Asteroid(), new Vector2(-1000, 500));
 
             return universe;
         }

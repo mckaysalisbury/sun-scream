@@ -21,7 +21,7 @@ namespace Server
         {
         }
 
-        const float speedFactor = 0.2f;
+        const float speedFactor = 0.1f;
 
         protected override Fixture GetFixture(World world)
         {

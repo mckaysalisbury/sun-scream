@@ -18,6 +18,10 @@ namespace Server
 
         public Role Role { get; set; }
 
+        Faction faction = Faction.Volgon;
+
+        public Faction Faction { get; set; }
+
         public List<Message> Messages { get; set; }
         public List<Note> Notes { get; set; }
 
@@ -80,7 +84,7 @@ namespace Server
                     switch (Role)
                     {
                         case Server.Role.Thrust:
-                            var thrust = AngleToVector(angle, 0.001f);
+                            var thrust = AngleToVector(angle, 0.04f);
                             Controlling.Fixture.Body.ApplyForce(thrust);
                             Controlling.Fixture.Body.Rotation = angle;
                             break;
@@ -111,13 +115,31 @@ namespace Server
             return new Vector2((float)(distance * Math.Cos(angle)), (float)(distance * Math.Sin(angle)));
         }
 
+        int throwAwayBytes = 23;
+
         public Client.UpdateToServer CheckForUpdate()
         {
+            if (throwAwayBytes > 0)
+            {
+                if (Client.Client.Available >= throwAwayBytes)
+                {
+                    var throwAway = new byte[throwAwayBytes];
+                    Client.Client.Receive(throwAway);
+                    throwAwayBytes = 0;
+                }
+            }
+
             if (Client.Client.Available >= 4)
             {
                 var bytes = new byte[4];
                 Client.Client.Receive(bytes);
                 var packetLength = BitConverter.ToInt32(bytes, 0);
+
+                if (packetLength > 100)
+                {
+                    Disconnect();
+                    return null;
+                }
 
                 if (packetLength > Client.Client.Available)
                     GameServer.Instance.Log(String.Format("Sent Length {0}  Available {1}", packetLength, Client.Client.Available));
