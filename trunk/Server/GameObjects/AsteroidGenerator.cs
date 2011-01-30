@@ -5,12 +5,14 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
+using Server.GameObjects;
 
 namespace Server
 {
     /// <summary>
     /// Stores information about a asteroid
     /// </summary>
+    [Deprecated]
     public class AsteroidGenerator : Entity
     {
         private const float size = 0.1f;
