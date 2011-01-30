@@ -158,44 +158,47 @@
 
     function keyDown(event : KeyboardEvent) : void
     {
-      var ch = String.fromCharCode(event.charCode);
-      if (event.keyCode == Keyboard.PAGE_DOWN)
+      if (! chat.isActive())
       {
-        SCALE = SCALE*2;
-        chat.addChat("Client: Scale=" + SCALE);
-      }
-      else if (event.keyCode == Keyboard.PAGE_UP)
-      {
-        SCALE = SCALE/2;
-        chat.addChat("Client: Scale=" + SCALE);
-      }
-      else if (event.keyCode == Keyboard.TAB || ch == "t" || ch == " ")
-      {
-        Connection.sendChat("/tractor");
-      }
-      else if (ch == "r")
-      {
-        Connection.sendChat("/release");
-      }
-      else if (ch == "0")
-      {
-        Connection.sendChat("/setfaction 0");
-      }
-      else if (ch == "1")
-      {
-        Connection.sendChat("/setfaction 1");
-      }
-      else if (ch == "2")
-      {
-        Connection.sendChat("/setfaction 2");
-      }
-      else if (ch == "3")
-      {
-        Connection.sendChat("/setfaction 3");
-      }
-      else if (ch == "b")
-      {
-        Connection.sendChat("/build");
+        var ch = String.fromCharCode(event.charCode);
+        if (event.keyCode == Keyboard.PAGE_DOWN)
+        {
+          SCALE = SCALE*2;
+          chat.addChat("Client: Scale=" + SCALE);
+        }
+        else if (event.keyCode == Keyboard.PAGE_UP)
+        {
+          SCALE = SCALE/2;
+          chat.addChat("Client: Scale=" + SCALE);
+        }
+        else if (event.keyCode == Keyboard.TAB || ch == "t" || ch == " ")
+        {
+          Connection.sendChat("/tractor");
+        }
+        else if (ch == "r")
+        {
+          Connection.sendChat("/release");
+        }
+        else if (ch == "0")
+        {
+          Connection.sendChat("/setfaction 0");
+        }
+        else if (ch == "1")
+        {
+          Connection.sendChat("/setfaction 1");
+        }
+        else if (ch == "2")
+        {
+          Connection.sendChat("/setfaction 2");
+        }
+        else if (ch == "3")
+        {
+          Connection.sendChat("/setfaction 3");
+        }
+        else if (ch == "b")
+        {
+          Connection.sendChat("/build");
+        }
       }
     }
 
