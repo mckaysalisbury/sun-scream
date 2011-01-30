@@ -150,7 +150,7 @@ namespace Server
                             ControllingEntityId = player.Controlling == null ? 0 : player.Controlling.Id,
                             Notes = player.Notes,
                             Messages = player.Messages,
-                            TractorRange = player.Controlling == null ? 0 : (int)player.Controlling.TractorQuadrance
+                            TractorRange = player.Controlling == null ? 0 : (int)(Math.Sqrt(player.Controlling.TractorQuadrance) * 10000f)
                         };
 
                     //GameServer.Instance.Log(string.Format("{0}", player.Controlling.Fixture.Body.LinearVelocity));
