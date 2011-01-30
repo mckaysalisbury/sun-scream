@@ -24,6 +24,9 @@ namespace Server
         [DataMember(Order = 4)]
         public List<Note> Notes { get; set; }
 
+        [DataMember(Order = 5)]
+        public int TractorRange { get; set; }
+
         public UpdatePacket()
         {
             Entities = new List<EntityUpdate>();
