@@ -47,8 +47,6 @@ namespace Server
 
         public Fixture Fixture { get; set; }
 
-        public virtual bool IsTractorable { get { return false; } }
-
         public Vector2 Position
         {
             get { return Fixture.Body.Position; }
@@ -99,14 +97,7 @@ namespace Server
 
         public static string DisplayString(string action, Entity result)
         {
-            if (result == null)
-            {
-                return string.Format("Nothing available to {0}", action);
-            }
-            else
-            {
-                return string.Format("{0} #{1}={2}:{3}", action, result.Id, result.Name, result.GetClientType());
-            }
+            return string.Format("{0} #{1}={2}:{3}", action, result.Id, result.Name, result.GetClientType());
         }
 
     }

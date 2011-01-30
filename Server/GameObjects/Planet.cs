@@ -47,7 +47,15 @@ namespace Server
             {
                 Die();
                 var ship = ((Asteroid)collidedWith).LastShip;
-                if (ship != null)
+                if (ship != null && ship.Faction == Faction.Destroyers)
+                {
+                    Score.Give(ship);
+                }
+            }
+            if (collidedWith is Hitchhiker)
+            {
+                var ship = ((Hitchhiker)collidedWith).LastShip;
+                if (ship != null && ship.Faction == Faction.Guides)
                 {
                     Score.Give(ship);
                 }

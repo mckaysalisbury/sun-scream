@@ -70,7 +70,9 @@ namespace Server.Display
                     planet.Width = 20;
                     planet.Height = 20;
                     return planet;
-                case EntityUpdateType.Ship:
+                case EntityUpdateType.BuilderShip:
+                case EntityUpdateType.DestroyerShip:
+                case EntityUpdateType.GuideShip:
                     var ship = new Label();
                     ship.Parent = this;
                     ship.Text = "S";

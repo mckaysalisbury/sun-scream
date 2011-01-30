@@ -9,8 +9,8 @@ namespace Server
     {
         public override string Execute(Player source, string arguments)
         {
-            source.Controlling.RemoveAndBuild();
-            return null;
+            bool success = source.Controlling.RemoveAndBuild();
+            return (success ? "Built" : "Could not build");
         }
     }
 }
