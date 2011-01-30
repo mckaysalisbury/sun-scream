@@ -30,6 +30,7 @@ namespace Server
             : base(name)
         {
             this.Faction = faction;
+            TractorQuadrance = 10000;
         }
 
         public EntityUpdateType TractorType { get; set; }
@@ -139,7 +140,7 @@ namespace Server
         {
             if (TractoredItems.Count >= TowMax)
             {
-                return string.Format("All {0} tractor beams in use.", TowMax);
+                return "All tractor beams in use.";
             }
             var currentPosition = this.Position;
             var tractorableEntities = this.Universe.Entites.Where((e) => e.GetClientType() == TractorType);

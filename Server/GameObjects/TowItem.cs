@@ -10,7 +10,7 @@ namespace Server
 {
     public abstract class TowItem : Entity
     {
-        protected const float size = 0.1f;
+        protected const float size = 1f;
         protected const float speedFactor = 0.1f;
 
         public Ship LastShip = null;
