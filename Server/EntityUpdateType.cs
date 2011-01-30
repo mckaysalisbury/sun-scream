@@ -10,7 +10,6 @@ namespace Server
     {
         Invisible,
         Ship,
-        Star,
         Planet,
         Asteroid,
         Hitchhiker,

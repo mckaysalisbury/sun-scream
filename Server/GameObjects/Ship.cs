@@ -110,7 +110,7 @@ namespace Server
 
         private void BuildPlanet()
         {
-            Universe.AddEntity(new StarSystem((this.Name ?? string.Empty) + (nextPlanetIndex++).ToString()), BehindMe());
+            Universe.AddEntity(new Planet((this.Name ?? string.Empty) + (nextPlanetIndex++).ToString()), BehindMe());
         }
 
         private Vector2 BehindMe()

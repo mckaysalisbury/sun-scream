@@ -19,13 +19,13 @@ namespace Server
         {
             var universe = new Universe();
 
-            universe.AddEntity(new StarSystem("Sol"), new Vector2(0,0));
-            universe.AddEntity(new StarSystem("Alpha Centauri"), new Vector2(3000, 500));
-            universe.AddEntity(new StarSystem("Procyon"), new Vector2(-4000, 2000));
-            universe.AddEntity(new StarSystem("Deneb"), new Vector2(10000, -10000));
-            universe.AddEntity(new StarSystem("Sirius"), new Vector2(-10000, 10000));
-            universe.AddEntity(new StarSystem("Betelgeuse"), new Vector2(10000, 9000));
-            universe.AddEntity(new StarSystem("Sirius"), new Vector2(-10000, -9000));
+            universe.AddEntity(new Planet("Earth"), new Vector2(0,0));
+            universe.AddEntity(new Planet("Venus"), new Vector2(3000, 500));
+            universe.AddEntity(new Planet("Mars"), new Vector2(-4000, 2000));
+            universe.AddEntity(new Planet("Jupiter"), new Vector2(10000, -10000));
+            universe.AddEntity(new Planet("Gamma Cephei Ab"), new Vector2(-10000, 10000));
+            universe.AddEntity(new Planet("Persephane"), new Vector2(10000, 9000));
+            universe.AddEntity(new Planet("Sirius"), new Vector2(-10000, -9000));
 
             universe.AddEntity(new Asteroid(), new Vector2(1000, -500));
             universe.AddEntity(new Asteroid(), new Vector2(-1000, 500));

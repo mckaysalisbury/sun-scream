@@ -60,15 +60,16 @@ namespace Server.Display
 
         private Control CreateControl(Entity entity)
         {
-            switch (entity.GetClientType())
+            var type = entity.GetClientType();
+            switch (type)
             {
-                case EntityUpdateType.Star:
-                    var star = new Button();
-                    star.Parent = this;
-                    star.Text = "x";
-                    star.Width = 20;
-                    star.Height = 20;
-                    return star;
+                case EntityUpdateType.Planet:
+                    var planet = new Button();
+                    planet.Parent = this;
+                    planet.Text = "x";
+                    planet.Width = 20;
+                    planet.Height = 20;
+                    return planet;
                 case EntityUpdateType.Ship:
                     var ship = new Label();
                     ship.Parent = this;
@@ -84,6 +85,11 @@ namespace Server.Display
                     invisible.Parent = this;
                     invisible.Text = "I";
                     return invisible;
+                case EntityUpdateType.Hitchhiker:
+                    var hitchhiker = new Label();
+                    hitchhiker.Parent = this;
+                    hitchhiker.Text = "H";
+                    return hitchhiker;
                 default:
                     throw new Exception();
             }
