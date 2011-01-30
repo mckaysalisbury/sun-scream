@@ -65,12 +65,37 @@ namespace Server
             Players.Remove(player);
         }
 
+        public int nextFactionIndex = 0;
+
         public Ship GenerateShip(Player player)
         {
-            player.Controlling = new Ship(player.Name, 10);
-            player.UpdateFaction();
+            var generatedFaction = (Faction)(nextFactionIndex++ % 3);
+            var ship = GenerateShip(player, generatedFaction);
+            return ship;
+        }
+
+        public Ship GenerateShip(Player player, Faction faction)
+        {
+            player.Controlling = new Ship(player.Name, faction);
+            player.AddMessage(string.Format("You are in the {0} faction.", faction), MessageType.System);
+            player.AddMessage(FactionMessage(faction), MessageType.System);
             AddEntity(player.Controlling, GetSpawnLocation());
             return player.Controlling;
+        }
+
+        private string FactionMessage(Faction faction)
+        {
+            switch (faction)
+            {
+                case Faction.Builders:
+                    return "You are a builder. You have a (T)ractor beam with which you can collect nearby asteroids, When you have collected 5 of them, you can (B)uild a new planet!";
+                case Faction.Destroyers:
+                    return "You are a destroyer. You have a (T)ractor beam with which you can collect nearby asteroids. When the time is right, you can (R)elease the asteroid. If it hits a planet it will destroy the planet! Muah hah ha!";
+                case Faction.Guides:
+                    return "You are a guide. You have a (T)ractor beam with which you can collect nearby hitchhikers. When the time is right, you can (R)elease the hitchhiker. If it lands on a planet, they will be happy!";
+                default:
+                    throw new NotImplementedException();
+            }
         }
 
         public Vector2 GetSpawnLocation()

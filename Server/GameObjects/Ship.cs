@@ -26,12 +26,10 @@ namespace Server
 
         public Dictionary<Entity, Joint> TractoredItems = new Dictionary<Entity, Joint>();
 
-        public Ship(string name, int maxTractors)
+        public Ship(string name, Faction faction)
             : base(name)
         {
-            TractorQuadrance = 10000;
-            this.TowMax = maxTractors;
-            TractorType = EntityUpdateType.Asteroid;
+            this.Faction = faction;
         }
 
         public EntityUpdateType TractorType { get; set; }
@@ -92,26 +90,30 @@ namespace Server
             return TractorEntity(positionToLookFrom);
         }
 
-        public bool RemoveAndBuild()
+        public string RemoveAndBuild()
         {
-            var tractoredAsteroids = TractoredItems.ToArray();
-            if (tractoredAsteroids.Length >= asteroidsNeededToBuild)
+            if (Faction == Server.Faction.Builders)
             {
-                int asteroidsNeededForThisPlanet = asteroidsNeededToBuild;
-                foreach (var asteroidPair in tractoredAsteroids)
+                var tractoredAsteroids = TractoredItems.ToArray();
+                if (tractoredAsteroids.Length >= asteroidsNeededToBuild)
                 {
-                    Detach(asteroidPair.Key);
-                    asteroidPair.Key.Die();
-
-                    if (--asteroidsNeededForThisPlanet == 0)
+                    int asteroidsNeededForThisPlanet = asteroidsNeededToBuild;
+                    foreach (var asteroidPair in tractoredAsteroids)
                     {
-                        BuildPlanet();
-                        return true;
+                        Detach(asteroidPair.Key);
+                        asteroidPair.Key.Die();
+
+                        if (--asteroidsNeededForThisPlanet == 0)
+                        {
+                            BuildPlanet();
+                            return "Planet built";
+                        }
                     }
+                    Debug.Fail("This shouldn't ever happen, I was told that there was enough, but couldn't find enough.");
                 }
-                Debug.Fail("This shouldn't ever happen, I was told that there was enough, but couldn't find enough.");
+                return "Not enough asteroids.";
             }
-            return false;
+            return "Only the builders can build a new star.";
         }
 
         public int nextPlanetIndex = 0;
@@ -185,7 +187,7 @@ namespace Server
             {
                 return faction;
             }
-            set
+            private set
             {
                 faction = value;
                 switch (faction)
