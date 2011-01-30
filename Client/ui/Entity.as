@@ -29,6 +29,18 @@ package ui
       {
         sprite.setFrame(Math.floor(Math.random()*16));
       }
+      else if (type == Server.EntityUpdateType.DestroyerShip)
+      {
+        sprite.setFrame(1);
+      }
+      else if (type == Server.EntityUpdateType.BuilderShip)
+      {
+        sprite.setFrame(2);
+      }
+      else if (type == Server.EntityUpdateType.GuideShip)
+      {
+        sprite.setFrame(3);
+      }
     }
 
     public function cleanup() : void
