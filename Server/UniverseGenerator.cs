@@ -20,12 +20,12 @@ namespace Server
             var universe = new Universe();
 
             universe.AddEntity(new StarSystem("Sol"), new Vector2(0,0));
-            universe.AddEntity(new StarSystem("Alpha Centauri"), new Vector2(300, 50));
-            universe.AddEntity(new StarSystem("Procyon"), new Vector2(-400, 200));
-            universe.AddEntity(new StarSystem("Deneb"), new Vector2(1000, -1000));
-            universe.AddEntity(new StarSystem("Sirius"), new Vector2(-1000, 1000));
-            universe.AddEntity(new StarSystem("Betelgeuse"), new Vector2(1000, 900));
-            universe.AddEntity(new StarSystem("Sirius"), new Vector2(-1000, -900));
+            universe.AddEntity(new StarSystem("Alpha Centauri"), new Vector2(3000, 500));
+            universe.AddEntity(new StarSystem("Procyon"), new Vector2(-4000, 2000));
+            universe.AddEntity(new StarSystem("Deneb"), new Vector2(10000, -10000));
+            universe.AddEntity(new StarSystem("Sirius"), new Vector2(-10000, 10000));
+            universe.AddEntity(new StarSystem("Betelgeuse"), new Vector2(10000, 9000));
+            universe.AddEntity(new StarSystem("Sirius"), new Vector2(-10000, -9000));
 
             universe.AddEntity(new AsteroidGenerator(), new Vector2(10, -500));
 
