@@ -13,6 +13,7 @@ package
 
   import lib.ui.ButtonList;
 
+  import ui.Sound;
   import ui.View;
 
   import Client.UpdateToServer;
@@ -186,6 +187,10 @@ package
         if (note.Type == NoteType.EntityRemoved)
         {
           game.removeEntity(note.Target);
+        }
+        if (note.Type == NoteType.PlaySound)
+        {
+          Sound.play(note.Target);
         }
       }
     }

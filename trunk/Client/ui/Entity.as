@@ -25,6 +25,10 @@ package ui
       pos = new Point(0, 0);
       tractor = null;
       isTowed = false;
+      if (type == Server.EntityUpdateType.Planet)
+      {
+        sprite.setFrame(Math.floor(Math.random()*16));
+      }
     }
 
     public function cleanup() : void
