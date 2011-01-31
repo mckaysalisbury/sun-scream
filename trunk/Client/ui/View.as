@@ -115,6 +115,18 @@
       {
         tractorParent.visible = true;
       }
+      for (var index in entities)
+      {
+        if (entities[index].shouldKill())
+        {
+          entities[index].cleanup();
+          delete entities[index];
+        }
+        if (entities[index] != null)
+        {
+          entities[index].touchDoomed();
+        }
+      }
     }
 
     public function getParent() : DisplayObjectContainer
@@ -169,8 +181,15 @@
       var oldEntity = entities[target];
       if (oldEntity != null)
       {
-        oldEntity.cleanup();
-        delete entities[oldEntity];
+        if (oldEntity.getType() == Server.EntityUpdateType.Planet)
+        {
+          oldEntity.startDoomed();
+        }
+        else
+        {
+          oldEntity.cleanup();
+          delete entities[oldEntity];
+        }
       }
     }
 

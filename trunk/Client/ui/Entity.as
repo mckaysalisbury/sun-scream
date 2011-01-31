@@ -43,6 +43,7 @@ package ui
       {
         sprite.setFrame(3);
       }
+      doomed = -1;
     }
 
     public function cleanup() : void
@@ -137,12 +138,37 @@ package ui
       }
     }
 
+    public function startDoomed() : void
+    {
+      doomed = 10;
+    }
+
+    public function touchDoomed() : void
+    {
+      if (doomed != -1)
+      {
+        --doomed;
+        sprite.setFrame(26 - doomed);
+      }
+    }
+
+    public function shouldKill() : Boolean
+    {
+      return doomed == 0;
+    }
+
+    public function getType() : int
+    {
+      return type;
+    }
+
     var sprite : ImageText;
     var images : ImageList;
     var type : int;
     var pos : Point;
     var tractor : Shape;
     var isTowed : Boolean;
+    var doomed : int;
 
     static var planetGlow = new GlowFilter(0xffffff, 0.5);
   }
