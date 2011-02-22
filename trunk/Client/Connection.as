@@ -27,7 +27,7 @@ package
     {
       game = newGame;
       name = "John Doe";
-      host = "localhost";
+      host = "legendstudio.com";
       disk = SharedObject.getLocal("sun-scream");
       disk.addEventListener(flash.events.AsyncErrorEvent.ASYNC_ERROR,
                             asyncHandler);
