@@ -30,7 +30,7 @@ namespace Server
             : base(name)
         {
             this.Faction = faction;
-            TractorQuadrance = 10000;
+            TractorQuadrance = 100000;
         }
 
         public EntityUpdateType TractorType { get; set; }

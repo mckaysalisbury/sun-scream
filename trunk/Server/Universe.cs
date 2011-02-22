@@ -126,78 +126,81 @@ namespace Server
 
         void Update()
         {
-            foreach (var entity in Entites.ToArray())
+            if (Players.Count > 0)
             {
-                entity.Update();
-
-                //GameServer.Instance.Log(string.Format("{0}={1}@({2},{3})", entity.Id, entity.Name, entity.Position.X, entity.Position.Y));
-            }
-
-            //var time = (float)(DateTime.Now - lastUpdate).TotalMilliseconds;
-            for (int i = 0; i < iterations; i++)
-            {
-                World.Step(interval / iterations);
-            }
-
-            foreach (var player in Players.ToArray())
-            {
-                player.Update();
-
-                if (player.Client != null)
+                foreach (var entity in Entites.ToArray())
                 {
-                    var packet = new UpdatePacket()
-                        {
-                            ControllingEntityId = player.Controlling == null ? 0 : player.Controlling.Id,
-                            Notes = player.Notes,
-                            Messages = player.Messages,
-                            TractorRange = player.Controlling == null ? 0 : (int)(Math.Sqrt(player.Controlling.TractorQuadrance) * 10000f)
-                        };
+                    entity.Update();
 
-                    //GameServer.Instance.Log(string.Format("{0}", player.Controlling.Fixture.Body.LinearVelocity));
-                    //GameServer.Instance.Log(((int)(player.Controlling.Fixture.Body.Rotation * 100f)).ToString());
+                    //GameServer.Instance.Log(string.Format("{0}={1}@({2},{3})", entity.Id, entity.Name, entity.Position.X, entity.Position.Y));
+                }
 
-                    foreach (var entity in Entites)
+                //var time = (float)(DateTime.Now - lastUpdate).TotalMilliseconds;
+                for (int i = 0; i < iterations; i++)
+                {
+                    World.Step(interval / iterations);
+                }
+
+                foreach (var player in Players.ToArray())
+                {
+                    player.Update();
+
+                    if (player.Client != null)
                     {
-                        var type = entity.GetClientType();
-                        if (type != EntityUpdateType.Invisible)
-                        {
-                            var update = new EntityUpdate()
-                                {
-                                    Type = entity.GetClientType(),
-                                    Id = entity.Id,
-                                    Name = entity.Name,
-                                    LocationX = (int)(entity.Fixture.Body.Position.X * 10000f),
-                                    LocationY = (int)(entity.Fixture.Body.Position.Y * 10000f),
-                                    Rotation = (int)(entity.Fixture.Body.Rotation * 100f),
-                                    Size = (int)(entity.Fixture.Shape.Radius * 10000f)
-                                };
-
-                            var ship = entity as Ship;
-                            if (ship != null)
+                        var packet = new UpdatePacket()
                             {
-                                foreach (var towed in ship.TractoredItems.Keys)
+                                ControllingEntityId = player.Controlling == null ? 0 : player.Controlling.Id,
+                                Notes = player.Notes,
+                                Messages = player.Messages,
+                                TractorRange = player.Controlling == null ? 0 : (int)(Math.Sqrt(player.Controlling.TractorQuadrance) * 10000f)
+                            };
+
+                        //GameServer.Instance.Log(string.Format("{0}", player.Controlling.Fixture.Body.LinearVelocity));
+                        //GameServer.Instance.Log(((int)(player.Controlling.Fixture.Body.Rotation * 100f)).ToString());
+
+                        foreach (var entity in Entites)
+                        {
+                            var type = entity.GetClientType();
+                            if (type != EntityUpdateType.Invisible)
+                            {
+                                var update = new EntityUpdate()
+                                    {
+                                        Type = entity.GetClientType(),
+                                        Id = entity.Id,
+                                        Name = entity.Name,
+                                        LocationX = (int)(entity.Fixture.Body.Position.X * 10000f),
+                                        LocationY = (int)(entity.Fixture.Body.Position.Y * 10000f),
+                                        Rotation = (int)(entity.Fixture.Body.Rotation * 100f),
+                                        Size = (int)(entity.Fixture.Shape.Radius * 10000f)
+                                    };
+
+                                var ship = entity as Ship;
+                                if (ship != null)
                                 {
-                                    update.Towed.Add(towed.Id);
+                                    foreach (var towed in ship.TractoredItems.Keys)
+                                    {
+                                        update.Towed.Add(towed.Id);
+                                    }
                                 }
+
+                                packet.Entities.Add(update);
                             }
-
-                            packet.Entities.Add(update);
                         }
-                    }
 
-                    var packetBytes = packet.Serialize();
+                        var packetBytes = packet.Serialize();
 
-                    player.Notes.Clear();
-                    player.Messages.Clear();
+                        player.Notes.Clear();
+                        player.Messages.Clear();
 
-                    try
-                    {
-                        player.Client.Client.Send(packetBytes);
-                    }
-                    catch (SocketException e)
-                    {
-                        //GameServer.Instance.Log(e.ToString());
-                        player.Disconnect();
+                        try
+                        {
+                            player.Client.Client.Send(packetBytes);
+                        }
+                        catch (SocketException e)
+                        {
+                            //GameServer.Instance.Log(e.ToString());
+                            player.Disconnect();
+                        }
                     }
                 }
             }
