@@ -134,24 +134,35 @@ namespace Server
             return new Vector2((float)(distance * Math.Cos(angle)), (float)(distance * Math.Sin(angle)));
         }
 
-        //int throwAwayBytes = 23;
+        string stupidPolicyThing = @"<?xml version=""1.0""?>
+<!DOCTYPE cross-domain-policy SYSTEM ""/xml/dtds/cross-domain-policy.dtd"">
+<cross-domain-policy>
+  <site-control permitted-cross-domain-policies=""master-only""/>
+  <allow-access-from domain=""*"" to-ports=""1701"" />
+</cross-domain-policy>
+";
+        bool isFirstBytes = true;
 
         public Client.UpdateToServer CheckForUpdate()
         {
-            //if (throwAwayBytes > 0)
-            //{
-            //    if (Client.Client.Available >= throwAwayBytes)
-            //    {
-            //        var throwAway = new byte[throwAwayBytes];
-            //        Client.Client.Receive(throwAway);
-            //        throwAwayBytes = 0;
-            //    }
-            //}
-
             if (Client.Client.Available >= 4)
             {
                 var bytes = new byte[4];
                 Client.Client.Receive(bytes);
+
+
+                if (isFirstBytes)
+                {
+                    isFirstBytes = false;
+                    if (bytes[0] == 60) // 60 == <
+                    {
+                        GameServer.Instance.Log("Sending stupid policy thingy and disconnecting");
+                        Client.Client.Send(Encoding.UTF8.GetBytes(stupidPolicyThing));
+                        Disconnect();
+                        return null;
+                    }
+                }
+
                 var packetLength = BitConverter.ToInt32(bytes, 0);
 
                 if (packetLength > 100000 || packetLength < 0)
